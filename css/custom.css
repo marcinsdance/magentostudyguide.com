@@ -11,9 +11,10 @@ ul.ui-accordion-content {
     max-height: 600px;
 }
 .display {
-    width: 67%;
+    width: 58%;
     float: left;
     padding-left: 20px;
     height: 800px;
     overflow-y: scroll;
 }
+ul.one li {}
