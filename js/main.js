@@ -4,10 +4,15 @@ $("li ul li").not(" li ul li ul li ").each( function() {
     var number = parseInt( $( this ).text().substring( 0, dot ) );
     $( this ).attr('id', number);
 });
-$("a.file").click( function(e) {
+$("a.file")
+    .not("#file18,#file19,#file22,#file23,#file24,#file25,#file26,#file27,#file28,#file29,#file30,#file31,#file32,#file33,#file34,#file36,#file46,#file47,#file481,")
+    .not("#file482,#file541,#file542,#file551,#file552,#file56,#file761,#file762,#file77,#file721")
+    .click( function(e) {
     e.preventDefault();
     var link = $(this).attr('href');
-    $("div.display").load( link );
+    $("div.display").load( link, function() {
+        $("div.display").scrollTop('0');
+    });
 });
 $("a#file18").click( function(e) {
     e.preventDefault();
@@ -182,5 +187,33 @@ $("a#file56").click( function(e) {
     var link = $(this).attr('href');
     $("div.display").load( link, function() {
         $("div.display").scrollTop('16150');
+    });
+});
+$("a#file761").click( function(e) {
+    e.preventDefault();
+    var link = $(this).attr('href');
+    $("div.display").load( link, function() {
+        $("div.display").scrollTop('3820');
+    });
+});
+$("a#file762").click( function(e) {
+    e.preventDefault();
+    var link = $(this).attr('href');
+    $("div.display").load( link, function() {
+        $("div.display").scrollTop('13335');
+    });
+});
+$("a#file77").click( function(e) {
+    e.preventDefault();
+    var link = $(this).attr('href');
+    $("div.display").load( link, function() {
+        $("div.display").scrollTop('3210');
+    });
+});
+$("a#file721").click( function(e) {
+    e.preventDefault();
+    var link = $(this).attr('href');
+    $("div.display").load( link, function() {
+        $("div.display").scrollTop('7580');
     });
 });
