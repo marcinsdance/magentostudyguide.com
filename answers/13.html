@@ -1,0 +1,126 @@
+<h2>Describe Magento codepools</h2> by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk</a>
+<h3><a href="http://blog.belvg.com/magento-certified-developer-exam-setting-up-a-cron-job.html" target="_blank">http://blog.belvg.com/magento-certified-developer-exam-setting-up-a-cron-job.html</a></h3>
+
+<p style="text-align: justify;"><img class="aligncenter size-full wp-image-2904" title="certificate" src="http://blog.belvg.com/wp-content/uploads/2012/09/certificate33332.jpg" alt="" /></p>
+<p style="text-align: justify;"><em>We suppose you continue following our <a href="http://blog.belvg.com/category/magento-news/developer-certification" target="_blank">Magento certification-dedicated posts</a> in our blog. This time we will describe how to set up a cron job.</em></p>
+<p style="text-align: justify;"><em></em>Let&#8217;s start with server setup.</p>
+<p style="text-align: justify;"><span id="more-2894"></span><br />
+    As any complex system, Magento has a lot of tasks that need to be executed periodically. Here are some of these processes: catalog price rules, sending newsletters, generating Google Sitemaps, customer alerts/notifications (product price change, product back to stock), automatic updating of currency rates, scheduled DB logs cleanup, etc.</p>
+<p style="text-align: justify;">For that purpose we need to setup a cron job on a server. From Wikipedia we know that <a href="http://en.wikipedia.org/wiki/Cron" target="_blank">cron</a> is the time-based job scheduler. Cron enables users to schedule jobs (commands or shell scripts) to run periodically at certain times or dates.</p>
+<p style="text-align: justify;">To set up a cron job, first of all we should make our server run cron.php intermittently (that is located in Magento installation root). For that purpose Magento developers provide us with a shell script &#8211; cron.sh, which is also located in installation root. Depending on your operational system, you need to edit either crontab on UNIX/BSD/Linux, using crontab -e command, or add a new task using Scheduled Tasks service for Windows. More information on this topic can be found on Magento Wiki page or in a <a href="https://support.sweettoothrewards.com/entries/21196536-setting-up-cron-jobs-in-magento" target="_blank">Sweet Tooth manual</a>.</p>
+<p><strong>cron.php file</strong></p>
+<p>Let&#8217;s have a look</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832af740bb" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832af740bb-1" style=""><span class="st">try</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af740bb-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Mage::</span><span class="e">getConfig</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">init</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">loadEventObservers</span><span class="sy">(</span><span class="s">'crontab'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a832af740bb-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Mage::</span><span class="e">app</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">addEventArea</span><span class="sy">(</span><span class="s">'crontab'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af740bb-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Mage::</span><span class="e">dispatchEvent</span><span class="sy">(</span><span class="s">'default'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a832af740bb-5" style=""><span class="sy">}</span><span class="h"> </span><span class="st">catch</span><span class="h"> </span><span class="sy">(</span><span class="i">Exception</span><span class="h"> </span><span class="v">$e</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af740bb-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Mage::</span><span class="e">printException</span><span class="sy">(</span><span class="v">$e</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a832af740bb-7" style=""><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0036 seconds] -->
+<p></p>
+<p style="text-align: justify;">If we thoroughly look at these three lines of code and investigate which methods they call further, we can see that after initialization of config file for crontab section Magento finally invokes <strong>Mage_Cron_Model_Observer-&gt;dipatch()</strong> that does the following:</p>
+<p>1. Process scheduled cron queue: Magento reads the cron schedule table for jobs that need to be executed this very second and jobs that should have already been executed, i.e. with timestamps in the past, that haven&#8217;t expired. The expiry limit is also a parameter, configurable in the admin panel. After all the work, dispatch method calls two <em>generate()</em> and <em>cleanup()</em> methods</p>
+<p style="text-align: justify;">    2. Generate tasks schedule: <strong>Mage_Cron_Model_Observer-&gt;generate()</strong>, this method searches final configuration file for content of <em>&lt;crontab&gt;</em> nodes ($config = Mage::getConfig()-&gt;getNode(&#8216;crontab/jobs&#8217;); ), reading <em>&lt;schedule&gt;&lt;cron_expr&gt;</em> elements to find out when and how often they need to be executed and pulls this data into the cron_schedule table.</p>
+<p style="text-align: justify;">    3. Cleanup: <strong>Mage_Cron_Model_Observer-&gt;cleanup()</strong>, this method deletes completed (with &#8216;success&#8217; status) or missed ($time &lt; $now &#8211; $scheduleLifetime, where <em>$scheduleLifetime</em> are set in Magento admin area) jobs from cron_schedule DB table.</p>
+<p><strong>cron_schedule table</strong></p>
+<p><a href="http://blog.belvg.com/wp-content/uploads/2012/09/cron_schedule1.png"><img class="aligncenter  wp-image-2896" style="border: 0.1px solid black;" title="cron_schedule" src="http://blog.belvg.com/wp-content/uploads/2012/09/cron_schedule1-1024x493.png" alt="" /></a></p>
+<p style="text-align: justify;">Refer to this <a href="http://www.magentocommerce.com/wiki/1_-_installation_and_configuration/how_to_setup_a_cron_job" target="_blank">source</a> while preparing for the exam.</p>
+<p>schedule_id &#8211; unique proccess id<br />
+    job_code &#8211; job identifier from configuration<br />
+    status &#8211; can be one of the predifened statuses: pending, running, success, missed, error<br />
+    messages &#8211; custom text reported by method that was executed by the job<br />
+    created_at &#8211; date/time when the task was created at, i.e. when server executes cron.php<br />
+    scheduled_at &#8211; date/time when the task is planned to be executed, that is specified in &lt;schedule&gt; node of the config file<br />
+    executed_at &#8211; date/time when the task was actually executed (NULL prior to execution)<br />
+    finished_at &#8211; date/time when the task finished execution (NULL prior to execution)</p>
+<p>When schedules are generated, status is set to pending, created_at to now() and scheduled_at to target date/time.</p>
+<p>When pending schedules are executed, status is set to running and executed_at to now().</p>
+<p>When scheduled task is finished successfully, status is set to success and finished_at to now().</p>
+<p>When scheduled task has thrown an exception, status is set to error and finished_at to now().</p>
+<p>If task status is pending and scheduled_at is older than “Missed if not run within” configured value, status is set to missed.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>Set up cron in Magento admin area</strong></p>
+<p>Cron (Scheduled Tasks) can be set up from the admin panel. The path is System -&gt; Configuration -&gt; System -&gt; Cron (Scheduled Tasks)</p>
+<p style="text-align: justify;">There are six settings here. Please, note that the time is measured in minutes. Even though Magento has predifened settings for all of them, you can tune everything according to your needs.</p>
+<p><a href="http://blog.belvg.com/wp-content/uploads/2012/09/admin_cron.png"><img class="aligncenter  wp-image-2897" style="border: 0.1px solid black;" title="admin_cron" src="http://blog.belvg.com/wp-content/uploads/2012/09/admin_cron-1024x517.png" alt="" /></a></p>
+<p style="text-align: justify;">Generate Schedules Every: schedules will be generated with setup frequency.</p>
+<p>Schedule ahead for: schedules will be generated for this amount of time ahead.</p>
+<p style="text-align: justify;">Missed if not run within: if cron.php was executed within setup minutes after the task was scheduled, it will be executed. Otherwise, Magento will mark it as &#8216;missed&#8217; in cron_schedule table</p>
+<p>History cleanup every: Magento will clean up history not more than setup amount of minutes.</p>
+<p>Success history lifetime: tasks with &#8216;success&#8217; status will be stored in cron_schedule table for this amount of minutes.</p>
+<p>Failure history lifetime: Tasks that have status &#8216;error&#8217; and &#8216;missed&#8217; will be stored in cron_schedule table for this amount of minutes.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>Set up a cron job for custom extensions</strong></p>
+<p style="text-align: center;">
+<p style="text-align: justify;">Here is how config of our custom extension will look like:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832af74448" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832af74448-1" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74448-2" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;crontab&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832af74448-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;jobs&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74448-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;cronjob_code&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832af74448-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;schedule&gt;</span><span class="r ">&lt;cron_expr&gt;</span><span class="i ">*/15 * * * *</span><span class="r ">&lt;/cron_expr&gt;</span><span class="r ">&lt;/schedule&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74448-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;run&gt;</span><span class="r ">&lt;model&gt;</span><span class="i ">modulename/modelname::methodName</span><span class="r ">&lt;/model&gt;</span><span class="r ">&lt;/run&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832af74448-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/cronjob_code&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74448-8" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/jobs&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832af74448-9" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/crontab&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74448-10" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0020 seconds] -->
+<p></p>
+<p style="text-align: justify;">&lt;cronjob_code&gt; &#8211; should be unique identifier, will be used as job_code in cron_schedule DB table</p>
+<p>&lt;schedule&gt;&lt;cron_expr&gt;* * * * *&lt;/cron_expr&gt;&lt;/schedule&gt; &#8211; each asterisk stands for time period corespondingly: minutes, hours, days, months, years. If you leave it this way (* * * * *), cron job will be executed every minute. In our example, cron job will be run every 15 minutes &lt;schedule&gt;&lt;cron_expr&gt;*/15 * * * *&lt;/cron_expr&gt;&lt;/schedule&gt; or we can use alternative syntax to do that &lt;schedule&gt;&lt;cron_expr&gt;0,15,30,45 * * * *&lt;/cron_expr&gt;&lt;/schedule&gt;. If you want, for example, to run your job at 3 a.m., you need to do your cron expresion this way: &lt;schedule&gt;&lt;cron_expr&gt;0 3 * * *&lt;/cron_expr&gt;&lt;/schedule&gt;</p>
+<p>&lt;run&gt;&lt;model&gt;modulename/modelname::methodName&lt;/model&gt;&lt;/run&gt;</p>
+<p style="text-align: justify;">Your modulename and modelname should be written in lowercase and stored according to certain (<a href=" http://blog.belvg.com/magento-certified-developer-exam-describing-class-group-configuration-an-use-in-factory-methods.html" target="_blank">Magento Factory method</a>) rules. methodName shoulb be written as is.</p>
+<p>We need to write the code of our method in app/code/local/Namespace/Modulename/Model/Modelname.php</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832af74831" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832af74831-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74831-2" style="">
+                </div><div class="crayon-line" id="crayon-50a832af74831-3" style=""><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">methodName</span><span class="sy">(</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74831-4" style="">
+                </div><div class="crayon-line" id="crayon-50a832af74831-5" style=""><span class="c">//put here whatever you need</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832af74831-6" style="">
+                </div><div class="crayon-line" id="crayon-50a832af74831-7" style=""><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0012 seconds] -->
+<p></p>
+<p style="text-align: justify;">That&#8217;s it.</p>

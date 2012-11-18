@@ -1,0 +1,343 @@
+<h2>Describe class group configuration and use in factory methods</h2> by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk</a>
+<h3><a href="http://blog.belvg.com/magento-certified-developer-exam-describing-class-group-configuration-an-use-in-factory-methods.html" target="_blank">http://blog.belvg.com/magento-certified-developer-exam-describing-class-group-configuration-an-use-in-factory-methods.html</a></h3>
+
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-2547" title="Magento Certified Developer Exam" src="http://blog.belvg.com/wp-content/uploads/2012/06/Describing-Class-Group-Configuration-and-Use-in-Factory-Methods.png" alt="Describing Class Group Configuration and Use in Factory Methods" /></p>
+<p style="text-align: justify;"><em>We suppose you continue following our <a href="http://blog.belvg.com/category/magento-news/developer-certification" target="_blank">Magento certification-dedicated posts</a> in our blog. This time we will describe class group configuration and use in factory methods.</em></p>
+<p style="text-align: justify;"><em></em>Magento uses <a href="http://en.wikipedia.org/wiki/Factory_method_pattern" target="_blank">factory methods</a> to instantiate Models, Blocks and Helpers classes, applying a necessary method (for example getModel, helper etc.). You should pass an abstract name of a class group, followed by an entity name. Class groups are described in configuration XML files in /etc/config.xml files of appropriate modules.<span id="more-2267"></span></p>
+<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/06/BelVG_block_scheme.png"><img src="http://blog.belvg.com/wp-content/uploads/2012/06/BelVG_block_scheme.png" alt="Block_scheme" /></a></p>
+<p style="text-align: justify;">Let&#8217;s have a look at the proccess of class instantiating by the example of models and try to instantiate the product object. This can be done by using getModel() method:</p>
+<p style="text-align: justify;">$product = Mage::getModel(&#8216;catalog/product&#8217;);</p>
+<p style="text-align: justify;"><!--more--><br />
+    This method retrieves an instance of Mage_Catalog_Model_Product this way:<br />
+    app/Mage.php</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310cdf66f" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310cdf66f-1" style=""><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdf66f-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve model object</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdf66f-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdf66f-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @link&nbsp;&nbsp;&nbsp;&nbsp;Mage_Core_Model_Config::getModelInstance</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdf66f-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; string $modelClass</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdf66f-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; array|object $arguments</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdf66f-7" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return&nbsp;&nbsp;Mage_Core_Model_Abstract|false</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdf66f-8" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdf66f-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="m">static</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getModel</span><span class="sy">(</span><span class="v">$modelClass</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="s">''</span><span class="sy">,</span><span class="h"> </span><span class="v">$arguments</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="t">array</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdf66f-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdf66f-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="r">self</span><span class="o">::</span><span class="e">getConfig</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getModelInstance</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">,</span><span class="h"> </span><span class="v">$arguments</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdf66f-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0023 seconds] -->
+<p>getModel() calls getModelInstance() method, which gets class instance with the help of getModelClassName</p>
+<p>app/code/core/Mage/Core/Model/Config.php</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310cdfa5c" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div><div class="crayon-num crayon-striped-num" style="">22</div><div class="crayon-num" style="">23</div><div class="crayon-num crayon-striped-num" style="">24</div><div class="crayon-num" style="">25</div><div class="crayon-num crayon-striped-num" style="">26</div><div class="crayon-num" style="">27</div><div class="crayon-num crayon-striped-num" style="">28</div><div class="crayon-num" style="">29</div><div class="crayon-num crayon-striped-num" style="">30</div><div class="crayon-num" style="">31</div><div class="crayon-num crayon-striped-num" style="">32</div><div class="crayon-num" style="">33</div><div class="crayon-num crayon-striped-num" style="">34</div><div class="crayon-num" style="">35</div><div class="crayon-num crayon-striped-num" style="">36</div><div class="crayon-num" style="">37</div><div class="crayon-num crayon-striped-num" style="">38</div><div class="crayon-num" style="">39</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310cdfa5c-1" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Get model class instance.</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Example:</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * $config-&gt;getModelInstance('catalog/product')</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-7" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Will instantiate Mage_Catalog_Model_Mysql4_Product</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-8" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-9" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param string $modelClass</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-10" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param array|object $constructArguments</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-11" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return Mage_Core_Model_Abstract|false</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-12" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getModelInstance</span><span class="sy">(</span><span class="v">$modelClass</span><span class="o">=</span><span class="s">''</span><span class="sy">,</span><span class="h"> </span><span class="v">$constructArguments</span><span class="o">=</span><span class="t">array</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-15" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getModelClassName</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="e">class_exists</span><span class="sy">(</span><span class="v">$className</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Varien_Profiler::</span><span class="e">start</span><span class="sy">(</span><span class="s">'CORE::create_object_of::'</span><span class="sy">.</span><span class="v">$className</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-18" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$obj</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">new</span><span class="h"> </span><span class="v">$className</span><span class="sy">(</span><span class="v">$constructArguments</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-19" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Varien_Profiler::</span><span class="e">stop</span><span class="sy">(</span><span class="s">'CORE::create_object_of::'</span><span class="sy">.</span><span class="v">$className</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-20" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$obj</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-21" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span><span class="h"> </span><span class="st">else</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-22" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="t">false</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-23" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-24" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-25" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-26" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-27" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve module class name</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-28" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-29" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; sting $modelClass</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-30" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return&nbsp;&nbsp;string</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-31" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-32" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getModelClassName</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-33" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-34" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$modelClass</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">trim</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-35" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="e">strpos</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">,</span><span class="h"> </span><span class="s">'/'</span><span class="sy">)</span><span class="o">===</span><span class="t">false</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-36" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$modelClass</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-37" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfa5c-38" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getGroupedClassName</span><span class="sy">(</span><span class="s">'model'</span><span class="sy">,</span><span class="h"> </span><span class="v">$modelClass</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfa5c-39" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0071 seconds] -->
+<p></p>
+<p style="text-align: justify;">getGroupedClassName() method does all the work. As you can see from getModelClassName, we pass the group type (model, block or helper) and the class identifier (in our case catalog/product) to this method. It explodes our string by using &#8216;/&#8217; as needle, removes whitespaces and forms array of strings.</p>
+<p style="text-align: justify;">Then we load Varien_Simplexml_Element and pass our group name (catalog) to find class prefix name from config.xml of our module. In our example it would be Mage_Catalog_Model; in case this extension was overwritten, it could be Namespace_Catalog_Model. We also add entity class name (product) and after using Magento uc_words (based on PHP ucwords that returns a string with the first character of each word capitalized, if that character is alphabetic), we finally receive Mage_Catalog_Model_Product that will be returned in getModelInstance. As we noticed from above, it will create the object, using a new operator.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310cdfe3c" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div><div class="crayon-num crayon-striped-num" style="">22</div><div class="crayon-num" style="">23</div><div class="crayon-num crayon-striped-num" style="">24</div><div class="crayon-num" style="">25</div><div class="crayon-num crayon-striped-num" style="">26</div><div class="crayon-num" style="">27</div><div class="crayon-num crayon-striped-num" style="">28</div><div class="crayon-num" style="">29</div><div class="crayon-num crayon-striped-num" style="">30</div><div class="crayon-num" style="">31</div><div class="crayon-num crayon-striped-num" style="">32</div><div class="crayon-num" style="">33</div><div class="crayon-num crayon-striped-num" style="">34</div><div class="crayon-num" style="">35</div><div class="crayon-num crayon-striped-num" style="">36</div><div class="crayon-num" style="">37</div><div class="crayon-num crayon-striped-num" style="">38</div><div class="crayon-num" style="">39</div><div class="crayon-num crayon-striped-num" style="">40</div><div class="crayon-num" style="">41</div><div class="crayon-num crayon-striped-num" style="">42</div><div class="crayon-num" style="">43</div><div class="crayon-num crayon-striped-num" style="">44</div><div class="crayon-num" style="">45</div><div class="crayon-num crayon-striped-num" style="">46</div><div class="crayon-num" style="">47</div><div class="crayon-num crayon-striped-num" style="">48</div><div class="crayon-num" style="">49</div><div class="crayon-num crayon-striped-num" style="">50</div><div class="crayon-num" style="">51</div><div class="crayon-num crayon-striped-num" style="">52</div><div class="crayon-num" style="">53</div><div class="crayon-num crayon-striped-num" style="">54</div><div class="crayon-num" style="">55</div><div class="crayon-num crayon-striped-num" style="">56</div><div class="crayon-num" style="">57</div><div class="crayon-num crayon-striped-num" style="">58</div><div class="crayon-num" style="">59</div><div class="crayon-num crayon-striped-num" style="">60</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310cdfe3c-1" style=""><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve class name by class group</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; string $groupType currently supported model, block, helper</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; string $classId slash separated class identifier, ex. group/class</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; string $groupRootNode optional config path for group config</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-7" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return&nbsp;&nbsp;string</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-8" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getGroupedClassName</span><span class="sy">(</span><span class="v">$groupType</span><span class="sy">,</span><span class="h"> </span><span class="v">$classId</span><span class="sy">,</span><span class="h"> </span><span class="v">$groupRootNode</span><span class="o">=</span><span class="t">null</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$groupRootNode</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$groupRootNode</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="s">'global/'</span><span class="sy">.</span><span class="v">$groupType</span><span class="sy">.</span><span class="s">'s'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-14" style="">
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-15" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$classArr</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">explode</span><span class="sy">(</span><span class="s">'/'</span><span class="sy">,</span><span class="h"> </span><span class="e">trim</span><span class="sy">(</span><span class="v">$classId</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$group</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$classArr</span><span class="sy">[</span>0<span class="sy">]</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$class</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="o">!</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$classArr</span><span class="sy">[</span>1<span class="sy">]</span><span class="sy">)</span><span class="h"> </span><span class="sy">?</span><span class="h"> </span><span class="v">$classArr</span><span class="sy">[</span>1<span class="sy">]</span><span class="h"> </span><span class="o">:</span><span class="h"> </span><span class="t">null</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-18" style="">
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-19" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">isset</span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_classNameCache</span><span class="sy">[</span><span class="v">$groupRootNode</span><span class="sy">]</span><span class="sy">[</span><span class="v">$group</span><span class="sy">]</span><span class="sy">[</span><span class="v">$class</span><span class="sy">]</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-20" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_classNameCache</span><span class="sy">[</span><span class="v">$groupRootNode</span><span class="sy">]</span><span class="sy">[</span><span class="v">$group</span><span class="sy">]</span><span class="sy">[</span><span class="v">$class</span><span class="sy">]</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-21" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-22" style="">
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-23" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$config</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_xml</span><span class="o">-&gt;</span><span class="m">global</span><span class="o">-&gt;</span><span class="sy">{</span><span class="v">$groupType</span><span class="sy">.</span><span class="s">'s'</span><span class="sy">}</span><span class="o">-&gt;</span><span class="sy">{</span><span class="v">$group</span><span class="sy">}</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-24" style="">
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-25" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">// First - check maybe the entity class was rewritten</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-26" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="t">null</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-27" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">isset</span><span class="sy">(</span><span class="v">$config</span><span class="o">-&gt;</span><span class="i">rewrite</span><span class="o">-&gt;</span><span class="v">$class</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-28" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="sy">(</span><span class="t">string</span><span class="sy">)</span><span class="v">$config</span><span class="o">-&gt;</span><span class="i">rewrite</span><span class="o">-&gt;</span><span class="v">$class</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-29" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span><span class="h"> </span><span class="st">else</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-30" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-31" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Backwards compatibility for pre-MMDB extensions.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-32" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * In MMDB release resource nodes &lt;..._mysql4&gt; were renamed to &lt;..._resource&gt;. So &lt;deprecatedNode&gt; is left</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-33" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * to keep name of previously used nodes, that still may be used by non-updated extensions.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-34" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-35" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$config</span><span class="o">-&gt;</span><span class="i">deprecatedNode</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-36" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$deprecatedNode</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$config</span><span class="o">-&gt;</span><span class="i">deprecatedNode</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-37" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$configOld</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_xml</span><span class="o">-&gt;</span><span class="m">global</span><span class="o">-&gt;</span><span class="sy">{</span><span class="v">$groupType</span><span class="sy">.</span><span class="s">'s'</span><span class="sy">}</span><span class="o">-&gt;</span><span class="v">$deprecatedNode</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-38" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">isset</span><span class="sy">(</span><span class="v">$configOld</span><span class="o">-&gt;</span><span class="i">rewrite</span><span class="o">-&gt;</span><span class="v">$class</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-39" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="sy">(</span><span class="t">string</span><span class="sy">)</span><span class="h"> </span><span class="v">$configOld</span><span class="o">-&gt;</span><span class="i">rewrite</span><span class="o">-&gt;</span><span class="v">$class</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-40" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-41" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-42" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-43" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-44" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">// Second - if entity is not rewritten then use class prefix to form class name</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-45" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$className</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-46" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="o">!</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$config</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-47" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$config</span><span class="o">-&gt;</span><span class="e">getClassName</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-48" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-49" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$className</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-50" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="s">'mage_'</span><span class="sy">.</span><span class="v">$group</span><span class="sy">.</span><span class="s">'_'</span><span class="sy">.</span><span class="v">$groupType</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-51" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-52" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="o">!</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$class</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-53" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="sy">.</span><span class="o">=</span><span class="h"> </span><span class="s">'_'</span><span class="sy">.</span><span class="v">$class</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-54" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-55" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">uc_words</span><span class="sy">(</span><span class="v">$className</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-56" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-57" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-58" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_classNameCache</span><span class="sy">[</span><span class="v">$groupRootNode</span><span class="sy">]</span><span class="sy">[</span><span class="v">$group</span><span class="sy">]</span><span class="sy">[</span><span class="v">$class</span><span class="sy">]</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$className</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310cdfe3c-59" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$className</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310cdfe3c-60" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0180 seconds] -->
+<p></p>
+<p style="text-align: justify;">Now let&#8217;s review how to declare class alias &#8211; a string that calls class (model, block, helper &#8211; depends from usage context)) we have declared. Alias naming rule is: group/entity.</p>
+<p style="text-align: justify;">As we observed, the group name is declared in configuration files in /etc/folder of the module.</p>
+<p>General case</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310ce0229" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310ce0229-1" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0229-2" style=""><span class="i ">&nbsp;&nbsp;</span><span class="r ">&lt;global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0229-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;models&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0229-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;groupname&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0229-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;class&gt;</span><span class="i ">Namespace_Modulename_Model</span><span class="r ">&lt;/class&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0229-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;/groupname&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0229-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/models&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0229-8" style=""><span class="i ">&nbsp;&nbsp;</span><span class="r ">&lt;/global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0229-9" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p></p>
+<p style="text-align: justify;">In our specific case</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310ce0613" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310ce0613-1" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0613-2" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0613-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;models&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0613-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;catalog&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0613-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;class&gt;</span><span class="i ">Mage_Catalog_Model</span><span class="r ">&lt;/class&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0613-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/catalog&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0613-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/models&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0613-8" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;/global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0613-9" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0010 seconds] -->
+<p></p>
+<p style="text-align: justify;">Creating models objects, we can also try to use Mage::getSingleton() method. The method differs from getModel() by using different Design Pattern called Singleton, which means that only one instantiation of a class is used during the runtime process. However, when calling getModel(), a new class will be created every time the method is called.</p>
+<p><strong>Helpers</strong></p>
+<p style="text-align: justify;">Instantiate a helper class the same way you do models. We call Mage::helper(&#8216;group/entity&#8217;) and it calls getHelperClassName() in its turn, which has a default value &#8216;data&#8217; in entity name. It means that if you pass only a group name, for example Mage::helper(&#8216;catalog&#8217;), it will create an object of Mage_Catalog_Helper_Data class.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310ce09f8" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310ce09f8-1" style=""><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve helper object</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param string $name the helper name</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return Mage_Core_Helper_Abstract</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="m">static</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">helper</span><span class="sy">(</span><span class="v">$name</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$registryKey</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="s">'_helper/'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="v">$name</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="o">!</span><span class="r">self</span><span class="o">::</span><span class="e">registry</span><span class="sy">(</span><span class="v">$registryKey</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$helperClass</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">self</span><span class="o">::</span><span class="e">getConfig</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getHelperClassName</span><span class="sy">(</span><span class="v">$name</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="e">register</span><span class="sy">(</span><span class="v">$registryKey</span><span class="sy">,</span><span class="h"> </span><span class="r">new</span><span class="h"> </span><span class="v">$helperClass</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce09f8-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="r">self</span><span class="o">::</span><span class="e">registry</span><span class="sy">(</span><span class="v">$registryKey</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce09f8-15" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0038 seconds] -->
+<p>From the code above you may notice that Magento registers a variable when the helper is being created. So helper instance can be created only one time during runtime.</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310ce0ddc" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310ce0ddc-1" style=""><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getHelperClassName</span><span class="sy">(</span><span class="v">$helperName</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0ddc-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0ddc-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="e">strpos</span><span class="sy">(</span><span class="v">$helperName</span><span class="sy">,</span><span class="h"> </span><span class="s">'/'</span><span class="sy">)</span><span class="h"> </span><span class="o">===</span><span class="h"> </span><span class="t">false</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0ddc-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$helperName</span><span class="h"> </span><span class="sy">.</span><span class="o">=</span><span class="h"> </span><span class="s">'/data'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0ddc-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce0ddc-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getGroupedClassName</span><span class="sy">(</span><span class="s">'helper'</span><span class="sy">,</span><span class="h"> </span><span class="v">$helperName</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce0ddc-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310ce11c4" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310ce11c4-1" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce11c4-2" style=""><span class="i ">&nbsp;&nbsp;</span><span class="r ">&lt;global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce11c4-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;helpers&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce11c4-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;groupname&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce11c4-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;class&gt;</span><span class="i ">Namespace_Modulename_Model</span><span class="r ">&lt;/class&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce11c4-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;/groupname&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce11c4-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/helpers&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce11c4-8" style=""><span class="i ">&nbsp;&nbsp;</span><span class="r ">&lt;/global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce11c4-9" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p><strong>Blocks</strong></p>
+<p style="text-align: justify;">The proccess of instantiating blocks is similar to the one of creating models and helpers. Blocks can be instantiated via layout xml (&lt;block type=&#8221;groupName/setup&#8221;&#8230;), createBlock(), addBlock(), and getBlock() methods, located in Mage_Core_Model_Layout. These methods also call getGroupedClassName(&#8216;block&#8217;, $blockType) and then create an object.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a8310ce15ad" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a8310ce15ad-1" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce15ad-2" style=""><span class="i ">&nbsp;&nbsp;</span><span class="r ">&lt;global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce15ad-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;blocks&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce15ad-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;groupname&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce15ad-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;class&gt;</span><span class="i ">Namespace_Modulename_Model</span><span class="r ">&lt;/class&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce15ad-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="r ">&lt;/groupname&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce15ad-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/blocks&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a8310ce15ad-8" style=""><span class="i ">&nbsp;&nbsp;</span><span class="r ">&lt;/global&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a8310ce15ad-9" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p></p>
+<p style="text-align: justify;">P.S. In Magento 2.0 this process will be changed as follows: Support to receive and process direct class names was added to all basic Magento methods that create objects. Support for class-id strings was retained to ensure a smooth transition (<a href="https://wiki.magento.com/display/MAGE2DOC/Framework+Changes+from+1.x+to+2.x#FrameworkChangesfrom1.xto2.x-DirectClassNameSupportinFactoryMethods" target="_blank">Framework Changes from 1.x to 2.x</a>).</p>
+<p style="text-align: left;">So instead of Mage::getModel(&#8216;catalog/product&#8217;) it will be Mage::getModel(&#8216;Mage_Catalog_Model_Product&#8217;). But this would be a completely new story;)</p>

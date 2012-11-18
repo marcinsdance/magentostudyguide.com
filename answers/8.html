@@ -1,0 +1,470 @@
+<h2>Explain how Magento loads and manipulates configuration information</h2> by <a href="http://blog.belvg.com/author/luge" target="_blank">Pavel Novitsky</a>
+<h3><a href="http://blog.belvg.com/magento-certified-developer-exam-explaining-how-magento-loads-and-manipulates-configuration-information-part2.html" target="_blank">http://blog.belvg.com/magento-certified-developer-exam-explaining-how-magento-loads-and-manipulates-configuration-information-part2.html - be sure to check out comments on this page too!</a></h3>
+
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-2575" title="Magento Certified Developer Exam" src="http://blog.belvg.com/wp-content/uploads/2012/05/Explaining-how-Magento-Loads-and-Manipulates-Configuration-Information-Part-I.png" alt="Explaining how Magento Loads and Manipulates Configuration Information (Part I)" /></p>
+<p style="text-align: justify;"><em>We suppose you continue following our Magento certification-dedicated posts in our blog. This time we will tell you how Magento loads and manipulates configuration information.</em></p>
+<p style="text-align: justify;">Basically, Magento configuration is spread among dozens of .xml files. So this is a reasonable question &#8211; how does Magento operate all these files and find proper settings for each particular extension?</p>
+<p><span id="more-2065"></span></p>
+<p style="text-align: justify;"><strong>Let’s refresh some key points of the Magento structure</strong></p>
+<p style="text-align: justify;">• Magento is a modular system, in which functionality is located in separate modules.</p>
+<p style="text-align: justify;">• There are 3 code pools in Magento – local, community and core.</p>
+<p style="text-align: justify;">• The structure of each module includes app/code/[codePool]/Namespace/Modulename/config.xml (this file contains all basic module settings) and app/etc/modules/Namespace_Modulename.xml (this file contains information about code pool and extension activation flag).</p>
+<p style="text-align: justify;">• Global settings for Magento installation, including database connection data and admin panel address, are stored in app/etc/config.xml и app/etc/local.xml.</p>
+<p>Refer to our previously posted certification-related articles: <a href="http://blog.belvg.com/magento-certification-magento-codepool.html#more-796" target="_blank">Magento Codepools</a> and <a href="http://blog.belvg.com/magento-certification-module-structure.html#more-1149" target="_blank">Magento Module Structure</a></p>
+<p style="text-align: justify;">If we trace the code performance starting from index.php, we’ll get the following outcome:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e4928a34" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e4928a34-1" style=""><span class="i">Index</span><span class="sy">.</span><span class="e">php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4928a34-2" style=""><span class="e"> </span><span class="e">Mage::</span><span class="e">run</span><span class="sy">(</span><span class="sy">)</span><span class="h"> </span>
+                </div><div class="crayon-line" id="crayon-50a82e4928a34-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="v">$_config</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">new</span><span class="h"> </span><span class="e">Mage_Core_Model_Config</span><span class="sy">(</span><span class="v">$options</span><span class="sy">)</span><span class="sy">;</span><span class="h"> </span><span class="sy">(</span><span class="st">in</span><span class="h"> </span><span class="cn">CE</span><span class="h"> </span>1<span class="sy">.</span>6<span class="sy">.</span><span class="o">*</span><span class="h"> </span><span class="st">and</span><span class="h"> </span><span class="e">previous </span><span class="i">versions</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4928a34-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="e">_setConfigModel</span><span class="sy">(</span><span class="v">$options</span><span class="sy">)</span><span class="sy">;</span><span class="h"> </span><span class="sy">(</span><span class="st">in</span><span class="h"> </span>С<span class="cn">E</span><span class="h"> </span>1<span class="sy">.</span>7<span class="sy">.</span><span class="o">*</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a82e4928a34-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="v">$_app</span><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">=</span><span class="h"> </span><span class="r">new</span><span class="h"> </span><span class="e">Mage_Core_Model_App</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4928a34-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="v">$_app</span><span class="o">-&gt;</span><span class="e">run</span><span class="sy">(</span>…<span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0057 seconds] -->
+<p>or</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e4928e11" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e4928e11-1" style=""><span class="e">Mage::</span><span class="e">app</span><span class="sy">(</span><span class="sy">)</span><span class="h"> </span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4928e11-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="v">$_app</span><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">=</span><span class="h"> </span><span class="r">new</span><span class="h"> </span><span class="e">Mage_Core_Model_App</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4928e11-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r">self</span><span class="o">::</span><span class="v">$_app</span><span class="o">-&gt;</span><span class="h"> </span><span class="e">init</span><span class="h"> </span><span class="sy">(</span>…<span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0020 seconds] -->
+<p></p>
+<p style="text-align: justify;">Later on we have a similar order of the class methods loading in both versions. In case of the Mage::run() all wrappers for processing configuration loading are located in Mage_Core_Model_App and refer to the Mage_Core_Model_Config methods. Calling Mage::app(), we immediately call Mage_Core_Model_Config::init(), which contains the process of configuration loading.</p>
+<p style="text-align: justify;">Finally, we come to Mage_Core_Model_Config, inherited from Mage_Core_Model_Config_Base and Varien_Simplexml_Config. At this stage the call method doesn’t matter, so let’s refer to Mage_Core_Model_Config:: init():</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e49291bf" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e49291bf-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Initialization of core configuration</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return Mage_Core_Model_Config</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">init</span><span class="sy">(</span><span class="v">$options</span><span class="o">=</span><span class="t">array</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">// lets skip cache init and non-standard options stuff</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-10" style="">
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadBase</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-12" style="">
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$cacheLoad</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadModulesCache</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$cacheLoad</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-15" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadModules</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-18" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadDb</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-19" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">saveCache</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49291bf-20" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e49291bf-21" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0054 seconds] -->
+<p>Let’s analyze this method line by line.</p>
+<p><strong>$this-&gt;loadBase();</strong></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e49295e5" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e49295e5-1" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Load base system configuration (config.xml and local.xml files)</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return Mage_Core_Model_Config</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">loadBase</span><span class="sy">(</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$etcDir</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getOptions</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getEtcDir</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$files</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">glob</span><span class="sy">(</span><span class="v">$etcDir</span><span class="sy">.</span><span class="cn">DS</span><span class="sy">.</span><span class="s">'*.xml'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadFile</span><span class="sy">(</span><span class="e">current</span><span class="sy">(</span><span class="v">$files</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">while</span><span class="h"> </span><span class="sy">(</span><span class="v">$file</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">next</span><span class="sy">(</span><span class="v">$files</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$merge</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">clone</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_prototype</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$merge</span><span class="o">-&gt;</span><span class="e">loadFile</span><span class="sy">(</span><span class="v">$file</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">extend</span><span class="sy">(</span><span class="v">$merge</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-15" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="e">in_array</span><span class="sy">(</span><span class="v">$etcDir</span><span class="sy">.</span><span class="cn">DS</span><span class="sy">.</span><span class="s">'local.xml'</span><span class="sy">,</span><span class="h"> </span><span class="v">$files</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_isLocalConfigLoaded</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="t">true</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-18" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82e49295e5-19" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e49295e5-20" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0084 seconds] -->
+<p></p>
+<p style="text-align: justify;">From the very beginning we define the absolute path to app/etc directory. Then we get a list of all .xml files from this catalog, read their content and merge into <strong>a single simpleXmlElement object</strong>. If local.xml file has been loaded (which generally means that Magento has already been installed), set flag $this-&gt;_isLocalConfigLoaded = true;. It will be used later to initialize store and load module setup scripts.</p>
+<p style="text-align: justify;">As far as this method doesn’t limit names and the amount of loaded files, we can add our custom .xml file into app/etc, if necessary. It can be helpful for specifying database connection data on a dev-server without the use of local.xml file, containing production-server information only.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e4929a0d" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e4929a0d-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929a0d-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$cacheLoad</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadModulesCache</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929a0d-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$cacheLoad</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929a0d-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929a0d-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0020 seconds] -->
+<p></p>
+<p style="text-align: justify;">This piece of code speaks for itself. If the configuration cache is enabled and contains the required information, we load the entire config. We also replace the config that has already been loaded from app/etc with the one, loaded from the cache (Mage_Core_Model_Config:: loadCache()) and return back to Mage_Core_Model_App.</p>
+<p style="text-align: justify;">There is a reasonable question you might ask at this point: if the whole configuration can be loaded from cache, why haven’t developers made this verification the first step, before scanning app/etc directory?</p>
+<p style="text-align: justify;">The thing is that Magento cache can be stored not only as files in var/cache, but in apc, memcached and xcache as well. This particular step with files loading from app/etc allows to define the type and configuration of the cache storage used.</p>
+<p style="text-align: justify;">The next step is loading of the most extensive configuration part – modules configuration.</p>
+<p><strong>$this-&gt;loadModules();</strong></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e4929e00" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div><div class="crayon-num crayon-striped-num" style="">22</div><div class="crayon-num" style="">23</div><div class="crayon-num crayon-striped-num" style="">24</div><div class="crayon-num" style="">25</div><div class="crayon-num crayon-striped-num" style="">26</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e4929e00-1" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Load modules configuration</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return Mage_Core_Model_Config</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">loadModules</span><span class="sy">(</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Varien_Profiler::</span><span class="e">start</span><span class="sy">(</span><span class="s">'config/load-modules'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_loadDeclaredModules</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-10" style="">
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$resourceConfig</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">sprintf</span><span class="sy">(</span><span class="s">'config.%s.xml'</span><span class="sy">,</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_getResourceConnectionModel</span><span class="sy">(</span><span class="s">'core'</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadModulesConfiguration</span><span class="sy">(</span><span class="t">array</span><span class="sy">(</span><span class="s">'config.xml'</span><span class="sy">,</span><span class="v">$resourceConfig</span><span class="sy">)</span><span class="sy">,</span><span class="h"> </span><span class="v">$this</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-13" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-15" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Prevent local.xml directives overwriting</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-16" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$mergeConfig</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">clone</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_prototype</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-18" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_isLocalConfigLoaded</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$mergeConfig</span><span class="o">-&gt;</span><span class="e">loadFile</span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getOptions</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getEtcDir</span><span class="sy">(</span><span class="sy">)</span><span class="sy">.</span><span class="cn">DS</span><span class="sy">.</span><span class="s">'local.xml'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-19" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_isLocalConfigLoaded</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-20" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">extend</span><span class="sy">(</span><span class="v">$mergeConfig</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-21" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-22" style="">
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-23" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">applyExtends</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-24" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Varien_Profiler::</span><span class="e">stop</span><span class="sy">(</span><span class="s">'config/load-modules'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e4929e00-25" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e4929e00-26" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0105 seconds] -->
+<p><strong>$this-&gt;_loadDeclaredModules();</strong></p>
+<p style="text-align: justify;"><em>_getDeclaredModuleFiles()</em>: At the beginning we scan app/etc/modules directory and collect the list of paths to all .xml files, indicating all modules  in the system. We form an associative array with &#8220;base&#8221;, &#8220;mage&#8221; and &#8220;custom&#8221; keys. Only Mage_All.xml path goes to the “base” section. Modules from the Magento basic pack (located in app/code/core/Mage &#8211; code pool &#8220;core&#8221;) go to the «mage» section. «Custom» section collects the rest of modules. At the end we merge everything into a single array. Due to initial splitting into keys, data is stored in the following sequence: Mage_All.xml, modules with Mage namespace, all other modules.</p>
+<p style="text-align: justify;">If you haven’t figured out why Magento developers paid so much attention to Mage_All.xml file, it’s a high time for you to look inside of it. Mage_All.xml contains all information required for loading modules that are crucial for the proper system operation.</p>
+<p style="text-align: justify;">Next, information from the list of collected .xml files is loaded into Mage_Core_Model_Config_Base $unsortedConfig. Then we get the$moduleDepends array, based on &lt;depends&gt;, &lt;active&gt; flags and module name.</p>
+<p style="text-align: justify;"><em>$this-&gt;_sortModuleDepends($moduleDepends):</em>  is necessary for checking dependencies  of all existing modules. After the verification a new array is formed, where modules are arranged regarding their dependencies on one another.</p>
+<p style="text-align: justify;">At the end of _loadDeclaredModules() we create <strong>simpleXmlElement object</strong> again and merge it with the one that has been created earlier from app/etc/*.xml.</p>
+<p>Let’s get back to loadModules() method.</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e492a19b" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e492a19b-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a19b-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$resourceConfig</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">sprintf</span><span class="sy">(</span><span class="s">'config.%s.xml'</span><span class="sy">,</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_getResourceConnectionModel</span><span class="sy">(</span><span class="s">'core'</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a19b-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">loadModulesConfiguration</span><span class="sy">(</span><span class="t">array</span><span class="sy">(</span><span class="s">'config.xml'</span><span class="sy">,</span><span class="v">$resourceConfig</span><span class="sy">)</span><span class="sy">,</span><span class="h"> </span><span class="v">$this</span><span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p style="text-align: justify;">$resourceConfig contains config.mysql4.xml line. Thus, our next step will be loading configuration from config.mysql4.xml and config.mysql4.xml files. It is still not clear, what config.mysql4.xml was planned to be used for, but I really hope that further releases will exclude reference to this file or eventually it will prove to be needed.</p>
+<p style="text-align: justify;">First this method checks whether modules could be loaded from local code pool (pay attention at &lt;disable_local_modules&gt;false&lt;/disable_local_modules&gt; in app/etc/local.xml). If only modules from community and core are permitted, Magento will change include_path() correspondingly.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e492a53b" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e492a53b-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a53b-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$disableLocalModules</span><span class="h"> </span><span class="o">&amp;&amp;</span><span class="h"> </span><span class="o">!</span><span class="e">defined</span><span class="sy">(</span><span class="s">'COMPILER_INCLUDE_PATH'</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a53b-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">set_include_path</span><span class="sy">(</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a53b-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">// excluded '/app/code/local'</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a53b-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'app'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'code'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'community'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">PS</span><span class="h"> </span><span class="sy">.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a53b-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'app'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'code'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'core'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">PS</span><span class="h"> </span><span class="sy">.</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a53b-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'lib'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">PS</span><span class="h"> </span><span class="sy">.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a53b-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Mage::</span><span class="e">registry</span><span class="sy">(</span><span class="s">'original_include_path'</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a53b-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a53b-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0066 seconds] -->
+<p></p>
+<p style="text-align: justify;">After this simple verification Magento ensures that we already have some config  &#8211; simpleXmlElement (if we don’t – it creates it) and delete from the loaded list of modules ones that have keys &lt;active&gt;false&lt;/active&gt; and &lt;codePool&gt;local&lt;/codePool&gt;.</p>
+<p style="text-align: justify;">Then for each of remained modules config.xml and config.mysql4.xml files are loaded. Next, as you’ve most likely figured out by yourselves, the loaded .xml is added to the existing one. If the last loaded file already contains the older xpath, system will use the last value.</p>
+<p style="text-align: justify;">The $this-&gt;applyExtends(); call originally was a way to change (override) data in config with the help of a custom extension. But this functionality is not in use at the moment.</p>
+<p style="text-align: justify;">If someone has managed to read everything down to these lines, please, pay attention to the following piece of code:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e492a936" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e492a936-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a936-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a936-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Prevent local.xml directives overwriting</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a936-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a936-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$mergeConfig</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">clone</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_prototype</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a936-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_isLocalConfigLoaded</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$mergeConfig</span><span class="o">-&gt;</span><span class="e">loadFile</span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getOptions</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getEtcDir</span><span class="sy">(</span><span class="sy">)</span><span class="sy">.</span><span class="cn">DS</span><span class="sy">.</span><span class="s">'local.xml'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a936-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_isLocalConfigLoaded</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492a936-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">extend</span><span class="sy">(</span><span class="v">$mergeConfig</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e492a936-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0044 seconds] -->
+<p></p>
+<p style="text-align: justify;">As we see, developers took care of no module could modify system data from app/etc/local.xml (the default database connection, outer cache and proxy-servers settings).</p>
+<p>Finally, we’ve approached <strong>$this-&gt;loadDb();</strong></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82e492ae08" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82e492ae08-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Load config data from DB</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return Mage_Core_Model_Config</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">loadDb</span><span class="sy">(</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_isLocalConfigLoaded</span><span class="h"> </span><span class="o">&amp;&amp;</span><span class="h"> </span><span class="e">Mage::</span><span class="e">isInstalled</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Varien_Profiler::</span><span class="e">start</span><span class="sy">(</span><span class="s">'config/load-db'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$dbConf</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getResourceModel</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$dbConf</span><span class="o">-&gt;</span><span class="e">loadToXml</span><span class="sy">(</span><span class="v">$this</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Varien_Profiler::</span><span class="e">stop</span><span class="sy">(</span><span class="s">'config/load-db'</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82e492ae08-15" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82e492ae08-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0048 seconds] -->
+<p></p>
+<p style="text-align: justify;">This method uses resource Mage_Core_Model_Resource_Config model, related to core_config_data table. At this step we load data from core_config_data into our configuration:</p>
+<p>1.    We add data about websites (see core_website table)<br />
+    2.    We add data about stores for the existing websites (see core_store table)<br />
+    3.    We add data from core_config_data according to the scope<br />
+    a.    Create &lt;default&gt; block first<br />
+    b.    Then create &lt;websites&gt; block<br />
+    c.    And, finally &#8211; &lt;stores&gt;<br />
+    d.    Each iteration replaces data from more general area of the scope with more specific one (Do you remember these amazing «use default», «use website» and «configuration scope» in the backend?)<br />
+    4.    Self-configuration (if Magento meets data related to no longer existing website, these data will be deleted).</p>
+
+<h2>Explain how Magento loads and manipulates configuration information</h2> by <a href="http://blog.belvg.com/author/luge" target="_blank">Pavel Novitsky</a>
+<h3><a href="http://blog.belvg.com/magento-certified-developer-exam-explaining-how-magento-loads-and-manipulates-configuration-information-part2.html" target="_blank">http://blog.belvg.com/magento-certified-developer-exam-explaining-how-magento-loads-and-manipulates-configuration-information-part2.html</a></h3>
+
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-2571" title="Magento Certified Developer Exam" src="http://blog.belvg.com/wp-content/uploads/2012/05/Explaining-how-Magento-Loads-and-Manipulates-Configuration-Information-Part-II.png" alt="Explaining how Magento Loads and Manipulates Configuration Information (Part II)" /></p>
+<p style="text-align: left;">We started explaining how Magento loads and manipulates configuration information <a href="http://blog.belvg.com/magento-certified-developer-exam-explaining-how-magento-loads-and-manipulates-configuration-information-part1.html" target="_blank">here</a>.</p>
+<p style="text-align: justify;">The next step is writing config into cache, if it is enabled.</p>
+<p>Our configuration is formed by now, but besides compiling this .xml file, we need to obtain data from it somehow. Let’s go back to <em>Mage.php</em>.</p>
+<p style="text-align: justify;"><span id="more-2113"></span></p>
+<p style="text-align: justify;">Here are the methods:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82f8f8a520" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div><div class="crayon-num crayon-striped-num" style="">22</div><div class="crayon-num" style="">23</div><div class="crayon-num crayon-striped-num" style="">24</div><div class="crayon-num" style="">25</div><div class="crayon-num crayon-striped-num" style="">26</div><div class="crayon-num" style="">27</div><div class="crayon-num crayon-striped-num" style="">28</div><div class="crayon-num" style="">29</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82f8f8a520-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve config value for store by path</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param string $path</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param mixed $store</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-7" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return mixed</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-8" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="m">static</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getStoreConfig</span><span class="sy">(</span><span class="v">$path</span><span class="sy">,</span><span class="h"> </span><span class="v">$store</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="t">null</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="r">self</span><span class="o">::</span><span class="e">app</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getStore</span><span class="sy">(</span><span class="v">$store</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getConfig</span><span class="sy">(</span><span class="v">$path</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-13" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-15" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve config flag for store by path</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-16" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-17" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param string $path</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-18" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param mixed $store</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-19" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return bool</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-20" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-21" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="m">static</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getStoreConfigFlag</span><span class="sy">(</span><span class="v">$path</span><span class="sy">,</span><span class="h"> </span><span class="v">$store</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="t">null</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-22" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-23" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$flag</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">strtolower</span><span class="sy">(</span><span class="r">self</span><span class="o">::</span><span class="e">getStoreConfig</span><span class="sy">(</span><span class="v">$path</span><span class="sy">,</span><span class="h"> </span><span class="v">$store</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-24" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="o">!</span><span class="k ">empty</span><span class="sy">(</span><span class="v">$flag</span><span class="sy">)</span><span class="h"> </span><span class="o">&amp;&amp;</span><span class="h"> </span><span class="s">'false'</span><span class="h"> </span><span class="o">!==</span><span class="h"> </span><span class="v">$flag</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-25" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="t">true</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-26" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span><span class="h"> </span><span class="st">else</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-27" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="t">false</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a520-28" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a520-29" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0091 seconds] -->
+<p>&nbsp;</p>
+<p>Their only difference is that <em>getStoreConfig()</em> will return the exact value while <em>getStoreConfigFlag()</em>, as its name suggests, returns boolean true or false. Both methods send us to <em>Mage_Core_Model_Store::getConfig()</em></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82f8f8a904" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div><div class="crayon-num crayon-striped-num" style="">22</div><div class="crayon-num" style="">23</div><div class="crayon-num crayon-striped-num" style="">24</div><div class="crayon-num" style="">25</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82f8f8a904-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve store configuration data</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-4" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param&nbsp;&nbsp; string $path</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @return&nbsp;&nbsp;string|null</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-7" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">getConfig</span><span class="sy">(</span><span class="v">$path</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="k ">isset</span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_configCache</span><span class="sy">[</span><span class="v">$path</span><span class="sy">]</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_configCache</span><span class="sy">[</span><span class="v">$path</span><span class="sy">]</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-13" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-14" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$config</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">Mage::</span><span class="e">getConfig</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-15" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$fullPath</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="s">'stores/'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getCode</span><span class="sy">(</span><span class="sy">)</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'/'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="v">$path</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$data</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$config</span><span class="o">-&gt;</span><span class="e">getNode</span><span class="sy">(</span><span class="v">$fullPath</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-18" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="o">!</span><span class="v">$data</span><span class="h"> </span><span class="o">&amp;&amp;</span><span class="h"> </span><span class="o">!</span><span class="e">Mage::</span><span class="e">isInstalled</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-19" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$data</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$config</span><span class="o">-&gt;</span><span class="e">getNode</span><span class="sy">(</span><span class="s">'default/'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="v">$path</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-20" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-21" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="st">if</span><span class="h"> </span><span class="sy">(</span><span class="o">!</span><span class="v">$data</span><span class="sy">)</span><span class="h"> </span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-22" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="t">null</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-23" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8a904-24" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_processConfigValue</span><span class="sy">(</span><span class="v">$fullPath</span><span class="sy">,</span><span class="h"> </span><span class="v">$path</span><span class="sy">,</span><span class="h"> </span><span class="v">$data</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8a904-25" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0098 seconds] -->
+<p>If the requested information is not found in a local cache, this method will use the path <em>stores/[store code]/[requested path]</em>. If data is still not found, the method will use another path <em>default/[requested path]</em> to search in the loaded configuration. When nothing is found, method will return null.</p>
+<p>Found data is processed via<em> _processConfigValue() method</em>:</p>
+<p style="text-align: justify;">• If the returned node has children, data will be stored in a local cache recursively. By the next call within a current user session there will be no need to look for a found data in the configuration.<br />
+    • If the node has <em>backend_model</em>, this model should be requested to bring data to the required format.<br />
+    • Variable of {<em>{unsecure_base_url}}, {{unsecure_base_url}}, {{base_url}}</em>sort are replaced by the correspondent values.</p>
+<p style="text-align: center;"><strong>As a conclusion I would like to sum everything up and point out the basics.</strong></p>
+<p style="text-align: justify;">1. All .xml files are collected into one big <em>simpleXmlElement</em> object</p>
+<p style="text-align: justify;">2. First, data is loaded from <em>app/etc/*.xml</em> and then from <em>app/etc/modules/*.xml</em>. Based on the module loaded information, config.xml is loaded from the etc directory of the module. If we load backend to check ACL and build menu elements, <em>adminhtml.xml</em> and <em>system.xml</em> are loaded as well. Configuration data from the database is the last one to load.</p>
+<p style="text-align: justify;">3. Any parameters, except the ones stored in <em>app/etc/local.xml</em>, can be overridden in config.xml of a custom module.</p>
+<p style="text-align: justify;"><strong>P.S.</strong> Even though Magento provides us with such convenient methods as <em>Mage:: getStoreConfig()</em> and <em>Mage:: getStoreConfigFlag()</em>, we can reach any element of the configuration tree with the help of <em>Mage::getConfig()-&gt;getNode($path, $scope, $scopeCode);</em></p>
+<p>Look at your final config of the Magento installation by running the following piece of code in the site root directory:</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82f8f8ace5" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82f8f8ace5-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-2" style=""><span class="e">define</span><span class="sy">(</span><span class="s">'MAGENTO_ROOT'</span><span class="sy">,</span><span class="h"> </span><span class="e">getcwd</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-3" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-4" style=""><span class="v">$mageFilename</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="cn">MAGENTO_ROOT</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'/app/Mage.php'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-5" style=""><span class="k ">require_once</span><span class="h"> </span><span class="v">$mageFilename</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-6" style=""><span class="e">umask</span><span class="sy">(</span>0<span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-7" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-8" style=""><span class="c">/* Store or website code */</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-9" style=""><span class="v">$mageRunCode</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="k ">isset</span><span class="sy">(</span><span class="v">$_SERVER</span><span class="sy">[</span><span class="s">'MAGE_RUN_CODE'</span><span class="sy">]</span><span class="sy">)</span><span class="h"> </span><span class="sy">?</span><span class="h"> </span><span class="v">$_SERVER</span><span class="sy">[</span><span class="s">'MAGE_RUN_CODE'</span><span class="sy">]</span><span class="h"> </span><span class="o">:</span><span class="h"> </span><span class="s">''</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-10" style="">
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-11" style=""><span class="c">/* Run store or run website */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-12" style=""><span class="v">$mageRunType</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="k ">isset</span><span class="sy">(</span><span class="v">$_SERVER</span><span class="sy">[</span><span class="s">'MAGE_RUN_TYPE'</span><span class="sy">]</span><span class="sy">)</span><span class="h"> </span><span class="sy">?</span><span class="h"> </span><span class="v">$_SERVER</span><span class="sy">[</span><span class="s">'MAGE_RUN_TYPE'</span><span class="sy">]</span><span class="h"> </span><span class="o">:</span><span class="h"> </span><span class="s">'store'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-13" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-14" style=""><span class="e">Mage::</span><span class="e">app</span><span class="sy">(</span><span class="v">$mageRunCode</span><span class="sy">,</span><span class="h"> </span><span class="v">$mageRunType</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-15" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82f8f8ace5-16" style=""><span class="v">$config</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">Mage::</span><span class="e">getConfig</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">getNode</span><span class="sy">(</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">asXml</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82f8f8ace5-17" style=""><span class="e">file_put_contents</span><span class="sy">(</span><span class="s">'config.xml'</span><span class="sy">,</span><span class="h"> </span><span class="v">$config</span><span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>

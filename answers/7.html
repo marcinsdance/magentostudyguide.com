@@ -1,0 +1,223 @@
+<h2>Describe methods for resolving module conflicts</h2> by <a href="http://blog.belvg.com/author/dzmitry-pakhunou" target="_blank">Dzmitry Pakhunou</a>
+<h3><a href="http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-describing-methods-for-resolving-module-conflicts.html" target="_blank">http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-describing-methods-for-resolving-module-conflicts.html</a></h3>
+
+<p><em>We suppose you continue following our Magento certification-dedicated posts in our blog. This time we will tell you about methods for resolving module conflicts.</em></p>
+<p style="text-align: justify;">First we should determine what type of conflict we are dealing with and then figure out the appropriate solutions.</p>
+<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/04/magento-ezam32.jpg"><img class="aligncenter  wp-image-1751" title="Magento Certification Exam" src="http://blog.belvg.com/wp-content/uploads/2012/04/magento-ezam32.jpg" alt="" /></a></p>
+<p style="text-align: justify;">There are 3 levels of modules compatibility conflicts:</p>
+<p style="text-align: justify;">1) Conflicts in configuration files<br />
+    2) Conflicts with the software part<br />
+    3) Conflicts in a module display</p>
+<p style="text-align: justify;"><span id="more-1749"></span></p>
+<p style="text-align: center;"><strong>Conflicts in configuration files</strong></p>
+<p style="text-align: justify;">Let&#8217;s start with describing the causes of conflicts with configuration files and solutions for it. Primarily, pay attention to the module definition file (Namespace_Modulename.xml), which is located in the app/etc/modules/folder. This file contains the module status (enabled/disabled) and its relation to <a href="http://blog.belvg.com/magento-certification-magento-codepool.html#more-796" target="_blank">Magento codepool</a>. Besides, this file allows determining the dependency, which is located between the &lt;depends&gt; &lt;/depends&gt; tags.</p>
+<p style="text-align: justify;">If, for example, two modules use the same class dependence, future conflicts may appear in the program parts of modules (improper use of the class constructor). This group of problems is closely connected to our second group &#8211; conflicts with the software part, which we consider later. If you experience problems with the compatibility of the modules due to the improper use of &lt;depends&gt;, a possible solution will be to indicate one class as dependency for another and use this dependency in class inheritance in the programming part later on. That’s what you can do:</p>
+<p style="text-align: justify;">a) Replace this code…</p>
+<p style="text-align: justify;">Namespace_OtherModulename.xml</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695a795" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695a795-1" style=""><span class="o">&lt;</span><span class="i">config</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695a795-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695a795-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">Namespace_OtherModulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695a795-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">active</span><span class="o">&gt;</span><span class="t">true</span><span class="o">&lt;</span><span class="o">/</span><span class="i">active</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695a795-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">codePool</span><span class="o">&gt;</span><span class="i">community</span><span class="o">&lt;</span><span class="o">/</span><span class="i">codePool</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695a795-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">depends</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="i">Mage_Something</span><span class="o">/</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">depends</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695a795-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">Namespace_OtherModulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695a795-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695a795-9" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">config</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0050 seconds] -->
+<p>Namespace_Modulename.xml</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695ab78" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695ab78-1" style=""><span class="o">&lt;</span><span class="i">config</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695ab78-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695ab78-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">Namespace_Modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695ab78-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">active</span><span class="o">&gt;</span><span class="t">true</span><span class="o">&lt;</span><span class="o">/</span><span class="i">active</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695ab78-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">codePool</span><span class="o">&gt;</span><span class="i">community</span><span class="o">&lt;</span><span class="o">/</span><span class="i">codePool</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695ab78-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">depends</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="i">Mage_Something</span><span class="o">/</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">depends</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695ab78-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">Namespace_Modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695ab78-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695ab78-9" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">config</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0049 seconds] -->
+<p>b) …with that one<br />
+    Namespace_OtherModulename.xml</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695af65" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695af65-1" style=""><span class="o">&lt;</span><span class="i">config</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695af65-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695af65-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">Namespace_OtherModulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695af65-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">active</span><span class="o">&gt;</span><span class="t">true</span><span class="o">&lt;</span><span class="o">/</span><span class="i">active</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695af65-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">codePool</span><span class="o">&gt;</span><span class="i">community</span><span class="o">&lt;</span><span class="o">/</span><span class="i">codePool</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695af65-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">depends</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="i">Mage_Something</span><span class="o">/</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">depends</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695af65-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">Namespace_OtherModulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695af65-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695af65-9" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">config</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0050 seconds] -->
+<p>Namespace_Modulename.xml</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695b34d" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695b34d-1" style=""><span class="o">&lt;</span><span class="i">config</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695b34d-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695b34d-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">Namespace_Modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695b34d-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">active</span><span class="o">&gt;</span><span class="t">true</span><span class="o">&lt;</span><span class="o">/</span><span class="i">active</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695b34d-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">codePool</span><span class="o">&gt;</span><span class="i">community</span><span class="o">&lt;</span><span class="o">/</span><span class="i">codePool</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695b34d-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">depends</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="i">Namespace_OtherModulename</span><span class="o">/</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">depends</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695b34d-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">Namespace_Modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695b34d-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695b34d-9" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">config</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0050 seconds] -->
+<p></p>
+<p style="text-align: center;"><strong>Conflicts with the software part</strong></p>
+<p style="text-align: justify;">As mentioned earlier, the main reason for module conflicts could be in the use of dependencies and class rewriting. You should regard your module configuration file (/Namespace_Modulename/etc/ config.xml), in which the class rewriting with &lt;rewrite&gt; &lt;/rewrite&gt; tags can be used. For example,</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695b732" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695b732-1" style=""><span class="o">&lt;</span><span class="i">customer</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695b732-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695b732-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="i">form_edit</span><span class="o">&gt;</span><span class="i">Namespace_Modulename_Block_Rewrite_BlockClass</span><span class="o">&lt;</span><span class="o">/</span><span class="i">form_edit</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695b732-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="o">/</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695b732-5" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">customer</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0026 seconds] -->
+<p>Incorrect use of class methods is the main reason of conflicts origin. There are several ways to solve this problem, but I would like to highlight the very best and most correct way in my opinion &#8211; the elimination of classes overriding. The idea of this method is similar to the previous method of module conflict resolving and offers setting the dependence of one class from another.</p>
+<p>Namespace_Modulename/etc/config.xml</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695bb1f" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695bb1f-1" style=""><span class="o">&lt;</span><span class="i">customer</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695bb1f-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695bb1f-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="i">form_edit</span><span class="o">&gt;</span><span class="i">Namespace_Modulename_Block_Rewrite_BlockClass</span><span class="o">&lt;</span><span class="o">/</span><span class="i">form_edit</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695bb1f-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="o">/</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695bb1f-5" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">customer</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p>Namespace_OtherModulename/etc/config.xml</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695bf09" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695bf09-1" style=""><span class="o">&lt;</span><span class="i">customer</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695bf09-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695bf09-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="i">form_edit</span><span class="o">&gt;</span><span class="i">Namespace_OtherModulename_Block_Rewrite_BlockClass</span><span class="o">&lt;</span><span class="o">/</span><span class="i">form_edit</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695bf09-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="o">/</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695bf09-5" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">customer</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0026 seconds] -->
+<p></p>
+<p style="text-align: justify;">1) In the first place remove the rewriting for the first module. Here are the lines:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82d695c301" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82d695c301-1" style=""><span class="o">&lt;</span><span class="i">customer</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695c301-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695c301-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="i">form_edit</span><span class="o">&gt;</span><span class="i">Namespace_Modulename_Block_Rewrite_BlockClass</span><span class="o">&lt;</span><span class="o">/</span><span class="i">form_edit</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82d695c301-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="o">/</span><span class="i">rewrite</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82d695c301-5" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">customer</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p style="text-align: justify;">2) Use the first class inheritance from the second one:</p>
+<p style="text-align: left;">Class Namespace_Modulename_Block_Rewrite_BlockClass extends Namespace_OtherModulename_Block_Rewrite_BlockClass</p>
+<p style="text-align: justify;">Despite the flexibility of this method, it has drawbacks. In particular, you should carefully check the same functions use by these two classes. There may be problems with value return and parent::functionName(); use.  However, I personally consider this method a high-priority in fixing module conflicts on the programming level.</p>
+<p style="text-align: center;"><strong>Conflicts in a module display</strong></p>
+<p style="text-align: justify;">The most frequent conflict appears while using several modules &#8211; problems with displaying module on the frontend. There are several reasons why this happens: blocks overriding in layout settings, the use of different template for the same blocks, removing blocks for another module to be embedded in. Let&#8217;s take a closer look at locations, where module conflicts may occur.</p>
+<ul style="text-align: justify;">
+    <li>theme configuration files (app/design/frontend/default/your_theme/layout)</li>
+</ul>
+<ul style="text-align: justify;">
+    <li>templates (app/design/frontend/default/your_theme/template)</li>
+</ul>
+<p style="text-align: justify;">If your module is not displayed at all or displayed with errors on the frontend, the high probability that conflicts arise in these files.</p>
+<p style="text-align: justify;">First, check your files and files of other modules for display settings on the frontend, which are located in app/design/frontend/default/your_theme/layout. If several modules use the same block, but allocate various templates to it, you need to change these configurations for template allocation to be used only once for the block. In this template other modules templates will be combined, for which we removed the templates allocations.</p>
+<p style="text-align: justify;">It is also a common mistake to replace a standard block by the module block with a new name. In this case all other modules, which used the standard blocks with the help of &lt;reference&gt; &lt;/reference&gt; tags, will not work because of a changed name. Thus, you need to use a new block name for all dead modules, where this block is applied to theme configuration files (layouts folder).</p>
+<p style="text-align: justify;">There are also some cases, when modules use their own templates that are hardly compatible or not compatible with other modules at all. This is single occasions and the solution strongly depends on a specific case.</p>

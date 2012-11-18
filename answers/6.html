@@ -1,0 +1,114 @@
+<h2>Explain class naming conventions and their relationship with the autoloader</h2> by <a href="http://blog.belvg.com/author/andrew-matskevich" target="_blank">Andrey Matskevitch</a>
+<h3><a href="http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-class-naming-conventions-and-their-relationship-with-the-autoloader.html#more-1608" target="_blank">http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-class-naming-conventions-and-their-relationship-with-the-autoloader.html#more-1608</a></h3>
+
+<p style="text-align: justify;"><em>We suppose you continue following our Magento certification-dedicated posts in our blog. This time we will tell you about class naming conventions and their relationship with the autoloader.</em></p>
+<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/04/magento-ezam3.jpg"><img class="aligncenter  wp-image-1613" style="border: 0pt none;" title="Magento Certification" src="http://blog.belvg.com/wp-content/uploads/2012/04/magento-ezam3.jpg" alt="" /></a></p>
+<p style="text-align: left;">Magento was developed based on the Zend Framework, so the rules of class naming in Magento were taken from the Zend Framework (read more <a href="http://framework.zend.com/manual/en/coding-standard.naming-conventions.html" target="_blank">here</a>).</p>
+<p style="text-align: justify;">Magento standardizes class names depending on their location in the file system. Such standardization enables automatic class loading (autoloader) instead of using require_once and include_once functions. Rather than the directory separator (&#8216;/&#8217; &#8211; invalid character for class names), developers use the underscore character (&#8216;_&#8217;).</p>
+<p style="text-align: justify;"><span id="more-1608"></span></p>
+<p style="text-align: justify;">For example, the Mage_Catalog_Model_Product class is located in the /app/code/core/Mage/Catalog/Model/Product.php category. Magento autoloader replaces all underscore characters (&#8216;_&#8217;) with the category separator (&#8216;/&#8217;) and looks for the file in one of the categories (/app/code/local can be disabled in the app/etc/local.xml in the disable_local_modules tag).</p>
+<p style="text-align: justify;"> - /app/code/core</p>
+<p style="text-align: justify;">- /app/code/community</p>
+<p style="text-align: justify;">- /app/code/local</p>
+<p style="text-align: justify;">- /lib/</p>
+<p style="text-align: left;">File search categories in Magento are defined in app/Mage.php.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82c9f3e40b" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82c9f3e40b-1" style=""><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e40b-2" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Set include path</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e40b-3" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e40b-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$paths</span><span class="sy">[</span><span class="sy">]</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'app'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'code'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'local'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e40b-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$paths</span><span class="sy">[</span><span class="sy">]</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'app'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'code'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'community'</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e40b-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$paths</span><span class="sy">[</span><span class="sy">]</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'app'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'code'</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'core'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e40b-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$paths</span><span class="sy">[</span><span class="sy">]</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="cn">BP</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">DS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="s">'lib'</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e40b-8" style="">
+                </div><div class="crayon-line" id="crayon-50a82c9f3e40b-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$appPath</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">implode</span><span class="sy">(</span><span class="cn">PS</span><span class="sy">,</span><span class="h"> </span><span class="v">$paths</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e40b-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">set_include_path</span><span class="sy">(</span><span class="v">$appPath</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="cn">PS</span><span class="h"> </span><span class="sy">.</span><span class="h"> </span><span class="e">Mage::</span><span class="e">registry</span><span class="sy">(</span><span class="s">'original_include_path'</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e40b-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">include_once</span><span class="h"> </span><span class="s">"Mage/Core/functions.php"</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e40b-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">include_once</span><span class="h"> </span><span class="s">"Varien/Autoload.php"</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0089 seconds] -->
+<p></p>
+<p style="text-align: justify;">The Varien_Autoload class is used for automatic upload:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82c9f3e7e5" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div><div class="crayon-num crayon-striped-num" style="">14</div><div class="crayon-num" style="">15</div><div class="crayon-num crayon-striped-num" style="">16</div><div class="crayon-num" style="">17</div><div class="crayon-num crayon-striped-num" style="">18</div><div class="crayon-num" style="">19</div><div class="crayon-num crayon-striped-num" style="">20</div><div class="crayon-num" style="">21</div><div class="crayon-num crayon-striped-num" style="">22</div><div class="crayon-num" style="">23</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82c9f3e7e5-1" style=""><span class="t">class</span><span class="h"> </span><span class="e">Varien_Autoload</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-2" style=""><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-3" style=""><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-4" style=""><span class="c">/**</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-5" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Register SPL autoload function</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-6" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-7" style=""><span class="m">static</span><span class="h"> </span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">register</span><span class="sy">(</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-8" style=""><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">spl_autoload_register</span><span class="sy">(</span><span class="t">array</span><span class="sy">(</span><span class="r">self</span><span class="o">::</span><span class="e">instance</span><span class="sy">(</span><span class="sy">)</span><span class="sy">,</span><span class="h"> </span><span class="s">'autoload'</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-10" style=""><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-11" style=""><span class="h">&nbsp;&nbsp;</span><span class="c">/**</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-12" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * Load class source code</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-13" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; *</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-14" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; * @param string $class</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-15" style=""><span class="c">&nbsp;&nbsp;&nbsp;&nbsp; */</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-16" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">autoload</span><span class="sy">(</span><span class="v">$class</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-17" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-18" style=""><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-19" style=""><span class="h">&nbsp;&nbsp; </span><span class="v">$classFile</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="e">str_replace</span><span class="sy">(</span><span class="s">' '</span><span class="sy">,</span><span class="h"> </span><span class="e ">DIRECTORY_SEPARATOR</span><span class="sy">,</span><span class="h"> </span><span class="e">ucwords</span><span class="sy">(</span><span class="e">str_replace</span><span class="sy">(</span><span class="s">'_'</span><span class="sy">,</span><span class="h"> </span><span class="s">' '</span><span class="sy">,</span><span class="h"> </span><span class="v">$class</span><span class="sy">)</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-20" style=""><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-21" style=""><span class="h">&nbsp;&nbsp; </span><span class="v">$classFile</span><span class="sy">.</span><span class="o">=</span><span class="h"> </span><span class="s">'.php'</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3e7e5-22" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="k ">return</span><span class="h"> </span><span class="k ">include</span><span class="h"> </span><span class="v">$classFile</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3e7e5-23" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0059 seconds] -->
+<p></p>
+<p style="text-align: center;"><strong> Creating objects in Magento</strong></p>
+<p style="text-align: justify;">Magento provides a special method to create models, helpers and blocks, using the Mage global class with a shortened class name. For example, to get the Mage_Catalog_Model_Product model in Magento the Mage :: getModel (&#8216;catalog / product&#8217;) method is commonly used.</p>
+<p>catalog – shortening for  Mage_Catalog_Model<br />
+    product – determines which class will be used</p>
+<p style="text-align: justify;">Correlation of the class name with a shortened name takes place in the module configuration (/etc/config.xml).</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a82c9f3ebcc" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a82c9f3ebcc-1" style=""><span class="c">&lt;!--?xml version="1.0"?--&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3ebcc-2" style="">
+                </div><div class="crayon-line" id="crayon-50a82c9f3ebcc-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">&lt;!-- a shortened name --&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3ebcc-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mage_Catalog_Model</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3ebcc-5" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3ebcc-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">&lt;!-- a shortened name --&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a82c9f3ebcc-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mage_Catalog_Block</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3ebcc-8" style="">
+                </div><div class="crayon-line" id="crayon-50a82c9f3ebcc-9" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">&lt;!-- a shortened name --&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a82c9f3ebcc-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Mage<span class="sy">_</span>Catalog<span class="sy">_</span>Helper</div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -19,13 +19,13 @@
   <ul class="one">
     <li><h4>High-level Magento architecture</h4>
       <ul>
-        <li>1. Describe Magento codepools</li>
-        <li>2. Describe typical Magento module structure</li>
+        <li>1. <a href="/answers/1.html" class="file">Describe Magento codepools</a></li>
+        <li>2. <a href="/answers/2.html" class="file">Describe typical Magento module structure</a></li>
         <li>3. Describe Magento templates and layout files location</li>
         <li>4. Describe Magento skin and javascript files location</li>
-        <li>5. Identify and explain the main Magento design areas (adminhtml and frontend)</li>
-        <li>6. Explain class naming conventions and their relationship with the autoloader</li>
-        <li>7. Describe methods for resolving module conflicts.</li>
+        <li>5. <a href="/answers/5.html" class="file">Identify and explain the main Magento design areas (adminhtml and frontend)</a></li>
+        <li>6. <a href="/answers/6.html" class="file">Explain class naming conventions and their relationship with the autoloader</a></li>
+        <li>7. <a href="/answers/7.html" class="file">Describe methods for resolving module conflicts</a></li>
       </ul>
       <h5>Questions</h5>
       <ul>
@@ -42,12 +42,12 @@
     </li>
     <li><h4>Magento configuration</h4>
       <ul>
-        <li>8. Explain how Magento loads and manipulates configuration information</li>
-        <li>9. Describe class group configuration and use in factory methods</li>
-        <li>10. Describe the process and configuration of class overrides in Magento</li>
+        <li>8. <a href="/answers/8.html" class="file">Explain how Magento loads and manipulates configuration information</a></li>
+        <li>9. <a href="/answers/9.html" class="file">Describe class group configuration and use in factory methods</a></li>
+        <li>10. <a href="/answers/10.html" class="file">Describe the process and configuration of class overrides in Magento</a></li>
         <li>11. Register an Observer</li>
         <li>12. Identify the function and proper use of automatically available events, including *_load_after, etc.</li>
-        <li>13. Set up a cron job</li>
+        <li>13. <a href="/answers/13.html" class="file">Set up a cron job</a></li>
       </ul>
       <h5>Questions</h5>
       <ul>
@@ -955,29 +955,20 @@
       </ul>
       <h5>Reference files</h5>
       <ul>
-        <li>Mage_Sales_Model_Order</li>
-        <li>Mage_Sales_Model_Order_Address</li>
-        <li>Mage_Adminhtml_controllers_Order_CreateController</li>
-        <li>Mage_Adminhtml_Model_Sales_Order_Create</li>
-        <li>(Ad.99) Mage_Sales_Model_Order_Invoice</li>
-        <li>(Ad.99) Mage/Sales/Model/Order/Invoice/*</li>
-        <li>(Ad.99) Mage_Sales_Model_Order_Payment</li>
-        <li>(Ad.99) Mage_Payment_Model_Method_Info</li>
-        <li>(Ad.99) Mage_Payment_Model_Method_Abstract</li>
-        <li>(Ad.100) Mage_Sales_Model_Order_Shipment</li>
-        <li>(Ad.100) Mage/Sales/Model/Order/Shipment/*</li>
-        <li>(Ad.101) Mage_Sales_Model_Order_Creditmemo</li>
-        <li>(Ad.101) Mage_Sales_Model_Order_Creditmemo/*</li>
-        <li>(Ad.102) Mage_Sales_Model_Order_Invoice</li>
-        <li>(Ad.102) Mage_Sales_Model_Order_Payment</li>
-        <li>(Ad.102) Mage_Sales_Model_Order_Shipment</li>
-        <li>(Ad.102) Mage_Sales_Model_Order_Creditmemo</li>
-        <li>(Ad.102) Mage_Payment_Model_Method_Abstract</li>
-        <li>(Ad.103) Mage_Adminhtml_Sales_OrderController</li>
-        <li>(Ad.103) Mage_Sales_Model_Order_Invoice</li>
-        <li>(Ad.103) Mage_Sales_Model_Order_Payment</li>
-        <li>(Ad.103) Mage_Sales_Model_Order_Shipment</li>
-        <li>(Ad.103) Mage_Sales_Model_Order_Creditmemo</li>
+        <li><a href="/magento/app/code/core/Mage/Sales/Model/Order.php" class="file">Mage_Sales_Model_Order</a></li>
+        <li><a href="/magento/app/code/core/Mage/Sales/Model/Order/Address.php" class="file">Mage_Sales_Model_Order_Address</a></li>
+        <li><a href="/magento/app/code/core/Mage/Adminhtml/controllers/Sales/Order/CreateController.php" class="file">Mage_Adminhtml_controllers_Order_CreateController</a></li>
+        <li><a href="/magento/app/code/core/Mage/Adminhtml/Model/Sales/Order/Create.php" class="file">Mage_Adminhtml_Model_Sales_Order_Create</a></li>
+        <li>(Ad.99,102,103) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Invoice.php" class="file">Mage_Sales_Model_Order_Invoice</a></li>
+        <li>(Ad.99) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Invoice/" class="file">Mage/Sales/Model/Order/Invoice/*</a></li>
+        <li>(Ad.99,102,103) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Payment.php" class="file">Mage_Sales_Model_Order_Payment</a></li>
+        <li>(Ad.99) <a href="/magento/app/code/core/Mage/Payment/Model/Info.php" class="file">Mage_Payment_Model_Method_Info (or Mage_Payment_Model_Info ?)</a></li>
+        <li>(Ad.99,102) <a href="/magento/app/code/core/Mage/Payment/Model/Method/Abstract.php" class="file">Mage_Payment_Model_Method_Abstract</a></li>
+        <li>(Ad.100,102,103) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Shipment.php" class="file">Mage_Sales_Model_Order_Shipment</a></li>
+        <li>(Ad.100) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Shipment/" class="file">Mage/Sales/Model/Order/Shipment/*</a></li>
+        <li>(Ad.101,102,103) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Creditmemo.php" class="file">Mage_Sales_Model_Order_Creditmemo</a></li>
+        <li>(Ad.101) <a href="/magento/app/code/core/Mage/Sales/Model/Order/Creditmemo/" class="file">Mage_Sales_Model_Order_Creditmemo/*</a></li>
+        <li>(Ad.103) <a href="/magento/app/code/core/Mage/Adminhtml/controllers/Sales/OrderController.php" class="file">Mage_Adminhtml_Sales_OrderController</a></li>
       </ul>
     </li>
     <li><h4>Customer</h4>
@@ -1000,10 +991,10 @@
       </ul>
       <h5>Reference files</h5>
       <ul>
-        <li>Mage/Customer/etc/config.xml</li>
-        <li>Mage_Customer_Model_Customer</li>
-        <li>Mage_Customer_Model_Entity_Customer</li>
-        <li>Mage_Customer_Model_Customer_Address</li>
+        <li><a href="/magento/app/code/core/Mage/Customer/etc/config.php" class="file">Mage/Customer/etc/config.xml</a></li>
+        <li><a href="/magento/app/code/core/Mage/Customer/Model/Customer.php" class="file">Mage_Customer_Model_Customer</a></li>
+        <li><a href="/magento/app/code/core/Mage/Customer/Model/Entity/Customer.php" class="file">Mage_Customer_Model_Entity_Customer</a></li>
+        <li>Mage_Customer_Model_Customer_Address (or rather <a href="/magento/app/code/core/Mage/Customer/Model/Address.php" class="file">Mage_Customer_Model_Address</a>)</li>
       </ul>
     </li>
   </ul>
@@ -1022,7 +1013,7 @@
       </ul>
       <h5>Reference files</h5>
       <ul>
-        <li>Mage_Widget_Model_Widget</li>
+        <li><a href="/magento/app/code/core/Mage/Widget/Model/Widget.php" class="file">Mage_Widget_Model_Widget</a></li>
       </ul>
     </li>
     <li><h4>API</h4>
@@ -1042,8 +1033,8 @@
       </ul>
       <h5>Reference files</h5>
       <ul>
-        <li>Mage_Api_Model_Wsdl_Config</li>
-        <li>Mage_Api_Model_Server</li>
+        <li><a href="/magento/app/code/core/Mage/Api/Model/Wsdl/Config.php" class="file">Mage_Api_Model_Wsdl_Config</a></li>
+        <li><a href="/magento/app/code/core/Mage/Api/Model/Server.php" class="file">Mage_Api_Model_Server</a></li>
       </ul>
     </li>
     <li><h4>Other Skills</h4>

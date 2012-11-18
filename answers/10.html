@@ -1,0 +1,343 @@
+<h2>Describe Magento codepools</h2> by <a href="http://blog.belvg.com/author/mishell-soiko" target="_blank">Mishel Soiko</a>
+<h3><a href="http://blog.belvg.com/the-process-configuration-of-class-overrides-in-magento-register-an-observer.html" target="_blank">http://blog.belvg.com/the-process-configuration-of-class-overrides-in-magento-register-an-observer.html</a></h3>
+
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-2519" title="Process and Configuration of Class Overrides in Magento. Register an Observer" src="http://blog.belvg.com/wp-content/uploads/2012/07/Process-and-Configuration-of-Class-Overrides-in-Magento.-Register-an-Observer.png" alt="Process and Configuration of Class Overrides in Magento. Register an Observer" /></p>
+<p style="text-align: justify;"><em>We suppose you continue following our <a href="http://blog.belvg.com/category/magento-news/developer-certification" target="_blank">Magento certification-dedicated posts</a> in our blog. This time we will describe two topics &#8211; the Process and Configuration of Class Overrides in Magento and Register an Observer.</em></p>
+<p style="text-align: justify;">In the <a href="http://blog.belvg.com/magento-certified-developer-exam-describing-class-group-configuration-an-use-in-factory-methods.html" target="_blank">previous post</a> we have described the following factory methods, used in Magento.<span id="more-2395"></span></p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019e567" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019e567-1" style="">•<span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span>for<span class="h"> </span>blocks<span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Mage<span class="sy">_</span>Core<span class="sy">_</span>Model<span class="sy">_</span>Layout<span class="h"> </span><span class="o">::</span><span class="h"> </span>createBlock<span class="sy">(</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019e567-2" style="">•<span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span>for<span class="h"> </span>models<span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Mage<span class="h"> </span><span class="o">::</span><span class="h"> </span>getModel<span class="sy">(</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span><span class="sy">)</span><span class="h"> </span>and<span class="h"> </span>getResourceModel<span class="sy">(</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a832019e567-3" style="">•<span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span>for<span class="h"> </span>helpers<span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Mage<span class="h"> </span><span class="o">::</span><span class="h"> </span>helper<span class="sy">(</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span><span class="sy">)</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/07/block_scheme_1.png"><img class="wp-image-2398 aligncenter" title="block_scheme" src="http://blog.belvg.com/wp-content/uploads/2012/07/block_scheme_1.png" alt="" /></a></p>
+<p style="text-align: justify;">Due to the use of these factory methods, it became possible to implement <em>rewrite</em>.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>What is it and how can we make use of it?</strong></p>
+<p>Let’s take the example of a model. As we mentioned, due to the <strong>getModel(‘catalog/product’)</strong> method, Magento returns an object of a certain class the way as follows:</p>
+<p>1) It defines class name.<br />
+    2) It creates an object for this class and calls autoloader.<br />
+    a.    It turns class name into <em>Mage/Catalog/Model/Product.php</em> path.<br />
+    b.    Server searches this file automatically among 3 codepools (local, community, core) and in the lib directory.</p>
+<p>As a result, Magento loads the first found class according to the order, defined in <em>include_path</em>.</p>
+<p>If we want to change basic Magento functionality, here are the options.</p>
+<p style="text-align: justify;"><strong>To do poorly.</strong> We can simply duplicate the file and its path (see the <strong>‘a’</strong> step above) into <em>local</em> codepool. Our class will be loaded from the local folder due to the priority of this codepool in the list, mentioned in <em>include_path</em>. Now make the necessary changes in the copied file.</p>
+<p style="text-align: justify;">So why is it bad? Because after copying the entire file, we will most likely miss all changes, made in a new version of the file, when Magento update is released. This method is better to be used for fast and dirty fixes.</p>
+<p style="text-align: justify;"><strong>To act smart</strong>. Inherit this class and describe in it changes only. There is a huge plus, compared to the previous method &#8211; readability. After all, we immediately see what was changed. <em>Rewrite</em> hurries to our rescue here. It allows us on the very first <em>define class name</em> stage to replace the name of the existing class with the name of our class (inherited from the original one).</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>How to describe it</strong></p>
+<p style="text-align: justify;">Let’s create a module. In config.xml inside <em>globals -&gt; models, blocks </em>and<em> helpers</em> we can specify our rewrites. For example, to override the standard class of the<strong> Mage_Catalog_Model_Product</strong> product, you need to use:</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019e967" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019e967-1" style=""><span class="r ">&lt;global&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019e967-2" style=""><span class="i ">...</span>
+                </div><div class="crayon-line" id="crayon-50a832019e967-3" style=""><span class="r ">&lt;models&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019e967-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;...</span>
+                </div><div class="crayon-line" id="crayon-50a832019e967-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;catalog&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019e967-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;rewrite&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019e967-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;product&gt;</span><span class="i "> Namespace_Modulename_Model_Myproduct </span><span class="r ">&lt;/product&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019e967-8" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/rewrite&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019e967-9" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/catalog&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019e967-10" style=""><span class="r ">&lt;/models&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019e967-11" style=""><span class="r ">&lt;/global&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p>Principle is the same as in Magento path.</p>
+<p style="text-align: justify;">&lt;catalog&gt;   &#8211; specify module namespace (catalog &#8211; node name can be viewed in module configuration in the section for modules);<br />
+    &lt;rewrite&gt;   &#8211; mark that next the list of module rewrites will be described;<br />
+    &lt;product&gt; &#8211; part of the classname following the group classname (Mage_Catalog_Model). A new class name is specified inside, and the class will be used instead of the standard one.</p>
+<p>To override the <strong>Mage_Adminhtml_Sales_Order_Create</strong> class, we will add the following lines in configuration (models section):</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019ed3d" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019ed3d-1" style=""><span class="r ">&lt;adminhtml&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019ed3d-2" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;rewrite&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019ed3d-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;sales_order_create&gt;</span><span class="i "> Namespace_Modulename_Model_Adminhtml_Order_Create</span><span class="r ">&lt;/sales_order_create&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019ed3d-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/rewrite&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019ed3d-5" style=""><span class="r ">&lt;/adminhtml&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p>The substitution is made here:</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019f11f" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019f11f-1" style=""><span class="i">Mage</span><span class="h"> </span><span class="o">::</span><span class="h"> </span><span class="e">getModel</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">,</span><span class="h"> </span><span class="v">$arguments</span><span class="sy">)</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f11f-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="i">Mage_Core_Model_Config</span><span class="h"> </span><span class="o">::</span><span class="h"> </span><span class="e">getModelInstance</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">,</span><span class="h"> </span><span class="v">$arguments</span><span class="sy">)</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a832019f11f-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$className</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getModelClassName</span><span class="sy">(</span><span class="v">$modelClass</span><span class="sy">)</span><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f11f-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="k ">return</span><span class="h">&nbsp;&nbsp;</span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">getGroupedClassName</span><span class="sy">(</span><span class="s">'model'</span><span class="sy">,</span><span class="h"> </span><span class="v">$modelClass</span><span class="sy">)</span>
+                </div><div class="crayon-line" id="crayon-50a832019f11f-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f11f-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line" id="crayon-50a832019f11f-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="v">$obj</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="r">new</span><span class="h"> </span><span class="v">$className</span><span class="sy">(</span><span class="v">$arguments</span><span class="sy">)</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f11f-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line" id="crayon-50a832019f11f-9" style=""><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0046 seconds] -->
+<p></p>
+<p style="text-align: justify;"><strong>getGroupedClassName</strong> makes search in rewrites, described in the layout. What will happen if we describe several rewrites for a single class? The first found will be executed. Peep inside a previous post <a href="http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-describing-methods-for-resolving-module-conflicts.html" target="_blank">Module Conflicts</a> to find out more about such cases.</p>
+<p style="text-align: justify;">Creating rewrite for Blocks and Helpers is similar. We also have another integral part of Magento MVC &#8211; controllers. How can we change the functionality of a standard controller?</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>Controllers</strong></p>
+<p style="text-align: justify;">To override the controller, we add a new router to config.xml of the module (expect to read more about router in the future posts). In brief, the pattern below helps establish the connection between router (used in the url) and a particular module.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019f505" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019f505-1" style=""><span class="o">&lt;</span><span class="i">frontend</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f505-2" style=""><span class="h">&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="i">routers</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f505-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f505-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="st">use</span><span class="o">&gt;</span><span class="i">standard</span><span class="o">&lt;</span><span class="o">/</span><span class="st">use</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f505-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="i">args</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f505-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">module</span><span class="o">&gt;</span><span class="i">Namespace_Modulename</span><span class="o">&lt;</span><span class="o">/</span><span class="i">module</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f505-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">frontName</span><span class="o">&gt;</span><span class="i">routername</span><span class="o">&lt;</span><span class="o">/</span><span class="i">frontName</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f505-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="o">/</span><span class="i">args</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f505-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f505-10" style=""><span class="h">&nbsp;&nbsp; </span><span class="o">&lt;</span><span class="o">/</span><span class="i">routers</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f505-11" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">frontend</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0050 seconds] -->
+<p></p>
+<p style="text-align: justify;">Creating modules, we normally set the connection between our router and a module. In this case we override the connection of existing router with our module.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019f8e5" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019f8e5-1" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">frontend</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f8e5-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">routers</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f8e5-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">prevmodulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f8e5-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">args</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f8e5-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f8e5-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="e">namespace_modulename </span><span class="i">before</span><span class="o">=</span><span class="s">"Prevnamespace_Prevmodulename"</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f8e5-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="i">Namespace_Modulename</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f8e5-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">namespace_modulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f8e5-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">modules</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f8e5-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">args</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f8e5-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">prevmodulename</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019f8e5-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">routers</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a832019f8e5-13" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">frontend</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0047 seconds] -->
+<p>Now we create a controller with the same name in our module like this:</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a832019fcd6" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a832019fcd6-1" style=""><span class="ta">&lt;?php</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019fcd6-2" style=""><span class="k ">require_once</span><span class="h"> </span><span class="s">'Prevnamespace/Prevmodulename/controllers/FilenameController.php'</span><span class="sy">;</span>
+                </div><div class="crayon-line" id="crayon-50a832019fcd6-3" style="">
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019fcd6-4" style=""><span class="t">class</span><span class="h"> </span><span class="e">Namespace_Modulename_FilenameController</span><span class="h"> </span><span class="r">extends</span><span class="h"> </span><span class="e">Prevnamespace_Prevmodulename_FilenameController</span>
+                </div><div class="crayon-line" id="crayon-50a832019fcd6-5" style=""><span class="sy">{</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a832019fcd6-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line" id="crayon-50a832019fcd6-7" style=""><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0016 seconds] -->
+<p></p>
+<p style="text-align: justify;"> <strong><span style="color: #800000;">Prevnamespace, Prevmodulename</span></strong> &#8211; name space and modul name, where we need to override the controller.<br />
+    <strong><span style="color: #800000;">Filename</span></strong> &#8211; the name of an overridable controller<br />
+    <strong><span style="color: #800000;">Namespace, Modulename</span></strong>- name space and module name with an extended controller.</p>
+<p style="text-align: justify;">Rewrites may certainly be inevitable. But they cause modules conflicts and problems with updates. How do we pull ourselves through this? Let’s have a look at a very classy way to affect Magento.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>Events in Magento</strong></p>
+<p style="text-align: justify;"><a href="http://en.wikipedia.org/wiki/Observer_pattern" target="_blank">Observer pattern</a>, implemented in Magento, allows inserting additional actions at given moments of code execution.</p>
+<p style="text-align: justify;"><a href="http://blog.belvg.com/wp-content/uploads/2012/07/block_scheme_2.png"><img class="aligncenter  wp-image-2399" title="block_scheme" src="http://blog.belvg.com/wp-content/uploads/2012/07/block_scheme_2.png" alt="" /></a></p>
+<p style="text-align: justify;">This pattern helps developing independent modules that embed their functionality with the help of events. It means it will be way more preferable to find an “observer” instead of rewriting the class. This observer will allow executing events at a certain time, influencing some kind of data. How is it realized?</p>
+<p>Look for the mentioned notes in the code<br />
+    <strong>Mage::dispatchEvent(&#8216;event_name&#8217;, $event_arguments);</strong></p>
+<p style="text-align: justify;">This note is an “observer” that allows executing methods, attached to it, transferring <em>$event_arguments</em> data array into methods.</p>
+<p style="text-align: justify;">For example, there is a great “observer” in the <strong>Mage_Core_Model_Abstract</strong> class, which allows impacting any object after it has been saved in database as far as models inherit <strong>Mage_Core_Model_Abstract</strong>.</p>
+<p></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a83201a00b6" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a83201a00b6-1" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">protected</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">_afterSave</span><span class="sy">(</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a00b6-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a83201a00b6-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a00b6-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="e">Mage::</span><span class="e">dispatchEvent</span><span class="sy">(</span><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_eventPrefix</span><span class="sy">.</span><span class="s">'_save_after'</span><span class="sy">,</span><span class="h"> </span><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_getEventData</span><span class="sy">(</span><span class="sy">)</span><span class="sy">)</span><span class="sy">;</span><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line" id="crayon-50a83201a00b6-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p>Let’s have a look at the <strong>Mage_Catalog_Model_Product</strong> model. After saving the product, the described method will be called.</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a83201a04a5" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a83201a04a5-1" style=""><span class="v">$this</span><span class="o">-&gt;</span><span class="i">_eventPrefix</span><span class="h"> </span><span class="o">=</span><span class="h"> </span><span class="s">'catalog_product'</span><span class="sy">;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a04a5-2" style="">
+                </div><div class="crayon-line" id="crayon-50a83201a04a5-3" style=""><span class="v">$this</span><span class="o">-&gt;</span><span class="e">_getEventData</span><span class="sy">(</span><span class="sy">)</span><span class="o">=</span><span class="h"> </span><span class="t">array</span><span class="sy">(</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a04a5-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="s">'data_object'</span><span class="h"> </span><span class="o">=</span><span class="o">&gt;</span><span class="h"> </span><span class="v">$this</span><span class="sy">,</span>
+                </div><div class="crayon-line" id="crayon-50a83201a04a5-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span>‘<span class="i">product</span>’<span class="h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="o">=</span><span class="o">&gt;</span><span class="h"> </span><span class="v">$this</span><span class="sy">,</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a04a5-6" style=""><span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p>Here is what we get:<br />
+    <strong>Mage::dispatchEvent(&#8216;catalog_product_save_after&#8217;, array(&#8230;, ‘product’ =&gt; $this));</strong></p>
+<p>Events that will be called are described in config.xml via layout. In our case:</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a83201a0881" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div><div class="crayon-num crayon-striped-num" style="">10</div><div class="crayon-num" style="">11</div><div class="crayon-num crayon-striped-num" style="">12</div><div class="crayon-num" style="">13</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a83201a0881-1" style=""><span class="o">&lt;</span><span class="i">adminhtml</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0881-2" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">events</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0881-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">catalog_product_save_after</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0881-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">observers</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0881-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">my_individual_name</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0881-6" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">type</span><span class="o">&gt;</span><span class="i">singleton</span><span class="o">&lt;</span><span class="o">/</span><span class="i">type</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0881-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="t">class</span><span class="o">&gt;</span><span class="i">modulename</span><span class="o">/</span><span class="i">observer</span><span class="o">&lt;</span><span class="o">/</span><span class="t">class</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0881-8" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="i">method</span><span class="o">&gt;</span><span class="i">methodName</span><span class="o">&lt;</span><span class="o">/</span><span class="i">method</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0881-9" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">my_individual_name</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0881-10" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">observers</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0881-11" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">catalog_product_save_after</span><span class="o">&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0881-12" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="o">&lt;</span><span class="o">/</span><span class="i">events</span><span class="o">&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0881-13" style=""><span class="o">&lt;</span><span class="o">/</span><span class="i">adminhtml</span><span class="o">&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0059 seconds] -->
+<p>(In this case I announce the event for area adminhtml, but events may also be described both by <em>global</em> and, of course, <em>frontend</em>).</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a83201a0c68" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a83201a0c68-1" style=""><span class="t">class</span><span class="h"> </span><span class="e">Namespace_Modulename_Model_Observer</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0c68-2" style=""><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0c68-3" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="m">public</span><span class="h"> </span><span class="t">function</span><span class="h"> </span><span class="e">methodName</span><span class="sy">(</span><span class="i">Varien_Event_Observer</span><span class="h"> </span><span class="v">$observer</span><span class="sy">)</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0c68-4" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">{</span>
+                </div><div class="crayon-line" id="crayon-50a83201a0c68-5" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">.</span><span class="sy">.</span><span class="sy">.</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0c68-6" style="">
+                </div><div class="crayon-line" id="crayon-50a83201a0c68-7" style=""><span class="h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sy">}</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a83201a0c68-8" style=""><span class="sy">}</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0019 seconds] -->
+<p></p>
+<p style="text-align: justify;">We can get the data of the array, transferred in <em>dispatchEvent</em> method, via <em>$observer</em> object. In our example array(&#8230;, ‘product’ =&gt; $this) is transferred. To receive the element of the <em>product</em> array, we should use <em>$observer-&gt;getEvent()-&gt;getProduct().</em></p>
+<p style="text-align: justify;">Together with other events we are free to use the ones, formed automatically and individually for your module and for models and controllers, created in it.</p>
+<p>•    Models<br />
+    *_load_before<br />
+    *_load_after</p>
+<p>*_save_before<br />
+    *_save_after<br />
+    *_save_commit_after</p>
+<p>*_delete_before<br />
+    *_delete_after<br />
+    *_delete_commit_after</p>
+<p>* &#8211; protected $_eventPrefix = ‘&#8230;’<br />
+    Specified individually in a created model</p>
+<p>•    Controllers<br />
+    controller_action_predispatch_*<br />
+    controller_action_predispatch_**</p>
+<p>controller_action_postdispatch_**<br />
+    controller_action_postdispatch_*</p>
+<p>controller_action_layout_render_before_**<br />
+    (described in a controller, it mostly concerns blocks)</p>
+<p>*  &#8211; RouteName<br />
+    ** &#8211; RouteName_ControllerName_ActionName</p>
+<p style="text-align: justify;">Using Observers, described in Magento core, is a very good habit. Remember to create Observers in the main locations of your modules. It will help developers use and customize extensions in their projects easily.</p>

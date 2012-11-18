@@ -1,0 +1,156 @@
+<h2>Describe typical Magento module structure</h2> by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk</a>
+<h3><a href="http://blog.belvg.com/magento-certification-module-structure.html" target="_blank">http://blog.belvg.com/magento-certification-module-structure.html</a></h3>
+<p>Typical Magento Module structure has the following folders and is based on <a href="http://en.wikipedia.org/wiki/Model-view-controller" target="_blank">MVC</a> architecture.</p>
+<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/02/img1.png"><img class="aligncenter size-full wp-image-1184" style="border: 0pt none;" title="img" src="http://blog.belvg.com/wp-content/uploads/2012/02/img1.png" alt="" /></a></p>
+<p>Let&#8217;s review all parts of module structure step by step.</p>
+<p><span id="more-1149"></span></p>
+<p><strong>Block</strong><br />
+    This folder liability is View, if we use terms of classical MVC architecture. Blocks coordinate models with the template files. The files in the folder load the data from database and transfer it to the templates in your theme (.phtml files).</p>
+<p><strong>Controllers</strong><br />
+    Controllers represent all business logic actions for the given request (dispatch(), preDispatch(), postDispatch() methods) and delegate commands to other parts of the system.</p>
+<p><strong>etc</strong><br />
+    It contains all xml files that declare and configure behavior of all modules. Each module must have at least config.xml and it’s a right place to declare all models, routers, blocks, helpers, etc.</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e111772" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e111772-1" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e111772-2" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;modules&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e111772-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;Namespace_Modulename&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e111772-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;version&gt;</span><span class="i ">0.1.0</span><span class="r ">&lt;/version&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e111772-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/Namespace_Modulename&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e111772-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/modules&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e111772-7" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0010 seconds] -->
+<p>Optionally this folder could have adminhtml.xml (grant permissions for your tabs/sections in backend menus) and system.xml (creates this new section or specifies where it should be displayed in existing one).<br />
+    Find more about xml structure <a href="http://www.magentocommerce.com/wiki/5_-_modules_and_development/admin/xml_structure_for_admin_configurations" target="_blank">here</a>.</p>
+<p><strong>Helper</strong><br />
+    Here you can create methods that would be useful for your store in different ways. Helpers contain utility methods, which are commonly used in the whole system. Methods, declared in helpers, can be called from any template file or block, model, controller class by</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e111b6f" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e111b6f-1" style=""><span class="e">Mage::</span><span class="e">helper</span><span class="sy">(</span><span class="s">'modulename/helpername'</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">methodName</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p>Each Module has a default Data Helper class Modulename/Helper/Data.php and we can call it as</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e111f3b" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e111f3b-1" style=""><span class="e">Mage::</span><span class="e">helper</span><span class="sy">(</span><span class="s">'modulename'</span><span class="sy">)</span><span class="o">-&gt;</span><span class="e">methodName</span><span class="sy">(</span><span class="sy">)</span><span class="sy">;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p><strong>Model</strong><br />
+    In classical MVC, Models are used to connect to the database and process the data from and to it. Magento has a different approach, which can be tricky at first look. Here is what <a href="http://www.magentocommerce.com/knowledge-base/entry/magento-for-dev-part-5-magento-models-and-orm-basics" target="_blank">they say</a>:<br />
+    &#8220;Most Magento Models can categorized in one of two ways. There&#8217;s a basic, ActiveRecord-like/one-object-one-table Model, and there&#8217;s also an Entity Attribute Value (EAV) Model. Each Model also gets a Model Collection. Collections are PHP objects used to hold a number of individual Magento Model instances. The Magento team has implemented the PHP Standard Library interfaces of IteratorAggregate and Countable to allow each Model type to have it&#8217;s own collection type. If you&#8217;re not familiar with the PHP Standard Library, think of Model Collections as arrays that also have methods attached. Magento Models don&#8217;t contain any code for connecting to the database. Instead, each Model uses two modelResource classes, (one read, one write), that are used to communicate with the database server (via read and write adapter objects).&#8221;</p>
+<p><strong>sql</strong><br />
+    Handles any custom database tables which will be used by the module and process all upgrades to the extension.</p>
+<p>etc/modules/Namespace_Modulename.xml</p>
+<p>To tell Magento which modules should be used and where they are located, we need to create XML file in the folder, from which it takes all xml files &#8211; etc/modules/</p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e112321" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div><div class="crayon-num crayon-striped-num" style="">4</div><div class="crayon-num" style="">5</div><div class="crayon-num crayon-striped-num" style="">6</div><div class="crayon-num" style="">7</div><div class="crayon-num crayon-striped-num" style="">8</div><div class="crayon-num" style="">9</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e112321-1" style=""><span class="ta">&lt;?</span><span class="e">xml </span><span class="i">version</span><span class="o">=</span><span class="s">"1.0"</span><span class="ta">?&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e112321-2" style=""><span class="r ">&lt;config&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e112321-3" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;modules&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e112321-4" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;Namespace_Modulename&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e112321-5" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;active&gt;</span><span class="i ">true</span><span class="r ">&lt;/active&gt;</span><span class="i "> </span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e112321-6" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;codePool&gt;</span><span class="i ">local</span><span class="r ">&lt;/codePool&gt;</span><span class="i "> </span>
+                </div><div class="crayon-line" id="crayon-50a829e112321-7" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/Namespace_Modulename&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e112321-8" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;/modules&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e112321-9" style=""><span class="r ">&lt;/config&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0016 seconds] -->
+<p></p>
+<p>You can indicate additional parameters such as depends, version and platform (can be defined in module’s config.xml as well):</p>
+<p><strong>Depends</strong></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e112783" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div><div class="crayon-num crayon-striped-num" style="">2</div><div class="crayon-num" style="">3</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e112783-1" style=""><span class="r ">&lt;depends&gt;</span>
+                </div><div class="crayon-line crayon-striped-line" id="crayon-50a829e112783-2" style=""><span class="i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="r ">&lt;Mage_Catalog </span><span class="r ">/&gt;</span>
+                </div><div class="crayon-line" id="crayon-50a829e112783-3" style=""><span class="r ">&lt;/depends&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p><strong>Version</strong></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e112af3" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e112af3-1" style=""><span class="r ">&lt;version&gt;</span><span class="i ">0.1.0</span><span class="r ">&lt;/version&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p><strong>Platform</strong></p><!-- Crayon Syntax Highlighter v1.10 -->
+
+<div id="crayon-50a829e112edc" class="crayon-syntax crayon-theme-classic crayon-font-consolas crayon-os-pc print-yes" data-settings=" scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; float: none; clear: both; ">
+
+    <div class="crayon-plain-wrap"></div>
+    <div class="crayon-main" style="">
+        <table class="crayon-table">
+            <tr class="crayon-row">
+                <td class="crayon-nums " data-settings="show" style="">
+                    <div class="crayon-nums-content"><div class="crayon-num" style="">1</div></div>
+                </td>
+                <td class="crayon-code"><div class="crayon-pre" style=""><div class="crayon-line" id="crayon-50a829e112edc-1" style=""><span class="r ">&lt;platform&gt;</span><span class="i ">сe</span><span class="r ">&lt;/platform&gt;</span><span class="i "> </span><span class="c">&lt;!-- (ce=community edition,pe=professional etc.) --&gt;</span></div></div></td>
+            </tr>
+        </table>
+    </div>
+</div>

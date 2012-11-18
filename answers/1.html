@@ -1,0 +1,23 @@
+<h2>Describe Magento codepools</h2> by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk</a>
+<h3><a href="http://blog.belvg.com/magento-certification-magento-codepool.html" target="_blank">http://blog.belvg.com/magento-certification-magento-codepool.html</a></h3>
+<p>Both junior and senior developers, who work with Magento on a constant basis or just start learning this platform, think over the perspective to obtain Magento Developer Certificate some day. Benefits are innumerable, ranging from a catchy point in CV, worldwide job skills recognition to exciting career prospects on on a global scale.</p>
+<p>BelVG can’t bypass the matter of many developers concern &#8211; Magento Certified Developer Exam, which contains of multiple-choice questions based on Magento Community Edition 1.5. Magento exam does not imply prerequisites. Find more information about Magento Developer Certification on <a href="http://www.magentocommerce.com/certification/" rel="nofollow">Magento Commerce</a> official website. Preparing themselves to exam, developers are offered to examine the Magento Certified Developer <a href="http://info.magento.com/rs/magentocommerce/images/Certification-Study-Guide-MCD-v1.pdf" rel="nofollow">Study Guide</a>.</p>
+<p><strong>We start a new section in our blog, dedicated to Magento Certified Developer Exam preparation</strong>, answering questions from above-mentioned Study Guide in series. Today we look through the first question <em>Describe Magento codepools</em> from the <em>Basics</em> chapter, <em>High-level Magento architecture</em>.</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-798" style="border: 0pt none;" src="http://blog.belvg.com/wp-content/uploads/2012/02/code2.png" alt="" /><br />
+    <strong></strong></p>
+<p><span id="more-796"></span></p>
+<p><strong>Describe Magento Codepools</strong></p>
+<p>Magento has three different codepools:</p>
+<ul>
+    <li>Community</li>
+    <li>Core</li>
+    <li>Local</li>
+</ul>
+<p><strong>Core pool</strong></p>
+<p>First of all, this folder stores all the code that makes Magento so powerful, flexible and lovely. The chief rule of Magento development is that you should never make any changes in it. In other words, this folder belongs to Magento core developers only and if you are going to edit anything in this pool, their evil spirit could punish you even through the display.</p>
+<p><strong>Community pool</strong></p>
+<p>This folder belongs entirely to community developers. This is the right place for hundreds of 3rd party extensions, both free and paid, that can be found at MagentoConnect or available on extensions development store (for instance, http://store.belvg.com/). So basically, if you have installed any extension, it must be in app/code/community/ only.</p>
+<p><strong>Local pool</strong></p>
+<p>If you have your own Magento-based store and want to make everything by yourself or you are a Magento developer and have a purpose to change the logic somehow, local pool is the place where everything should be done. If you want to override Magento extensions, blocks or methods, copy the necessary folders from the Core pool and do whatever you are inclined to do. Apply the same rule for custom extensions that are created specifically for the website &#8211; all code should be in local pool.</p>
+<p><strong>How does the framework interact with the various codepools?</strong></p>
+<p>To identify the proccess let&#8217;s take a look at app/Mage.php</p>
