@@ -1,4 +1,11 @@
 $(".accordion").accordion({ "header": "h3", "heightStyle": "fill" });
+$(document).ready( function() {
+    $(".display").load( 'welcome.html' );
+})
+$("ul li a").click( function() {
+    var taketext = $(this).text();
+    $(".description h2").text( taketext );
+})
 $("li ul li").not(" li ul li ul li ").each( function() {
     var dot = $( this ).text().indexOf( '.' );
     var number = parseInt( $( this ).text().substring( 0, dot ) );

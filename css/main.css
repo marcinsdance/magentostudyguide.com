@@ -59,15 +59,68 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+a {
+    color: black;
+}
 div.accordion {
     width: 39%;
     float: left;
+    margin-top: 100px;
 }
-
-
-
-
-
+.wrapper {
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    z-index: 1;
+}
+.ui-accordion-header {
+    padding-left: 40px;
+}
+h5 {
+    margin: 0;
+}
+ul {
+    margin-top: 0;
+}
+ul.ui-accordion-content {
+    max-height: 540px;
+}
+.logo {
+    width: 39%;
+    float: left;
+}
+.logo a {
+    text-decoration: none;
+}
+.description {
+    width: 58%;
+    float: left;
+}
+.display {
+    width: 58%;
+    float: left;
+    padding-left: 20px;
+    margin-top: 100px;
+    height: 800px;
+    overflow-y: scroll;
+}
+h1 {
+    margin: 8px 20px;
+}
+.forkme {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    z-index: 2;
+}
+.copyright {
+    text-align: center;
+}
+.page {
+    width: 100%;
+    overflow: auto;
+}
 
 
 

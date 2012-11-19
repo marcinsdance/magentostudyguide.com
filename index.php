@@ -6,12 +6,10 @@
     <title>Magento Certification Study Guide</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="css/thickbox.css">
     <link rel="stylesheet" href="css/normalize.min.css">
-    <link rel="stylesheet" href="css/main.css">
     <link type="text/css" href="css/start/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/custom.css">
-      <script src="js/vendor/modernizr-2.6.1.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.1.min.js"></script>
   </head>
   <body>
   <script type="text/javascript">
@@ -27,6 +25,12 @@
     })();
 
   </script>
+  <div class="page">
+  <a href="https://github.com/marcinsdance/magentostudyguide.com"><img class="forkme" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+  <div class="wrapper">
+      <div class="logo"><a href="/"><h1>MagentoStudyGuide.com</h1></a></div>
+      <div class="description"><h2>Welcome.</h2></div>
+  </div>
   <div class="accordion">
   <h3>1- Basics - 6% of the exam.</h3>
   <ul class="one">
@@ -1057,15 +1061,13 @@
     </li>
   </ul>
   </div><!-- accordion -->
-  <div class="display">
-    <p>Click a link on the left to see relative contents.</p>
-  </div>
+  <div class="display"></div>
+  </div><!-- page -->
+  <div class="copyright">Copy &copy; 2012 <a href="http://www.magentostudyguide.com/">magentostudyguide.com</a></div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')</script>
-    <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
-  <script src="js/thickbox.js   "></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')</script>
+  <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
   <script src="js/main.js"></script>
   </body>
 </html>
