@@ -14,6 +14,19 @@
       <script src="js/vendor/modernizr-2.6.1.min.js"></script>
   </head>
   <body>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3215352-52']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
   <div class="accordion">
   <h3>1- Basics - 6% of the exam.</h3>
   <ul class="one">
@@ -1044,7 +1057,9 @@
     </li>
   </ul>
   </div><!-- accordion -->
-  <div class="display"></div>
+  <div class="display">
+    <p>Click a link on the left to see relative contents.</p>
+  </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
