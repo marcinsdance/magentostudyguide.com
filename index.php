@@ -1063,7 +1063,10 @@
   </div><!-- accordion -->
   <div class="display"></div>
   </div><!-- page -->
-  <div class="copyright">Copy &copy; 2012 <a href="http://www.magentostudyguide.com/">magentostudyguide.com</a></div>
+  <div class="copyright">Copy &copy; 2012 <a href="http://www.magentostudyguide.com/">magentostudyguide.com</a> | <script type="text/javascript"><!--
+  var mzkvkwv = ['u','d',' ','c','u','o','d','t','d','e','n',':','t','g','e','u','t','f','f','a','a','r','e','=','e','e','c','@','l','=','s','i','a','u','m','i',' ','m','g','g','n','n','m','h','m','o','o','y','.','"','l','s','a','s','a','i','>','<','l','c','i','.','o','>','f','i','/','d','@','<','o','s','e','"','a','y','o','t','m','t','"','"','a','m','o','g','n','i'];var kundkky = [76,36,43,81,34,40,78,29,73,5,17,15,26,65,66,72,71,18,6,64,86,4,24,49,37,79,44,62,12,7,70,16,46,30,63,35,2,83,23,33,59,25,21,3,41,19,82,32,80,56,55,48,53,47,10,58,87,84,45,39,77,38,14,57,60,54,85,31,20,0,27,28,51,42,22,74,61,68,9,13,50,8,1,52,69,75,67,11];var xqswouh= new Array();for(var i=0;i<kundkky.length;i++){xqswouh[kundkky[i]] = mzkvkwv[i]; }for(var i=0;i<xqswouh.length;i++){document.write(xqswouh[i]);}
+  // --></script>
+      <noscript>Please enable Javascript to see the email address</noscript></div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')</script>
