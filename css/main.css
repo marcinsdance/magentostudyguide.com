@@ -95,6 +95,11 @@ ul.ui-accordion-content {
 .description {
   width: 58%;
   float: left;
+  padding-left: 20px;
+}
+.description h3 {
+  color: #007200;
+  display: none;
 }
 .display {
   width: 58%;
@@ -150,14 +155,14 @@ h1 {
 .theform h3 {
   background: white;
   padding: 5px;
-  margin: 0 -5px 0 1px;
+  margin: 0 1px 1px 1px;
 }
 .theform form {
   width: 100%;
   height: 600px;
 }
 .theform form textarea {
-  width: 100%;
+  width: 694px;
   height: 300px;
 }
 .theform form input[type=submit] {
@@ -165,10 +170,27 @@ h1 {
   background: white;
   border: 1px black solid;
   padding: 5px 10px;
-  margin: -1px -6px;
+  margin: -1px 0;
   font-weight: bold;
 }
-
+.theform form input[type=text] {
+  width: 338px;
+  float: left;
+  margin: 0;
+  padding: 5px;
+  border: 1px black solid;
+}
+.closeform {
+  position: absolute;
+  right: -20px;
+  top: -35px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 2px 2px 2px black;
+  text-transform: uppercase;
+}
 
 /* ==========================================================================
    Media Queries

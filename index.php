@@ -1072,11 +1072,12 @@
       <noscript>Please enable Javascript to see the email address</noscript></div>
   <div class="formwrapper"></div><!-- formwrapper -->
   <div class="theform">
+      <div class="closeform">x</div>
       <h3></h3>
       <form class="form">
           <input type="hidden" class="subject" name="subject" value=""/>
-          <input type="text" class="name" name="name"/>
-          <input type="text" class="email" name="email"/>
+          <input type="text" class="name" name="name" placeholder="Name"/>
+          <input type="text" class="email" name="email" placeholder="Email"/>
           <textarea name="suggestion"></textarea>
           <input type="submit" class="submit" value="Send"/>
       </form>

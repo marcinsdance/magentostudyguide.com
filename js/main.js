@@ -6,7 +6,7 @@ $(document).ready( function() {
         function() { $(".sendform").remove(); }
     );
   $(".sendform").live("click", function() {
-    var thistext = $(this).parent().children("a").text();
+    var thistext = $(this).parent().text().substr(6);
     $("form .subject").attr('value',thistext);
     $(".theform h3").text(thistext);
     $(".formwrapper").show();
@@ -18,6 +18,9 @@ $(".submit").click( function(e) {
   console.log('test');
   $.post("form.php", $("form.form").serialize(),function(data) {
     $(".description h3").text(data);
+    $(".description h3").show("slow");
+    $(".formwrapper").hide();
+    $(".theform").hide();
   });
 });
 $("ul li a").click( function() {
@@ -246,4 +249,10 @@ $("a#file721").click( function(e) {
     $("div.display").load( link, function() {
         $("div.display").scrollTop('7580');
     });
+});
+$(".closeform").click( function() {
+  $(".theform, .formwrapper").hide();
+});
+$(".formwrapper").click( function() {
+  $(".theform, .formwrapper").hide();
 });
