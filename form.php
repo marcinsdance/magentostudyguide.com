@@ -3,11 +3,14 @@ $subject = $_POST['subject'];
 $suggestion = $_POST['suggestion'];
 $name = $_POST['name'];
 $email = $_POST['email'];
-$message = 'Name: ' . $name;
+$address = "info@magentostudyguide.com";
+$subject = "Suggestion from the website";$message = 'Name: ' . $name;
 $message = 'Email: ' . $email;
 $message = 'subject: ' . $subject;
 $message = 'suggestion: ' . $suggestion;
 
+mail($address,$subject,$message);
+/*
 require_once 'class.phpmailer.php';
 $mail = new PHPMailer(); // defaults to using php "mail()"
 $mail->SetFrom('info@magentostudyguide.com', 'First Last');
@@ -23,3 +26,4 @@ if(!$mail->Send()) {
 } else {
   echo 'Thank you for sending the suggestion!';
 }
+*/
