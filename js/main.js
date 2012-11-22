@@ -1,15 +1,38 @@
 $(".accordion").accordion({ "header": "h3", "heightStyle": "fill" });
 $(document).ready( function() {
     $(".display").load( 'welcome.html' );
-})
+    $("li ul li").not(" li ul li ul li ").hover(
+        function() { $(this).prepend('<div class="sendform"><u>submit</u></div>'); },
+        function() { $(".sendform").remove(); }
+    );
+  $(".sendform").live("click", function() {
+    var thistext = $(this).parent().children("a").text();
+    $("form .subject").attr('value',thistext);
+    $(".theform h3").text(thistext);
+    $(".formwrapper").show();
+    $(".theform").show();
+  });
+});
+$(".submit").click( function(e) {
+  e.preventDefault();
+  console.log('test');
+  $.post("form.php", $("form.form").serialize(),function(data) {
+    $(".description h3").text(data);
+  });
+});
 $("ul li a").click( function() {
     var taketext = $(this).text();
     $(".description h2").text( taketext );
-})
+});
 $("li ul li").not(" li ul li ul li ").each( function() {
     var dot = $( this ).text().indexOf( '.' );
     var number = parseInt( $( this ).text().substring( 0, dot ) );
     $( this ).attr('id', number);
+    $(this).css({
+        'position':'relative',
+        'margin-left':'-200px',
+        'padding-left':'200px'
+    });
 });
 $("a.file")
     .not("#file18,#file19,#file22,#file23,#file24,#file25,#file26,#file27,#file28,#file29,#file30,#file31,#file32,#file33,#file34,#file36,#file46,#file47,#file481,")

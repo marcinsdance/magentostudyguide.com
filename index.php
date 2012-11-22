@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -29,7 +29,10 @@
   <a href="https://github.com/marcinsdance/magentostudyguide.com"><img class="forkme" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
   <div class="wrapper">
       <div class="logo"><a href="/"><h1>MagentoStudyGuide.com</h1></a></div>
-      <div class="description"><h2>Welcome.</h2></div>
+      <div class="description">
+          <h2>Welcome!</h2>
+          <h3></h3>
+      </div>
   </div>
   <div class="accordion">
   <h3>1- Basics - 6% of the exam.</h3>
@@ -1067,7 +1070,17 @@
   var mzkvkwv = ['u','d',' ','c','u','o','d','t','d','e','n',':','t','g','e','u','t','f','f','a','a','r','e','=','e','e','c','@','l','=','s','i','a','u','m','i',' ','m','g','g','n','n','m','h','m','o','o','y','.','"','l','s','a','s','a','i','>','<','l','c','i','.','o','>','f','i','/','d','@','<','o','s','e','"','a','y','o','t','m','t','"','"','a','m','o','g','n','i'];var kundkky = [76,36,43,81,34,40,78,29,73,5,17,15,26,65,66,72,71,18,6,64,86,4,24,49,37,79,44,62,12,7,70,16,46,30,63,35,2,83,23,33,59,25,21,3,41,19,82,32,80,56,55,48,53,47,10,58,87,84,45,39,77,38,14,57,60,54,85,31,20,0,27,28,51,42,22,74,61,68,9,13,50,8,1,52,69,75,67,11];var xqswouh= new Array();for(var i=0;i<kundkky.length;i++){xqswouh[kundkky[i]] = mzkvkwv[i]; }for(var i=0;i<xqswouh.length;i++){document.write(xqswouh[i]);}
   // --></script>
       <noscript>Please enable Javascript to see the email address</noscript></div>
-
+  <div class="formwrapper"></div><!-- formwrapper -->
+  <div class="theform">
+      <h3></h3>
+      <form class="form">
+          <input type="hidden" class="subject" name="subject" value=""/>
+          <input type="text" class="name" name="name"/>
+          <input type="text" class="email" name="email"/>
+          <textarea name="suggestion"></textarea>
+          <input type="submit" class="submit" value="Send"/>
+      </form>
+  </div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')</script>
   <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
