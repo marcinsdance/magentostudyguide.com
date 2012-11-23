@@ -1,6 +1,5 @@
 by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk</a>
 <h3><a href="http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-the-main-magento-design-areas-and-more.html" target="_blank">http://blog.belvg.com/get-ready-for-magento-certified-developer-exam-the-main-magento-design-areas-and-more.html</a></h3>
-<p><em>We suppose you continue following our Magento certification-dedicated posts in our blog. This week we turn to another pack of Basics questions, concerning main Magento design areas; the structure of a complete theme and Magento templates, layout, skin and javascript files location.</em></p>
 <p>In classical MVC architecture view files are html code with output of the logic in templates via php or  any template engine, for example, Smarty (in Prestashop, Oxid) or Twig, Dwoo, Calypso, etc. Working with Magento, you may fall into delusion that everything is extremely complicated, but this complexity allows you to maintain flexibility and modularity.</p>
 <p>In Magento there are three components of the template system. As we discussed in a previous article, there are php classes that are stored in modules folder called Block. They load the data from database and transfer it to the PHP/HTML templates in your theme (.phtml files). There are also XML layout configuration files that act as application guides on how to build a page, what to build it with and the behavior of each building block.</p>
 <h3 style="text-align: left;">Identifying ad explaining the main Magento design areas (adminhtml and frontend)</h3>
@@ -30,27 +29,3 @@ by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk<
     <li><strong>Non-default theme</strong></li>
 </ul>
 <p>Non-default theme can be completely different from the default theme or may contain some images of them. Corrections in CSS file, layout file and all the rest will be loaded from the interface default theme. Dig more about creation of a non-default theme <a href="http://www.magentocommerce.com/wiki/4_-_themes_and_template_customization/0_-_theming_in_magento/designing-for-magento" target="_blank">here</a>.</p>
-<p>&nbsp;</p>
-<h3 style="text-align: center;">Describe Magento templates and layout files location</h3>
-<p>&nbsp;</p>
-<p>A theme consists of the following elements:</p>
-<p><strong>Layout</strong> folder includes XML files that define the layout of the theme. Layout files work as a &#8220;glue&#8221; between the modules (which are found under the app/code directory), and the template files. For more information read <a href="http://www.magentocommerce.com/design_guide/articles/intro-to-layouts">Intro to Layouts</a>.</p>
-<p style="text-align: center;"> <a href="http://blog.belvg.com/wp-content/uploads/2012/03/layout1.png"><img class="aligncenter size-full wp-image-1413" style="border: 0;" title="layout" src="http://blog.belvg.com/wp-content/uploads/2012/03/layout1.png" alt="" /></a></p>
-<p>Because of Magento modularity, all XML files of the default theme are stored in separate folders with the name of the module to which they belong to. A non-default theme, contrariwise, should have a single layout file, named local.xml, where all layout updates are placed.<strong></strong></p>
-<p><strong>Template</strong> folder contains of .phtml files that have HTML and PHP code for each Magento blocks which will be displayed in the frontend.</p>
-<p style="text-align: center;">
-<p style="text-align: center;"> <a href="http://blog.belvg.com/wp-content/uploads/2012/03/templates1.png"><img class="aligncenter size-full wp-image-1414" style="border: 0;" title="templates" src="http://blog.belvg.com/wp-content/uploads/2012/03/templates1.png" alt="" /></a><br />
-    <strong></strong></p>
-<p style="text-align: left;"><strong>Locale</strong> folder contains .of CSV files organized on a per language basis that provide translations in format of languagecode_COUNTRTYCODE (en_US or en_UK)/translate.csv. More detailed information about internationalization will come in the future articles.</p>
-<p style="text-align: left;">
-<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/03/locale1.png"><img class="aligncenter size-full wp-image-1415" style="border: 0;" title="locale" src="http://blog.belvg.com/wp-content/uploads/2012/03/locale1.png" alt="" /></a></p>
-<p><strong> </strong></p>
-<p>&nbsp;</p>
-<h3 style="text-align: center;"><strong></strong>Describe Magento skin and javascript files location</h3>
-<p>&nbsp;</p>
-<p><strong>Skin</strong> folder includes Javascript, CSS and image files that are used in .phtml files in template folder, i.e. all the files in this folder vary from theme to theme. From the given picture you can see that there are three main folders – CSS for style-sheets of your theme, images (for media files that are used in your theme) and JS for the templates javascript files.</p>
-<p>&nbsp;</p>
-<p style="text-align: center;"><a href="http://blog.belvg.com/wp-content/uploads/2012/03/skins.png"><img class=" wp-image-1397 aligncenter" style="border: 0;" title="skins" src="http://blog.belvg.com/wp-content/uploads/2012/03/skins.png" alt="" /></a></p>
-<p><strong>JS</strong> folder embodies JS files, libraries and frameworks that are used via frontend and backend. If you need to add a new Javascript/AJAX library or your module from Local code pool requires special scripts, they should be placed here.</p>
-<p>&nbsp;</p>
-<p style="text-align: center;"> <a href="http://blog.belvg.com/wp-content/uploads/2012/03/js.png"><img class="size-full wp-image-1398 aligncenter" style="border:0" title="js" src="http://blog.belvg.com/wp-content/uploads/2012/03/js.png" alt="" /></a></p>

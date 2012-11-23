@@ -2,11 +2,11 @@ $(".accordion").accordion({ "header": "h3", "heightStyle": "fill" });
 $(document).ready( function() {
     $(".display").load( 'welcome.html' );
     $("li ul li").not(" li ul li ul li ").hover(
-        function() { $(this).prepend('<div class="sendform"><u>submit</u></div>'); },
+        function() { $(this).prepend('<div class="sendform">contribute</div>'); },
         function() { $(".sendform").remove(); }
     );
   $(".sendform").live("click", function() {
-    var thistext = $(this).parent().text().substr(6);
+    var thistext = $(this).parent().text().substr(10);
     $("form .subject").attr('value',thistext);
     $(".theform h3").text(thistext);
     $(".formwrapper").show();
