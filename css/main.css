@@ -88,6 +88,7 @@ ul.ui-accordion-content {
 .logo {
   width: 39%;
   float: left;
+  padding-left: 20px;
 }
 .logo a {
   text-decoration: none;
@@ -110,7 +111,7 @@ ul.ui-accordion-content {
   overflow-y: scroll;
 }
 h1 {
-  margin: 8px 20px;
+  margin: 8px 20px 20px 20px;
 }
 .forkme {
   position: absolute;
@@ -192,7 +193,15 @@ h1 {
   text-shadow: 2px 2px 2px black;
   text-transform: uppercase;
 }
-
+.g-plusone {
+  margin-left: 10px;
+}
+.social {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+.twitter-follow-button { height: 24px!important; }
 /* ==========================================================================
    Media Queries
    ========================================================================== */

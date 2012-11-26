@@ -25,10 +25,38 @@
     })();
 
   </script>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   <div class="page">
   <a href="https://github.com/marcinsdance/magentostudyguide.com"><img class="forkme" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
   <div class="wrapper">
-      <div class="logo"><a href="/"><h1>MagentoStudyGuide.com</h1></a></div>
+      <div class="logo"><a href="/"><h1>MagentoStudyGuide.com</h1></a>
+
+          <!-- Google Plus button -->
+          <div class="g-plusone" data-annotation="inline" data-width="240"></div>
+          <script type="text/javascript">
+              (function() {
+                  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                  po.src = 'https://apis.google.com/js/plusone.js';
+                  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+          </script>
+          <!-- end Google Plus button -->
+          <!-- Twitter button -->
+          <a href="https://twitter.com/magentostudy" class="twitter-follow-button" data-show-count="false">Follow @magentostudy</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          <!-- end Twitter button -->
+          <!-- Facebook button -->
+          <!--<div class="fb-like" data-href="http://www.magentostudyguide.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>-->
+          <!-- end Facebook button -->
+
+      </div>
       <div class="description">
           <h2>Welcome!</h2>
           <h3></h3>
