@@ -69,8 +69,8 @@
       <ul>
         <li>1. <a href="/answers/1.html" class="file">Describe Magento codepools</a></li>
         <li>2. <a href="/answers/2.html" class="file">Describe typical Magento module structure</a></li>
-        <li>3. Describe Magento templates and layout files location</li>
-        <li>4. Describe Magento skin and javascript files location</li>
+        <li>3. <a href="/answers/3.html" class="file">Describe Magento templates and layout files location</a></li>
+        <li>4. <a href="/answers/4.html" class="file">Describe Magento skin and javascript files location</a></li>
         <li>5. <a href="/answers/5.html" class="file">Identify and explain the main Magento design areas (adminhtml and frontend)</a></li>
         <li>6. <a href="/answers/6.html" class="file">Explain class naming conventions and their relationship with the autoloader</a></li>
         <li>7. <a href="/answers/7.html" class="file">Describe methods for resolving module conflicts</a></li>

@@ -133,6 +133,8 @@ h1 {
   left: 140px;
   top: 0;
   cursor: pointer;
+  font-size: 10px;
+  line-height: 18px;
 }
 .formwrapper {
   position: fixed;
