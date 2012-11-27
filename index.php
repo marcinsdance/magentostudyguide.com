@@ -438,8 +438,8 @@
   <ul class="one">
     <li><h4>Models, resource models, and collections</h4>
       <ul>
-        <li>47. Describe the basic concepts of models, resource models, and collections, and the relationship they have to one another</li>
-        <li>48. Configure a database connection</li>
+        <li>47. <a href="/answers/47.html" class="file">Describe the basic concepts of models, resource models, and collections, and the relationship they have to one another</a></li>
+        <li>48. <a href="/answers/48.html" class="file">Configure a database connection</a></li>
         <li>49. Describe how Magento works with database tables</li>
         <li>50. Describe the load-and-save process for a regular entity</li>
         <li>51. Describe group save operations</li>
