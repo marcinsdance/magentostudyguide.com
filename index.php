@@ -497,9 +497,9 @@
   <ul class="one">
     <li><h4>EAV model concepts</h4>
       <ul>
-        <li>59. Define basic EAV concepts and class hierarchy</li>
-        <li>60. Describe the database schema for EAV entities</li>
-        <li>61. Describe the EAV entity structure and its difference from the standard core resource model</li>
+        <li>59. <a href="/answers/59.html" class="file">Define basic EAV concepts and class hierarchy</a></li>
+        <li>60. <a href="/answers/60.html" class="file">Describe the database schema for EAV entities</a></li>
+        <li>61. <a href="/answers/61.html" class="file">Describe the EAV entity structure and its difference from the standard core resource model</a></li>
         <li>62. Describe the EAV load-and-save process and its differences from the regular load- and-save process</li>
       </ul>
       <h5>Questions</h5>

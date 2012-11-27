@@ -1,0 +1,19 @@
+by <a href="http://alanstorm.com/" target="_blank">Alan Storm</a>
+<h3><a href="http://www.magentocommerce.com/knowledge-base/entry/magento-for-dev-part-5-magento-models-and-orm-basics" target="_blank">http://www.magentocommerce.com/knowledge-base/entry/magento-for-dev-part-5-magento-models-and-orm-basics</a></h3>
+<h2>Traditional PHP MVC Models</h2>
+<p>If the definition of MVC is somewhat fuzzy, the definition of a Model is even fuzzier. Prior to the wide adoption of the MVC pattern by PHP developers, data access was usually raw SQL statements and/or a SQL abstraction layer. Developers would write queries and not think too much about what objects they were modeling.</p>
+
+<p>In this day and age, raw SQL is mostly frowned upon, but many PHP frameworks are still SQL centric. Models will be objects that provide some layer of abstraction, but behind the scenes developers are still writing SQL and/or calling SQL like abstraction methods to read and write-down their data.</p>
+
+<p>Other frameworks eschew SQL and take the Object Relational Mapping (ORM) approach. Here, a developer is dealing strictly with Objects. Properties are set, and when a save method is called on the Object, the data is automatically written to the database. Some ORMs will attempt to divine object properties from the database, others require the user to specify them in some way, (usually in an abstract data language such as YAML). One of the most famous and popular implementations of this approach is ActiveRecord.</p>
+
+<p>This definition of ORM should suffice for now, but like everything Computer Science these days, the strict definition of ORM has blurred over the years. It's beyond the scope of this article to settle that dispute, but suffice it say we're generalizing a bit.</p>
+
+  <h2>Magento Models</h2>
+<p>It should be no surprise that Magento takes the ORM approach. While the Zend Framework SQL abstractions are available, most of your data access will be via the built in Magento Models, and Models you build yourself. It should also come as no surprise that Magento has a highly flexible, highly abstract, concept of what a Model is.</p>
+
+<p><strong>Anatomy of a Magento Model</strong>
+<p>Most Magento Models can be categorized in one of two ways. There's a basic, ActiveRecord-like/one-object-one-table Model, and there's also an Entity Attribute Value (EAV) Model. Each Model also gets a Model Collection. Collections are PHP objects used to hold a number of individual Magento Model instances. The Magento team has implemented the PHP Standard Library interfaces of IteratorAggregate and Countable to allow each Model type to have it's own collection type. If you're not familiar with the PHP Standard Library, think of Model Collections as arrays that also have methods attached.</p>
+
+<p>Magento Models don't contain any code for connecting to the database. Instead, each Model uses a modelResource class, that is used to communicate with the database server (via one read and one write adapter object). By decoupling the logical Model and the code that talks to the database, it's theoretically possible to write new resource classes for a different database schemas and platforms while keeping your Models themselves untouched.</p>
+<p><a href="http://www.magentocommerce.com/knowledge-base/entry/magento-for-dev-part-5-magento-models-and-orm-basics" target="_blank">Read more</a></p>
