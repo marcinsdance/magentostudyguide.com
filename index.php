@@ -93,7 +93,7 @@
         <li>8. <a href="/answers/8.html" class="file">Explain how Magento loads and manipulates configuration information</a></li>
         <li>9. <a href="/answers/9.html" class="file">Describe class group configuration and use in factory methods</a></li>
         <li>10. <a href="/answers/10.html" class="file">Describe the process and configuration of class overrides in Magento</a></li>
-        <li>11. Register an Observer</li>
+        <li>11. <a href="/answers/11.html" class="file">Register an Observer</a></li>
         <li>12. Identify the function and proper use of automatically available events, including *_load_after, etc.</li>
         <li>13. <a href="/answers/13.html" class="file">Set up a cron job</a></li>
       </ul>

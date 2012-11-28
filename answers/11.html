@@ -1,0 +1,33 @@
+You can create an event with the Mage::dispatchEvent method.
+If you have an object like the order then you have to define a parameterlist as Array. array( 'order' =&gt; $order)<br />
+Just implement following line to your extension class:<br />
+Mage::dispatchEvent('the_event_name',array( 'order' =&gt; $order));<br />
+To observe an event, specify the observer in the config.xml at /app/(codepool)/Extensionname/ .<br />
+&lt;config&gt;<br />
+&nbsp;&nbsp;&lt;global&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;events&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;the_event_name&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;observers&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;extensionname&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;type&gt;singleton&lt;/type&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;class&gt;Extensionname_Model_Observer&lt;/class&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;method&gt;methodName&lt;/method&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/extensionname&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/observers&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/the_event_name&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/events&gt;<br />
+&nbsp;&nbsp;&lt;/global&gt;<br />
+&lt;/config&gt;<br /><br />
+
+Create an Extension and a model (Observer.php): /app/(codepool)/Extensionname/Model/Observer.php<br /><br />
+class Extensionname_Model_Observer<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;public function methodName($event)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$order = $event-&gt;getOrder();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//for example send a new order mail to customer<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$order-&gt;sendNewOrderEmail()-&gt;setEmailSent(true)-&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;save();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//do something else ....<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}
