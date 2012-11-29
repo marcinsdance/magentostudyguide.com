@@ -205,10 +205,9 @@ h1 {
 .g-plusone {
   margin-left: 10px;
 }
-.social {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+.socials {
+    width: 400px;
+    float: left;
 }
 .twitter-follow-button { height: 24px!important; }
 .table67 { font-size: 12px; }
