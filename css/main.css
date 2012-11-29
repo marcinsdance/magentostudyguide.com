@@ -63,10 +63,13 @@ a {
   color: black;
 }
 div.accordion {
-  width: 39%;
-  float: left;
-  margin-top: 100px;
-  font-size: 13px;
+    width: 39%;
+    float: left;
+    margin-top: 100px;
+    font-size: 14px;
+}
+div.accordion h4 {
+    margin: 0;
 }
 .wrapper {
   width: 100%;
@@ -205,6 +208,9 @@ h1 {
   left: 20px;
 }
 .twitter-follow-button { height: 24px!important; }
+.table67 { font-size: 12px; }
+
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
