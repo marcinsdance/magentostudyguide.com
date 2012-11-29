@@ -95,7 +95,10 @@ ul.ui-accordion-content {
   padding-left: 20px;
 }
 .logo a {
-  text-decoration: none;
+    text-decoration: none;
+}
+.logo h1, .logo h2 {
+    margin: 0;
 }
 .description {
   width: 38%;

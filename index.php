@@ -36,8 +36,8 @@
   <div class="page">
   <a href="https://github.com/marcinsdance/magentostudyguide.com"><img class="forkme" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
   <div class="wrapper">
-      <div class="logo"><a href="/"><h1>MagentoStudyGuide.com</h1></a>
-
+      <div class="logo"><a href="/"><h1>MageStudyGuide.com</h1></a><h2>Magento Certified Developer study guide.</h2>
+      <div class="socials"><!-- socials -->
           <!-- Google Plus button -->
           <div class="g-plusone" data-annotation="inline" data-width="240"></div>
           <script type="text/javascript">
@@ -55,8 +55,8 @@
           <!-- Facebook button -->
           <!--<div class="fb-like" data-href="http://www.magentostudyguide.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>-->
           <!-- end Facebook button -->
-
-      </div>
+      </div><!-- end socials -->
+      </div><!-- end wrapper -->
       <div class="description">
           <h2>Welcome!</h2>
           <h3></h3>

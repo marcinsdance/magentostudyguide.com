@@ -1,0 +1,32 @@
+<style>
+  .item {
+    margin: 10px;
+    float: left;
+  }
+  .corner-stamp {
+    float: left;
+  }
+</style>
+<div><p>The content on this website has been sponsored by:</p></div>
+<div id="container">
+  <div class="item"><a href="http://www.digitalboutique.co.uk/" target="_blank"><img src="img/digital-boutique-logo.png" align="center"/></a></div>
+  <div class="item"><a href="http://store.belvg.com/" target="_blank"><img src="img/belvg-logo.png" align="center" /></div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="/path/to/jquery.masonry.min.js"></script>
+<script>$(function(){
+  var $container = $('#container');
+  $container.imagesLoaded(function(){
+    $container.masonry({
+      itemSelector : '.item',
+      isAnimated: true,
+      animationOptions: {
+        duration: 750,
+        easing: 'linear',
+        queue: false
+      },
+      cornerStampSelector: '.corner-stamp'
+    });
+  });
+});
+</script>
