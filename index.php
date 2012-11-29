@@ -730,7 +730,7 @@
       <h5>Questions</h5>
       <ul>
         <li>Which product types exist in Magento</li>
-        <li>Which product types are implemented as part of the Mage_Catalog module, and which are not</li>
+        <li><a href="/answers/7q2.html" class="file">Which product types are implemented as part of the Mage_Catalog module, and which are not</a></li>
         <li>What steps need to be taken in order to implement a custom product type</li>
         <li>How do the different product types handle price calculation</li>
         <li>Which indexing processes does the product type influence</li>
@@ -775,22 +775,22 @@
             <li>2. the construction of paths</li>
             <li>3. the attributes required to display a new category in the store</li>
           </ul>
-          <h5>Questions</h5>
-          <ul>
-            <li>How is the category hierarchy reflected in the database? Does it differ when multiple root categories are present?</li>
-            <li>How is a catalog tree read from the database tables, with and without flat catalog tables enabled?</li>
-            <li>How does working with categories differ if the flat catalog is enabled on a model level?</li>
-            <li>How is the category parent id path set on new categories?</li>
-            <li>Which methods exist to read category children and how do they differ?</li>
-          </ul>
-          <h5>Reference files</h5>
-          <ul>
-            <li><a href="/magento/app/code/core/Mage/Catalog/Model/Category.php" class="file">Mage_Catalog_Model_Category</a></li>
-            <li><a href="/magento/app/code/core/Mage/Catalog/Model/Resource/Eav/Mysql4/Category.php" class="file">Mage_Catalog_Model_Resource_Eav_Mysql4_Category</a></li>
-            <li><a href="/magento/app/code/core/Mage/Catalog/Model/Resource/Eav/Mysql4/Category/Collection.php" class="file">Mage_Catalog_Model_Resource_Eav_Mysql4_Category_Collection</a></li>
-            <li><a href="/magento/app/code/core/Mage/Catalog/Model/Resource/Eav/Mysql4/Category/Tree.php" class="file">Mage_Catalog_Model_Resource_Eav_Mysql4_Category_Tree</a></li>
-          </ul>
         </li>
+      </ul>
+      <h5>Questions</h5>
+      <ul>
+        <li><a href="/answers/7q13.html" class="file">How is the category hierarchy reflected in the database? Does it differ when multiple root categories are present?</a></li>
+        <li>How is a catalog tree read from the database tables, with and without flat catalog tables enabled?</li>
+        <li>How does working with categories differ if the flat catalog is enabled on a model level?</li>
+        <li>How is the category parent id path set on new categories?</li>
+        <li>Which methods exist to read category children and how do they differ?</li>
+      </ul>
+      <h5>Reference files</h5>
+      <ul>
+        <li><a href="/magento/app/code/core/Mage/Catalog/Model/Category.php" class="file">Mage_Catalog_Model_Category</a></li>
+        <li><a href="/magento/app/code/core/Mage/Catalog/Model/Resource/Eav/Mysql4/Category.php" class="file">Mage_Catalog_Model_Resource_Eav_Mysql4_Category</a></li>
+        <li><a href="/magento/app/code/core/Mage/Catalog/Model/Resource/Eav/Mysql4/Category/Collection.php" class="file">Mage_Catalog_Model_Resource_Eav_Mysql4_Category_Collection</a></li>
+        <li><a href="/magento/app/code/core/Mage/Catalog/Model/Resource/Eav/Mysql4/Category/Tree.php" class="file">Mage_Catalog_Model_Resource_Eav_Mysql4_Category_Tree</a></li>
       </ul>
     </li>
     <li><h4>Catalog Price Rules</h4>
