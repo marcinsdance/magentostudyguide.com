@@ -111,3 +111,5 @@ a img { border: none; }
 /* contributors */
 .digitalboutique { width: 365px; height: 66px; }
 .belvg { width: 194px; height: 82px; }
+
+.applause { position: fixed; bottom: 0; right: 0; }
