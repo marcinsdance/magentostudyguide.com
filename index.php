@@ -1091,6 +1091,82 @@
       </ul>
     </li>
   </ul>
+
+  <h3>11- Enterprise Edition - 9% of the exam.</h3>
+  <ul class="one">
+    <li>115. Describe how to customize, extend, and troubleshoot Enterprise Edition catalog target rules</li>
+      <h5>Questions</h5>
+      <ul>
+        <li>What additional possibilities does the Enterprise target rule module provide over the Mage_CatalogRule?</li>
+        <li>How does the module store the rules in the database?</li>
+        <li>Which indexer processes the rules, and how is the index used to realize faster reads?</li>
+      </ul>
+      <h5>Reference files</h5>
+      <ul>
+        <li>Enterprise_TargetRule_Model_Rule</li>
+        <li>Enterprise_TargetRule_Model_Mysql4_Index</li>
+        <li>Enterprise_TargetRule_Model_Observer</li>
+      </ul>
+    </li>
+    <li>116. Describe how to customize, extend, and troubleshoot the Enterprise Edition reward point system
+      <h5>Question</h5>
+      <ul>
+        <li>How do the features offered by the reward point system hook into other Magento modules?</li>
+        <li>Under which conditions may reward points be assigned?</li>
+        <li>Which steps are required to add new custom options to assign reward points?</li>
+      </ul>
+      <h5>Reference files</h5>
+      <ul>
+        <li>Enterprise_Reward_Model_Observer</li>
+        <li>Enterprise_Reward_Model_Reward_Rate::calculateToCurrency() and calculateToPoints()</li>
+        <li>Enterprise_Reward_Helper_Data::getRateFromRatesArray()</li>
+      </ul>
+    </li>
+    <li>117. Describe how to implement, customize, and troubleshoot Enterprise Edition website restrictions
+    <h5>Questions</h5>
+      <ul>
+        <li>How does the website restrictions module determine which pages are accessible without authentication?</li>
+        <li>How does the module prevent visitors from accessing restricted website content?</li>
+      </ul>
+    <h5>Reference files</h5>
+      <ul>
+        <li>Enterprise_WebsiteRestriction_Model_Observer</li>
+        <li>Enterprise_WebsiteRestriction_Block_Cms_Stub</li>
+      </ul>
+    </li>
+    <li>118. Identify the elements and functioning of Enterprise Edition Full Page Cache
+    <h5>Questions</h5>
+      <ul>
+        <li>How does the full page cache module hook into the request flow and serve page requests from the cache?</li>
+        <li>What is the difference between the applyWithoutApp() and applyInApp() methods of the abstract?</li>
+        <li>What is the role of each node in the cache.xml configuration file?</li>
+        <li>Which steps are necessary to implement a gynamically rendered block inside an otherwise fully cached page?</li>
+      </ul>
+      <h5>Reference files</h5>
+      <ul>
+        <li>Enterprise_PageCache_Model_Observer</li>
+        <li>Enterprise_PageCache_Model_Container_Abstract</li>
+        <li>Enterprise_PageCache_Model_Processor_Default</li>
+      </ul>
+    </li>
+    <li>119. Describe the Payment Bridge
+      <h5>Questions</h5>
+      <ul>
+        <li>How is the Payment Bridge implemented and configured?</li>
+      </ul>
+      <h5>Reference files</h5>
+      <ul>
+        <li>Enterprise/Pbridge/*</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>12- Challenge Questions - 8% of the exam</h3>
+  <ul class="one">
+    <li>Approximately 8% of the Magento Certified Developer Plus exam consists of Challenge questions, randomly drawn from the objectives covered in the individual sections of this Study Guide.
+    The Challenge questions go into more detail or cover move complex areas of the topic than the questions in the other sections of the Magento Certified Developer Plus exam.</li>
+  </ul>
+
   </div><!-- accordion -->
   <div class="display"></div>
   </div><!-- page -->
