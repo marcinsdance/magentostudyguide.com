@@ -144,7 +144,7 @@
   <ul class="one">
     <li><h4>Application initialization</h4>
       <ul>
-        <li>17. Describe the steps for application initialization</li>
+        <li>17. <a href="answers/217.html" class="file">Describe the steps for application initialization</a></li>
         <li>18. Describe the role of the system entrypoint, index.php</li>
       </ul>
       <h5>Questions</h5>

@@ -1,0 +1,47 @@
+<h4>Topic 2 – Part 1: Application Initialization</h4>
+<p>by <a href="http://blog.magestore.com/author/alex/" target="_blank">Alex</a></p>
+<p>We have finished Magento Basics with 9 articles which guide you about fundamentals, configuration XML, and multi-language… in Magento.
+  Today, I will start the next step of Magento Certificate Preparation. You will be introduced the first topic – Application initialization consisting of two parts:</p>
+  <ol>
+    <li style="text-align: justify;">Describe the steps for the application initialization.</li>
+    <li style="text-align: justify;">Change a website from within index.php.</li>
+  </ol>
+<strong>I. </strong><strong>Describe the steps for application initialization</strong><br />
+<ul>
+  <li>Run the file index.php</li>
+  <li>Include Mage.php</li>
+</ul>
+● If not existing =&gt; redirect to the downloader of &nbsp;magento<br />
+●&nbsp;If existing a file Mage.php =&gt; Conduct the command: Mage::run($mageRunCode, $mageRunType);<br />
+<ul class="ul-listing-style">
+  <li> App::run($mageRunCode, $mageRunType)</li>
+</ul>
+● Load configuration files in app/etc/modules<br />
+● Load configuration files in the module (app/code/core/Mage/Customer/etc/config.xml)<br />
+● Update/create version of modules in core_resource<br />
+● Update/create database of modules<br />
+<ul class="ul-listing-style">
+  <li style="text-align: justify;"> Mage_Core_Controller_Varien_Front::dispatch()</li>
+</ul>
+● Use routers to define the controller and action requested<br />
+● Call dispatch() of the controller that is requested<br />
+● Call action of the controller that is requested<br />
+● Return HTML code for the browser<br />
+<strong>II. </strong><strong>Change a website from within index.php</strong><br />
+Change the website and uses of index.php by the following steps:<br />
+<em><strong>Step 1</strong></em>: Create Website<br />
+<ul class="ul-listing-style">
+  <li>Generate catalog, root category (<strong><em>Catalog &gt; Manage Categories</em></strong>)</li>
+  <li>Manage store, create website, store and store view (<strong><em>System &gt; Manage Stores</em></strong>)</li>
+  <li>Configure Base Url for the website which has been created (<strong><em>System &gt; Configuration </em></strong>tab <strong><em>Web</em></strong>)</li>
+</ul>
+<em><strong>Step 2</strong></em>: Insert the code below into index.php before the command: <strong>Mage::run($mageRunCode, $mageRunType);</strong><br />
+<pre style="background: #EFEFEF; boder: 1px solid #EFEFEF;"><code style="color: #2a63a5;">switch($_SERVER['HTTP_HOST']) {
+  case 'name_domain_1':
+  case 'name_domain_n':
+  $mageRunCode = 'website_code';
+  $mageRunType = 'website';
+  break;
+  }
+</code></pre>
+Hope this post will give you great helps! <img src="http://blog.magestore.com/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley">
