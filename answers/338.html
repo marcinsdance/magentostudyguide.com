@@ -1,0 +1,19 @@
+<ul>
+  <li>Mage_Core_Block_Template</li>
+  <li>Mage_Core_Block_Text_List</li>
+  <li>Mage_Core_Block_Messages</li>
+  <li>Mage_Core_Block_Text_Tag</li>
+  <li>Mage_Core_Block_Text</li>
+  <li>Mage_Page_Block_Template_Links</li>
+</ul>
+
+  All blocks are either <strong>structural blocks</strong> or <strong>content blocks</strong>.
+  Example:
+  <ul>
+    <li><strong>core/text_list</strong> - Example of a <strong>structural block</strong>.<br />
+      It does not utilize templates; it's simply used to output the content of all of its child blocks one after the other.
+    </li>
+    <li><strong>core/template</strong> - Example of a <strong>content block</strong>.<br />
+      The output of this type of block depends on the assigned template. It's child blocks are output within it's template via the getChildHtml('block_name') method.
+    </li>
+  </ul>

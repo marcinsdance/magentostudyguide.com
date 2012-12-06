@@ -78,7 +78,7 @@
       <h5>Questions</h5>
       <ul>
         <li>How does the framework interact with the various codepools?</li>
-        <li>What constitutes a namespace and a module?</li>
+        <li><a href="/answers/1q2.html" class="file">What constitutes a namespace and a module?</a></li>
         <li>What does the structure of a complete theme look like?</li>
       </ul>
       <h5>Reference files</h5>
@@ -321,9 +321,9 @@
       <ul>
         <li>34. Describe the programmatic structure of blocks</li>
         <li>35. Describe the relationship between templates and blocks</li>
-        <li>36. Describe the stages in the lifecycle of a block</li>
+        <li>36. <a href="/answers/336.html" class="file">Describe the stages in the lifecycle of a block</a></li>
         <li>37. Describe events fired in blocks</li>
-        <li>38. Identify different types of blocks</li>
+        <li>38. <a href="/answers/338.html" class="file">Identify different types of blocks</a></li>
         <li>39. Describe block instantiation</li>
         <li>40. Explain different mechanisms for disabling block output</li>
         <li>41. Describe how a typical block is rendered</li>
@@ -355,7 +355,7 @@
             <li>Mage_Core_Block_Text</li>
           </ul>
         </li>
-        <li>(Ad.5) Which block type renders its children automatically?</li>
+        <li>(Ad.36) <a href="/answers/q336.html" class="file">Which block type renders its children automatically?</a></li>
         <li>(Ad.5) Which block type is usually used for a pages?</li>
         <li>(Ad.6) How can a template's block instance be accessed inside the template file, and how can other block instances be accessed?</li>
         <li>(Ad.6) How can block instances be accessed from the controller?</li>
