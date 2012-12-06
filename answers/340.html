@@ -1,0 +1,12 @@
+<ul>
+  <li>If the response has already been created and set on the response object
+outside the regular rendering process (e.g., in an observer),
+the 'no-renderLayout' flag can be set on the action controller using<br/>
+  Mage::app()->getFrontController()->getAction()->setFlag('','no-renderLayout');<br/>
+  </li>
+  <li>This prevents renderLayout() from processing the output blocks.</li>
+  <li>The same can be achieved by calling setNoRender(true) on the front controller:<br/>
+    Mage::app()->getFrontController()->setNoRender(true);
+  </li>
+  <li>Setting the isDispatched() flag on the response object might be more efficient to achieve a similar effect.</li>
+</ul>

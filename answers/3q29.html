@@ -1,0 +1,6 @@
+Access to the layout object from an arbitrary place:<br />
+Mage::app()->getLayout()->getBlock('head')->getTemplate()
+Access to a block instance from an arbitrary place:<br />
+Mage::app()->getLayout()->getBlock('head')->setTemplate('path/to/the/template.phtml')<br /><br />
+Setting template manually, from inside of the block:
+$this->setTemplate('template.phtml');

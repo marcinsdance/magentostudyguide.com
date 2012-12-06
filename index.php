@@ -325,14 +325,14 @@
         <li>37. Describe events fired in blocks</li>
         <li>38. <a href="/answers/338.html" class="file">Identify different types of blocks</a></li>
         <li>39. Describe block instantiation</li>
-        <li>40. Explain different mechanisms for disabling block output</li>
+        <li>40. <a href="/answers/340.html" class="file">Explain different mechanisms for disabling block output</a></li>
         <li>41. Describe how a typical block is rendered</li>
       </ul>
       <h5>Questions</h5>
       <ul>
         <li>(Ad.1) What are blocks used for in Magento?</li>
-        <li>(Ad.1) What is the parent block for all Magento blocks?</li>
-        <li>(Ad.1) Which class does each block that uses a template extend?</li>
+        <li>(Ad.1) <a href="/answers/3q10.html" class="file">What is the parent block for all Magento blocks?</a></li>
+        <li>(Ad.1) <a href="/answers/3q11.html" class="file">Which class does each block that uses a template extend?</a></li>
         <li>(Ad.1) In which way does a template block store information about its template file? Does it store an absolute or a relative path to the template?</li>
         <li>(Ad.1) What is the role of the Mage_Core_Block_Abstract class?</li>
         <li>(Ad.2) Can any block in Magento use a template file?</li>
@@ -344,7 +344,7 @@
         <li>(Ad.3) How is the tree of blocks typically rendered?</li>
         <li>(Ad.3) Is it possible to create an instance of the block and render it on the page without using the Magento layout?</li>
         <li>(Ad.3) Is it possible to create an instance of the block and add it to the current layout manually?</li>
-        <li>(Ad.3) How are a  block's children rendered? Once you added a child to the block, can you expect it will be rendered automatically?</li>
+        <li>(Ad.3) <a href="/answers/3q23.html" class="file">How are a  block's children rendered? Once you added a child to the block, can you expect it will be rendered automatically?</a></li>
         <li>(Ad.3) What is a difference in rendering process for different types of blocks?</li>
         <li>(Ad.4) How can block output be caught using an observer?</li>
         <li>(Ad.4) What events do Mage_Core_Block_Abstract and Mage_Core_Block_Template fire?</li>
@@ -358,8 +358,8 @@
         <li>(Ad.36) <a href="/answers/q336.html" class="file">Which block type renders its children automatically?</a></li>
         <li>(Ad.5) Which block type is usually used for a pages?</li>
         <li>(Ad.6) How can a template's block instance be accessed inside the template file, and how can other block instances be accessed?</li>
-        <li>(Ad.6) How can block instances be accessed from the controller?</li>
-        <li>(Ad.6) How can block instances be accessed inside install scripts or other model class instances?</li>
+        <li>(Ad.6) <a href="/answers/3q28.html" class="file">How can block instances be accessed from the controller?</a></li>
+        <li>(Ad.6) <a href="/answers/3q29.html" class="file">How can block instances be accessed inside install scripts or other model class instances?</a></li>
         <li>(Ad.7) In which ways can block output be disabled in Magento?</li>
         <li>(Ad.7) Which method can be overridden to control block output?</li>
         <li>(Ad.8) Which class performs rendering of the template?</li>
@@ -391,7 +391,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>(Ad.1) How are <update />, <block />, and <action /> used in Magento layout?</li>
+        <li>(Ad.1) How are &lt;update /&gt;, &lt;block /&gt;, and &lt;action /&gt; used in Magento layout?</li>
         <li>(Ad.1) Which classes and methods determine which nodes from layout XML correspond to certain urls?</li>
         <li>(Ad.2) How can layout XML files be registered for the frontend and adminhtml areas?</li>
         <li>(Ad.3) How can code be modified or added to Magento pages using the following methods?

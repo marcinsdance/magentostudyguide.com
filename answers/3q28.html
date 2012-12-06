@@ -1,0 +1,16 @@
+From an action controller:<br />
+$this->getLayout()->getBlock('head')->getTemplate();<br /><br />
+
+  /**<br />
+  * Get specified tab grid<br />
+  */<br />
+    public function gridOnlyAction()<br />
+    {<br />
+      $this->_initProduct();<br />
+      $this->getResponse()->setBody(<br />
+      $this->getLayout()->createBlock('adminhtml/catalog_product_edit_tab_' .<br />
+      $this->getRequest()->gerParam('gridOnlyBlock')<br />
+  )<br />
+  ->toHtml()<br />
+  );<br />
+  }<br />
