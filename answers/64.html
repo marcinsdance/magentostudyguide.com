@@ -1,0 +1,76 @@
+<h2>Frontend Interface</h2>
+/**<br/>
+* Entity attribute frontend interface<br/>
+*<br/>
+* <strong>Frontend is providing the user interface for the attribute</strong><br/>
+*<br/>
+*/<br/>
+<strong>interface Mage_Eav_Model_Entity_Attribute_Frontend_Interface</strong><br/>
+{<br/><br/>
+
+}<br/><br/>
+
+
+<h2>Source Interface</h2>
+/**<br/>
+* Entity attribute select source interface<br/>
+*<br/>
+* <strong>Source is providing the selection options for user interface</strong><br/>
+*<br/>
+*/<br/>
+<strong>interface Mage_Eav_Model_Entity_Attribute_Source_Interface</strong><br/>
+{<br/>
+/**<br/>
+* Retrieve All options<br/>
+*<br/>
+* @return array<br/>
+*/<br/>
+public function getAllOptions();<br/>
+<br/>
+/**<br/>
+* Retrieve Option value text<br/>
+*<br/>
+* @param string $value<br/>
+* @return mixed<br/>
+*/<br/>
+public function getOptionText($value);<br/>
+}<br/><br/>
+
+
+<h2>Backend Interface</h2>
+/**<br/>
+* Entity attribute backend interface<br/>
+*<br/>
+* <strong>Backend is responsible for saving the values of the attribute</strong><br/>
+* <strong>and performing pre and post actions</strong><br/>
+*<br/>
+*/<br/>
+<strong>interface Mage_Eav_Model_Entity_Attribute_Backend_Interface</strong><br/>
+{<br/>
+public function getTable();<br/>
+public function isStatic();<br/>
+public function getType();<br/>
+public function getEntityIdField();<br/>
+public function setValueId($valueId);<br/>
+public function getValueId();<br/>
+public function afterLoad($object);<br/>
+public function beforeSave($object);<br/>
+public function afterSave($object);<br/>
+public function beforeDelete($object);<br/>
+public function afterDelete($object);<br/><br/>
+
+/**<br/>
+* Get entity value id<br/>
+*<br/>
+* @param Varien_Object $entity<br/>
+*/<br/>
+public function getEntityValueId($entity);<br/><br/>
+
+/**<br/>
+* Set entity value id<br/>
+*<br/>
+* @param Varien_Object $entity<br/>
+* @param int $valueId<br/>
+*/<br/>
+public function setEntityValueId($entity, $valueId);<br/>
+}
