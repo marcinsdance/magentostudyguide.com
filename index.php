@@ -476,7 +476,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Under which circumstances are setup scripts executed?</li>
+        <li><a href="/answers/4q9.html" class="file">Under which circumstances are setup scripts executed?</a></li>
         <li>How and where does Magento differentiate between install, upgrade, and downgrade scripts?</li>
         <li>What is the difference between the different classes used to execute setup scripts?</li>
         <li>Which is the base setup class for flat table entities, and which one the base for EAV entities?</li>
