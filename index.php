@@ -25,14 +25,6 @@
     })();
 
   </script>
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
-      fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
   <div class="page">
   <a href="https://github.com/marcinsdance/magentostudyguide.com"><img class="forkme" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
   <div class="wrapper">
@@ -1134,7 +1126,7 @@
         <li>Enterprise_WebsiteRestriction_Block_Cms_Stub</li>
       </ul>
     </li>
-    <li>118. Identify the elements and functioning of Enterprise Edition Full Page Cache
+    <li>118. <a href="/answers/118.html" class="file">Identify the elements and functioning of Enterprise Edition Full Page Cache</a>
     <h5>Questions</h5>
       <ul>
         <li>How does the full page cache module hook into the request flow and serve page requests from the cache?</li>
@@ -1189,6 +1181,6 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')</script>
   <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main2.js"></script>
   </body>
 </html>
