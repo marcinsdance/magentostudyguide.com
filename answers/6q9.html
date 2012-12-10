@@ -1,0 +1,4 @@
+by <a href="http://stackoverflow.com/users/471559/clockworkgeek" target="_blank">clockworkgeek</a><br/>
+<p>Sometimes the cache location (like "/tmp/") or service (like Memcache) is shared with other applications. "Flush Magento Cache" removes only those entries that Magento reliably tracks as it's own. "Flush Cache Storage" clears everything but might affect other applications if they're using it.</p>
+<p>Normally the location is "var/cache/" in Magento's folder so is not shared after all. It is safe to use either button. Sometimes (rarely) entries are not clearly tagged or Magento loses track of them and only the second button has an effect on them. I tend to use the second button when I'm having difficulty tracking down the cause of a problem.</p>
+<p>Found at: <a href="http://stackoverflow.com/questions/5955365/what-is-the-difference-between-flush-magento-cache-and-flush-cache-storage-i" target="_blank">stackoverflow</a></p>

@@ -1,0 +1,38 @@
+In Mage_Adminhtml_Block_Widget_Grid we can find:
+
+  <ul>
+    <li>protected $_varNameLimit    = 'limit';</li>
+    <li>protected $_varNamePage     = 'page';</li>
+    <li>protected $_varNameSort     = 'sort';</li>
+    <li>protected $_varNameDir      = 'dir';</li>
+    <li>protected $_varNameFilter   = 'filter';</li>
+    <li>protected $_defaultLimit    = 20;</li>
+    <li>protected $_defaultPage     = 1;</li>
+    <li>protected $_defaultSort     = false;</li>
+    <li>protected $_defaultDir      = 'desc';</li>
+    <li>protected $_defaultFilter   = array();</li>
+  </ul>
+
+  <strong>Sample usage:</strong><br />
+public function getVarNameLimit()<br />
+{<br />
+&nbsp;&nbsp;return $this->_varNameLimit;<br />
+}<br /><br />
+
+public function setVarNameLimit($name)<br />
+{<br />
+&nbsp;&nbsp;return $this->_varNameLimit = $name;<br />
+}<br /><br />
+
+
+protected function _preparePage()<br />
+{<br />
+&nbsp;&nbsp;$this->getCollection()->setPageSize($this->getParam($this->getVarNameLimit(), $this->_defaultLimit));<br />
+&nbsp;&nbsp;$this->getCollection()->setCurPage($this->getParam($this->getVarNamePage(), $this->_defaultPage));<br />
+}<br /><br />
+
+public function setDefaultLimit($limit)<br />
+{<br />
+&nbsp;&nbsp;$this->_defaultLimit = $limit;<br />
+&nbsp;&nbsp;return $this;<br />
+}
