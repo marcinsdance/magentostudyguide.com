@@ -721,7 +721,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Which product types exist in Magento</li>
+        <li><a href="/answers/7q1.html" class="file">Which product types exist in Magento</a></li>
         <li><a href="/answers/7q2.html" class="file">Which product types are implemented as part of the Mage_Catalog module, and which are not</a></li>
         <li>What steps need to be taken in order to implement a custom product type</li>
         <li>How do the different product types handle price calculation</li>
