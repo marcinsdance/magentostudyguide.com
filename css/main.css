@@ -126,6 +126,7 @@ h1 {
   right: 0;
   border: 0;
   z-index: 2;
+  height: 100px;
 }
 .copyright {
   text-align: center;

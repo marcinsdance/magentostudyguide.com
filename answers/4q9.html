@@ -1,0 +1,7 @@
+Setup scripts are only processed when:
+  <ul>
+    <li>A module version is declared</li>
+    <li>A module setup resource is declared</li>
+    <li>The configuration cache is being refreshed or is turned off</li>
+    <li>Mage::run() was called to execute Magento; that is, Mage::app() will not start setup scripts</li>
+  </ul>

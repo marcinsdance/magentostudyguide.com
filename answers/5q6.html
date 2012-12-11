@@ -1,0 +1,83 @@
+<h2>in Mage_Eav_Model_Entity_Abstract:</h2>
+
+<strong>public function save(Varien_Object $object)</strong><br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if ($object->isDeleted()) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $this->delete($object);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;if (!$this->isPartialSave()) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->loadAllAttributes($object);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;if (!$object->getEntityTypeId()) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$object->setEntityTypeId($this->getTypeId());<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;$object->setParentId((int) $object->getParentId());<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;$this->_beforeSave($object);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<strong>$this->_processSaveData($this->_collectSaveData($object));</strong><br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this->_afterSave($object);<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;return $this;<br />
+}<br /><br />
+
+<strong>protected function _processSaveData($saveData)</strong><br />
+{<br/>
+...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;/**<br />
+&nbsp;&nbsp;&nbsp;&nbsp;* insert attribute values<br />
+&nbsp;&nbsp;&nbsp;&nbsp;*/<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (!empty($insert)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach ($insert as $attributeId => $value) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$attribute = $this->getAttribute($attributeId);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->_insertAttribute($newObject, $attribute, $value);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;/**<br />
+&nbsp;&nbsp;&nbsp;&nbsp;* update attribute values<br />
+&nbsp;&nbsp;&nbsp;&nbsp;*/<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (!empty($update)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach ($update as $attributeId => $v) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$attribute = $this->getAttribute($attributeId);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->_updateAttribute($newObject, $attribute, $v['value_id'], $v['value']);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;/**<br />
+&nbsp;&nbsp;&nbsp;&nbsp;* delete empty attribute values<br />
+&nbsp;&nbsp;&nbsp;&nbsp;*/<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (!empty($delete)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach ($delete as $table => $values) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->_deleteAttributes($newObject, $table, $values);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+...<br />
+}<br/>
+<br /><br />
+
+<strong>protected function _collectSaveData($newObject)</strong><br />
+{<br/>
+...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;/**<br />
+&nbsp;&nbsp;&nbsp;&nbsp;* Check comparability for attribute value<br />
+&nbsp;&nbsp;&nbsp;&nbsp;*/<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if ($this->_canUpdateAttribute($attribute, $v, $origData)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($this->_isAttributeValueEmpty($attribute, $v)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$delete[$attribute->getBackend()->getTable()][] = array(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'attribute_id'  => $attrId,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'value_id'      => $attribute->getBackend()->getValueId()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} elseif ($v !== $origData[$k]) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$update[$attrId] = array(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'value_id' => $attribute->getBackend()->getValueId(),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'value'    => $v,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;} else if (!$this->_isAttributeValueEmpty($attribute, $v)) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$insert[$attrId] = $v;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+...<br />
+}

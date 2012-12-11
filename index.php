@@ -25,14 +25,6 @@
     })();
 
   </script>
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
-      fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
   <div class="page">
   <a href="https://github.com/marcinsdance/magentostudyguide.com"><img class="forkme" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
   <div class="wrapper">
@@ -476,7 +468,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Under which circumstances are setup scripts executed?</li>
+        <li><a href="/answers/4q9.html" class="file">Under which circumstances are setup scripts executed?</a></li>
         <li>How and where does Magento differentiate between install, upgrade, and downgrade scripts?</li>
         <li>What is the difference between the different classes used to execute setup scripts?</li>
         <li>Which is the base setup class for flat table entities, and which one the base for EAV entities?</li>
@@ -503,15 +495,15 @@
         <li>62. Describe the EAV load-and-save process and its differences from the regular load- and-save process</li>
       </ul>
       <h5>Questions</h5>
+      <p>This objective covers understanding how EAV entity values are stored in the database, how the involved tables relate, how the EAV resource models differ from the flat table resource models and how the EAV models process CRUD operations.</p>
       <ul>
-        <li>This objective covers understanding how EAV entity values are stored in the database, how the involved tables relate, how the EAV resource models differ from the flat table resource models and how the EAV models process CRUD operations.</li>
         <li>Which classes in Mage_Eav are used as resource models and which are used as regular models?</li>
         <li>How do flat and EAV resource models differ?</li>
         <li>Which entities in a native Magento installation use EAV resource models and why?</li>
         <li>What are the advantages and disadvantages of EAV over flat table resource models?</li>
-        <li>How are store and website scope attribute values implemented in the Magneto EAV system?</li>
-        <li>How does the model distinguish between insert and update operations?</li>
-        <li>How do load and save processes for EAV entities differ from those for flat table entities?What parts are identical?</li>
+        <li>How are store and website scope attribute values implemented in the Magento EAV system?</li>
+        <li><a href="/answers/5q6.html" class="file">How does the model distinguish between insert and update operations?</a></li>
+        <li>How do load and save processes for EAV entities differ from those for flat table entities? What parts are identical?</li>
       </ul>
       <h5>Reference files</h5>
       <ul>
@@ -529,7 +521,7 @@
     <li><h4>Attributes management</h4>
       <ul>
         <li>63. Identify the purpose of attribute frontend, source, and backend models</li>
-        <li>64. Describe how to implement the interface of attribute frontend, source, and backend models</li>
+        <li>64. <a href="/answers/64.html" class="file">Describe how to implement the interface of attribute frontend, source, and backend models</a></li>
         <li>65. Describe how to create and customize attributes</li>
       </ul>
       <h5>Questions</h5>
@@ -577,11 +569,11 @@
         <li>(Ad.1) When does Magento figure out which area to use on the current page?</li>
         <li>(Ad.1) How you can make your controller work under the /admin route?</li>
         <li>(Ad.2) At which moment does Magento check if a user is logged in or not</li>
-        <li>(Ad.2) Which class do most Magento adminhtml blocks extend</li>
+        <li>(Ad.2) <a href="/answers/6q6.html" class="file">Which class do most Magento adminhtml blocks extend</a></li>
         <li>(Ad.2) What are the roles of adminhtml config</li>
         <li>(Ad.2) What are the differences between the different cache types on the admin cache cleaning page</li>
-        <li>(Ad.2) What is the difference between “Flush storage” and “Flush Magento Cache”</li>
-        <li>(Ad.2) How you can clear the cache without using the UI</li>
+        <li>(Ad.2) <a href="/answers/6q9.html" class="file">What is the difference between “Flush storage” and “Flush Magento Cache”</a></li>
+        <li>(Ad.2) <a href="/answers/6q10.html" class="file">How you can clear the cache without using the UI</a></li>
       </ul>
       <h5>Reference files</h5>
       <ul>
@@ -601,10 +593,10 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Which block does a standard Magento form extend?</li>
-        <li>What is the default template for a Magento form?</li>
+        <li><a href="/answers/6q11.html" class="file">Which block does a standard Magento form extend?</a></li>
+        <li><a href="/answers/6q12.html" class="file">What is the default template for a Magento form?</a></li>
         <li>Describe the role of a form container and its template.</li>
-        <li>Describe the concept of Form elements, and list system elements implemented in Magento.</li>
+        <li><a href="/answers/6q14.html" class="file">Describe the concept of Form elements, and list system elements implemented in Magento.</a></li>
         <li>Describe the concept of Fieldsets.</li>
         <li>How can you render an element with a custom template?</li>
       </ul>
@@ -626,7 +618,7 @@
         <li>What is the default template for Magento grid instances</li>
         <li>How can grid filters be customized</li>
         <li>How does Magento actually perform sorting/paging/filtering operations</li>
-        <li>What protected methods are specific to adminhtml grids, and how are they used</li>
+        <li><a href="/answers/6q21.html" class="file">What protected methods are specific to adminhtml grids, and how are they used</a></li>
         <li>What is the standard column class in a grid, and what is its role</li>
         <li>What are column renderers used for in Magento</li>
         <li>How can javascript used for a Magento grid be customized</li>
@@ -1134,7 +1126,7 @@
         <li>Enterprise_WebsiteRestriction_Block_Cms_Stub</li>
       </ul>
     </li>
-    <li>118. Identify the elements and functioning of Enterprise Edition Full Page Cache
+    <li>118. <a href="/answers/118.html" class="file">Identify the elements and functioning of Enterprise Edition Full Page Cache</a>
     <h5>Questions</h5>
       <ul>
         <li>How does the full page cache module hook into the request flow and serve page requests from the cache?</li>
@@ -1189,6 +1181,6 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')</script>
   <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main2.js"></script>
   </body>
 </html>
