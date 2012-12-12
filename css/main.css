@@ -82,6 +82,8 @@ div.accordion h4 {
 }
 h5 {
   margin: 0;
+  text-decoration: underline;
+  cursor: pointer;
 }
 ul {
   margin-top: 0;

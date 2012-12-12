@@ -256,3 +256,5 @@ $(".closeform").click( function() {
 $(".formwrapper").click( function() {
   $(".theform, .formwrapper").hide();
 });
+$("h5").next().toggle();
+$("h5").click( function() { $(this).next().toggle() })
