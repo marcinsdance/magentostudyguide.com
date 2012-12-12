@@ -1,0 +1,84 @@
+Found at: <a href="http://www.magentocommerce.com/wiki/modules_reference/english/mage_adminhtml/catalog_product/producttype#dokuwiki__top" target="_blank">http://www.magentocommerce.com/wiki/modules_reference/english/mage_adminhtml/catalog_product/producttype#dokuwiki__top</a>
+    <h2><a name="simple" id="simple">Simple</a></h2>
+
+  <p>
+    The Simple Products type should be used for that generally have a single configuration (one-size-fits-all). This might include items such as:
+  </p>
+  <ul>
+    <li class="level1"><div class="li"> A Box of Crayons, Small (24 Colors)</div>
+    </li>
+    <li class="level1"><div class="li"> A Box of Crayons, Large (64 Colors)</div>
+    </li>
+    <li class="level1"><div class="li"> SuperHighTech 26” HD Computer Monitor</div>
+    </li>
+    <li class="level1"><div class="li"> Barrack Obama Action Figure (6”)</div>
+    </li>
+  </ul>
+
+  <h2><a name="grouped" id="grouped">Grouped</a></h2>
+
+  <p>
+    Grouped products allow you to create a new product using one or more existing products in your store. For instance, let’s assume you have a “Barrack Obama Action Figure” and a “George W Bush Action Figure” already in your store and you wanted to sell them as a bundle. You would simply create a new Grouped Product (let’s call it “Obama + Bush (Get Both and Spend Twice as Much!)”, then add both action figures to the group via the “Associated Products” tab.
+  </p>
+
+  <p>
+    Note: Unfortunately, you are not able to set a special “group” price directly from the product page. To offer a discount for buying items together, you will need to create a new Shopping Cart Price Rule.
+  </p>
+
+  <h2><a name="configurable" id="configurable">Configurable</a></h2>
+
+  <p>
+    Configurable Product : This product enables your customers to select the variant that they want by choosing options. For example, you can sell T-shirts in two colors and three sizes. You would create six simple products as individual products (each with its own SKUs) and then add these six to a configurable product where customers can choose the size and color, and then add it to their cart. Very similar functionality is possible by using Custom Options for Simple products. The difference between a configurable product and a product including custom options is that inventory is not checked or updated for individual options during the purchase of the custom options.
+  </p>
+
+  <h2><a name="virtual" id="virtual">Virtual</a></h2>
+
+  <p>
+    Virtual Products are those that do not have a physical or digital counterpart. They do not ship, nor do they have a download link. This product type might be used for services like:
+  </p>
+  <ul>
+    <li class="level1"><div class="li"> House Cleaning</div>
+    </li>
+    <li class="level1"><div class="li"> 1-Year Newsletter Subscription</div>
+    </li>
+  </ul>
+
+  <p>
+    Note: If using Virtual Products for “subscriptions”, it is important to note that there is no built-in way to manage auto-renewing subscriptions. All purchases made in Magento, regardless of Product Type, are one-time purchases.
+  </p>
+
+  <h2><a name="bundle" id="bundle">Bundle</a></h2>
+
+  <p>
+    This product type is also known as a “kit” in other eCommerce software. This product type is ideal for circumstances where the user have to select a number of configurable options, but at least one option. This might includes products like:
+  </p>
+  <ul>
+    <li class="level1"><div class="li"> Customizable Computer Systems</div>
+    </li>
+    <li class="level1"><div class="li"> Customizable Tuxedos/Suits</div>
+    </li>
+  </ul>
+
+  <p>
+    <a href="http://www.magentocommerce.com/blog/comments/video-bundle-kitting-in-magento-11/" class="urlextern" title="http://www.magentocommerce.com/blog/comments/video-bundle-kitting-in-magento-11/" rel="nofollow">Click here for a video tutorial on using bundles</a>
+  </p>
+
+  <h2><a name="downloadable" id="downloadable">Downloadable</a></h2>
+
+  <p>
+    Downloadable products are similar to virtual products, except that they include the ability to add one or more digital files for download. Files can either be uploaded via the Admin interface, or by uploading directly to the server via <acronym title="File Transfer Protocol">FTP</acronym> and then added by <acronym title="Uniform Resource Locator">URL</acronym>. When a customer buys a Downloadable product, Magento will generate a secure, encrypted link (so that the customers can’t see the file’s real location) for that customer to download their file.
+  </p>
+
+  <p>
+    This category might include products such as:
+  </p>
+  <ul>
+    <li class="level1"><div class="li"> Music/MP3s</div>
+    </li>
+    <li class="level1"><div class="li"> Computer Software</div>
+    </li>
+  </ul>
+
+  <p>
+    Note: If you have <acronym title="Secure Sockets Layer">SSL</acronym> enabled for your site, downloads may fail under all versions of <acronym title="Internet Explorer">IE</acronym> as <acronym title="Internet Explorer">IE</acronym> contains a bug that prevents downloading over secure connections if the no-cache header is set. This can be easily fixed in an htaccess file by removing the no-cache and no-store headers, or by forcing download links to to be non-secure.
+  </p>

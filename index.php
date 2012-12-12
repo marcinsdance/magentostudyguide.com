@@ -715,13 +715,13 @@
   <ul class="one">
     <li><h4>Product Types</h4>
       <ul>
-        <li>77. Identify and describe standard product types (simple, configurable, bundled, etc.)</li>
-        <li>78. Create custom product types from scratch or modify existing product types</li>
+        <li>77. <a href="/answers/77.html" class="file">Identify and describe standard product types (simple, configurable, bundled, etc.)</a></li>
+        <li>78. <a href="/answers/78.html" class="file">Create custom product types from scratch or modify existing product types</a></li>
         <li>79. Identify how custom product types interact with indexing, SQL, and underlying data structures.</li>
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Which product types exist in Magento</li>
+        <li><a href="/answers/7q1.html" class="file">Which product types exist in Magento</a></li>
         <li><a href="/answers/7q2.html" class="file">Which product types are implemented as part of the Mage_Catalog module, and which are not</a></li>
         <li>What steps need to be taken in order to implement a custom product type</li>
         <li>How do the different product types handle price calculation</li>
@@ -805,7 +805,7 @@
       <ul>
         <li>84. Choose optimal catalog structure (EAV vs. Flat) for a given implementation</li>
         <li>85. Implement, troubleshoot, and modify Magento tax rules</li>
-        <li>86. Modify, extend, and trou</li>
+        <li>86. Modify, extend, and troubleshoot the Magento layered("filter") navigation</li>
         <li>87. Troubleshoot and customize Magento indexes</li>
         <li>88. Describe custom product options in Magento</li>
       </ul>
