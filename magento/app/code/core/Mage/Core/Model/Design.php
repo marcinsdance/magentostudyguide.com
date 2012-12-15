@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -48,7 +48,7 @@ class Mage_Core_Model_Design extends Mage_Core_Model_Abstract
 {
     protected function _construct()
     {
-        $this->_init('core/design');
+        $this->_init(\'core/design\');
     }
 
     public function validate()
@@ -63,10 +63,10 @@ class Mage_Core_Model_Design extends Mage_Core_Model_Abstract
             ->loadChange($storeId, $date);
 
         if (!empty($result)) {
-            if (!empty($result['design'])) {
-                $tmp = explode('/', $result['design']);
-                $result['package'] = $tmp[0];
-                $result['theme'] = $tmp[1];
+            if (!empty($result[\'design\'])) {
+                $tmp = explode(\'/\', $result[\'design\']);
+                $result[\'package\'] = $tmp[0];
+                $result[\'theme\'] = $tmp[1];
             }
 
             $this->setData($result);
@@ -74,9 +74,8 @@ class Mage_Core_Model_Design extends Mage_Core_Model_Abstract
 
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

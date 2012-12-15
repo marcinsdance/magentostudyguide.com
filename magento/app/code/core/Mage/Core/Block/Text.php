@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -36,13 +36,13 @@ class Mage_Core_Block_Text extends Mage_Core_Block_Abstract
 
     public function setText($text)
     {
-        $this->setData('text', $text);
+        $this->setData(\'text\', $text);
         return $this;
     }
 
     public function getText()
     {
-        return $this->getData('text');
+        return $this->getData(\'text\');
     }
 
     public function addText($text, $before=false)
@@ -57,15 +57,14 @@ class Mage_Core_Block_Text extends Mage_Core_Block_Abstract
     protected function _toHtml()
     {
         if (!$this->_beforeToHtml()) {
-            return '';
+            return \'\';
         }
 
         return $this->getText();
     }
 
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

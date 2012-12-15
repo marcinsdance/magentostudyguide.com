@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -32,15 +32,15 @@ $str = <<<'EOD'
  */
 class Mage_Core_Model_Translate
 {
-    const CSV_SEPARATOR     = ',';
-    const SCOPE_SEPARATOR   = '::';
-    const CACHE_TAG         = 'translate';
+    const CSV_SEPARATOR     = \',\';
+    const SCOPE_SEPARATOR   = \'::\';
+    const CACHE_TAG         = \'translate\';
 
-    const CONFIG_KEY_AREA   = 'area';
-    const CONFIG_KEY_LOCALE = 'locale';
-    const CONFIG_KEY_STORE  = 'store';
-    const CONFIG_KEY_DESIGN_PACKAGE = 'package';
-    const CONFIG_KEY_DESIGN_THEME   = 'theme';
+    const CONFIG_KEY_AREA   = \'area\';
+    const CONFIG_KEY_LOCALE = \'locale\';
+    const CONFIG_KEY_STORE  = \'store\';
+    const CONFIG_KEY_DESIGN_PACKAGE = \'package\';
+    const CONFIG_KEY_DESIGN_THEME   = \'theme\';
 
     /**
      * Locale name
@@ -114,8 +114,8 @@ class Mage_Core_Model_Translate
     {
         $this->setConfig(array(self::CONFIG_KEY_AREA=>$area));
 
-        $this->_translateInline = Mage::getSingleton('core/translate_inline')
-            ->isAllowed($area=='adminhtml' ? 'admin' : null);
+        $this->_translateInline = Mage::getSingleton(\'core/translate_inline\')
+            ->isAllowed($area==\'adminhtml\' ? \'admin\' : null);
 
         if (!$forceReload) {
             if ($this->_canUseCache()) {
@@ -131,7 +131,7 @@ class Mage_Core_Model_Translate
 
         foreach ($this->getModulesConfig() as $moduleName=>$info) {
             $info = $info->asArray();
-            $this->_loadModuleTranslation($moduleName, $info['files'], $forceReload);
+            $this->_loadModuleTranslation($moduleName, $info[\'files\'], $forceReload);
         }
 
         $this->_loadThemeTranslation($forceReload);
@@ -151,11 +151,11 @@ class Mage_Core_Model_Translate
      */
     public function getModulesConfig()
     {
-        if (!Mage::getConfig()->getNode($this->getConfig(self::CONFIG_KEY_AREA).'/translate/modules')) {
+        if (!Mage::getConfig()->getNode($this->getConfig(self::CONFIG_KEY_AREA).\'/translate/modules\')) {
             return array();
         }
 
-        $config = Mage::getConfig()->getNode($this->getConfig(self::CONFIG_KEY_AREA).'/translate/modules')->children();
+        $config = Mage::getConfig()->getNode($this->getConfig(self::CONFIG_KEY_AREA).\'/translate/modules\')->children();
         if (!$config) {
             return array();
         }
@@ -181,7 +181,7 @@ class Mage_Core_Model_Translate
             $this->_config[self::CONFIG_KEY_DESIGN_PACKAGE] = Mage::getDesign()->getPackageName();
         }
         if (!isset($this->_config[self::CONFIG_KEY_DESIGN_THEME])) {
-            $this->_config[self::CONFIG_KEY_DESIGN_THEME] = Mage::getDesign()->getTheme('locale');
+            $this->_config[self::CONFIG_KEY_DESIGN_THEME] = Mage::getDesign()->getTheme(\'locale\');
         }
         return $this;
     }
@@ -260,7 +260,7 @@ class Mage_Core_Model_Translate
 
     protected function _prepareDataString($string)
     {
-        return str_replace('""', '"', $string);
+        return str_replace(\'""\', \'"\', $string);
     }
 
     /**
@@ -270,7 +270,7 @@ class Mage_Core_Model_Translate
      */
     protected function _loadThemeTranslation($forceReload = false)
     {
-        $file = Mage::getDesign()->getLocaleFileName('translate.csv');
+        $file = Mage::getDesign()->getLocaleFileName(\'translate.csv\');
         $this->_addData($this->_getFileData($file), false, $forceReload);
         return $this;
     }
@@ -295,8 +295,8 @@ class Mage_Core_Model_Translate
      */
     protected function _getModuleFilePath($module, $fileName)
     {
-        //$file = Mage::getConfig()->getModuleDir('locale', $module);
-        $file = Mage::getBaseDir('locale');
+        //$file = Mage::getConfig()->getModuleDir(\'locale\', $module);
+        $file = Mage::getBaseDir(\'locale\');
         $file.= DS.$this->getLocale().DS.$fileName;
         return $file;
     }
@@ -327,7 +327,7 @@ class Mage_Core_Model_Translate
     {
         if (is_null($this->_data)) {
             return array();
-            //Mage::throwException('Translation data is not initialized. Please contact developers.');
+            //Mage::throwException(\'Translation data is not initialized. Please contact developers.\');
         }
         return $this->_data;
     }
@@ -358,7 +358,7 @@ class Mage_Core_Model_Translate
      */
     public function getResource()
     {
-        return Mage::getResourceSingleton('core/translate');
+        return Mage::getResourceSingleton(\'core/translate\');
     }
 
     /**
@@ -369,7 +369,7 @@ class Mage_Core_Model_Translate
     public function getTranslate()
     {
         if (is_null($this->_translate)) {
-            $this->_translate = new Zend_Translate('array', $this->getData(), $this->getLocale());
+            $this->_translate = new Zend_Translate(\'array\', $this->getData(), $this->getLocale());
         }
         return $this->_translate;
     }
@@ -384,11 +384,11 @@ class Mage_Core_Model_Translate
     {
         $text = array_shift($args);
 
-        if (is_string($text) && ''==$text
+        if (is_string($text) && \'\'==$text
             || is_null($text)
             || is_bool($text) && false===$text
-            || is_object($text) && ''==$text->getText()) {
-            return '';
+            || is_object($text) && \'\'==$text->getText()) {
+            return \'\';
         }
         if ($text instanceof Mage_Core_Model_Translate_Expr) {
             $code = $text->getCode(self::SCOPE_SEPARATOR);
@@ -397,17 +397,17 @@ class Mage_Core_Model_Translate
             $translated = $this->_getTranslatedString($text, $code);
         }
         else {
-            if (!empty($_REQUEST['theme'])) {
-                $module = 'frontend/default/'.$_REQUEST['theme'];
+            if (!empty($_REQUEST[\'theme\'])) {
+                $module = \'frontend/default/\'.$_REQUEST[\'theme\'];
             } else {
-                $module = 'frontend/default/default';
+                $module = \'frontend/default/default\';
             }
             $code = $module.self::SCOPE_SEPARATOR.$text;
             $translated = $this->_getTranslatedString($text, $code);
         }
 
         //array_unshift($args, $translated);
-        //$result = @call_user_func_array('sprintf', $args);
+        //$result = @call_user_func_array(\'sprintf\', $args);
 
         $result = @vsprintf($translated, $args);
         if ($result === false) {
@@ -415,8 +415,8 @@ class Mage_Core_Model_Translate
         }
 
         if ($this->_translateInline && $this->getTranslateInline()) {
-            if (strpos($result, '{{{')===false || strpos($result, '}}}')===false || strpos($result, '}}{{')===false) {
-                $result = '{{{'.$result.'}}{{'.$translated.'}}{{'.$text.'}}{{'.$module.'}}}';
+            if (strpos($result, \'{{{\')===false || strpos($result, \'}}}\')===false || strpos($result, \'}}{{\')===false) {
+                $result = \'{{{\'.$result.\'}}{{\'.$translated.\'}}{{\'.$text.\'}}{{\'.$module.\'}}}\';
             }
         }
 
@@ -455,27 +455,27 @@ class Mage_Core_Model_Translate
      */
     public function getTemplateFile($file, $type, $localeCode=null)
     {
-        if (is_null($localeCode) || preg_match('/[^a-zA-Z_]/', $localeCode)) {
+        if (is_null($localeCode) || preg_match(\'/[^a-zA-Z_]/\', $localeCode)) {
             $localeCode = $this->getLocale();
         }
 
-        $filePath = Mage::getBaseDir('locale')  . DS
-                  . $localeCode . DS . 'template' . DS . $type . DS . $file;
+        $filePath = Mage::getBaseDir(\'locale\')  . DS
+                  . $localeCode . DS . \'template\' . DS . $type . DS . $file;
 
         if (!file_exists($filePath)) { // If no template specified for this locale, use store default
-            $filePath = Mage::getBaseDir('locale') . DS
+            $filePath = Mage::getBaseDir(\'locale\') . DS
                       . Mage::app()->getLocale()->getDefaultLocale()
-                      . DS . 'template' . DS . $type . DS . $file;
+                      . DS . \'template\' . DS . $type . DS . $file;
         }
 
         if (!file_exists($filePath)) {  // If no template specified as  store default locale, use en_US
-            $filePath = Mage::getBaseDir('locale') . DS
+            $filePath = Mage::getBaseDir(\'locale\') . DS
                       . Mage_Core_Model_Locale::DEFAULT_LOCALE
-                      . DS . 'template' . DS . $type . DS . $file;
+                      . DS . \'template\' . DS . $type . DS . $file;
         }
 
         $ioAdapter = new Varien_Io_File();
-        $ioAdapter->open(array('path' => Mage::getBaseDir('locale')));
+        $ioAdapter->open(array(\'path\' => Mage::getBaseDir(\'locale\')));
 
         return (string) $ioAdapter->read($filePath);
     }
@@ -488,21 +488,21 @@ class Mage_Core_Model_Translate
     public function getCacheId()
     {
         if (is_null($this->_cacheId)) {
-            $this->_cacheId = 'translate';
+            $this->_cacheId = \'translate\';
             if (isset($this->_config[self::CONFIG_KEY_LOCALE])) {
-                $this->_cacheId.= '_'.$this->_config[self::CONFIG_KEY_LOCALE];
+                $this->_cacheId.= \'_\'.$this->_config[self::CONFIG_KEY_LOCALE];
             }
             if (isset($this->_config[self::CONFIG_KEY_AREA])) {
-                $this->_cacheId.= '_'.$this->_config[self::CONFIG_KEY_AREA];
+                $this->_cacheId.= \'_\'.$this->_config[self::CONFIG_KEY_AREA];
             }
             if (isset($this->_config[self::CONFIG_KEY_STORE])) {
-                $this->_cacheId.= '_'.$this->_config[self::CONFIG_KEY_STORE];
+                $this->_cacheId.= \'_\'.$this->_config[self::CONFIG_KEY_STORE];
             }
             if (isset($this->_config[self::CONFIG_KEY_DESIGN_PACKAGE])) {
-                $this->_cacheId.= '_'.$this->_config[self::CONFIG_KEY_DESIGN_PACKAGE];
+                $this->_cacheId.= \'_\'.$this->_config[self::CONFIG_KEY_DESIGN_PACKAGE];
             }
             if (isset($this->_config[self::CONFIG_KEY_DESIGN_THEME])) {
-                $this->_cacheId.= '_'.$this->_config[self::CONFIG_KEY_DESIGN_THEME];
+                $this->_cacheId.= \'_\'.$this->_config[self::CONFIG_KEY_DESIGN_THEME];
             }
         }
         return $this->_cacheId;
@@ -546,7 +546,7 @@ class Mage_Core_Model_Translate
      */
     protected function _canUseCache()
     {
-        return Mage::app()->useCache('translate');
+        return Mage::app()->useCache(\'translate\');
     }
 
     /**
@@ -558,7 +558,7 @@ class Mage_Core_Model_Translate
      */
     protected function _getTranslatedString($text, $code)
     {
-        $translated = '';
+        $translated = \'\';
         if (array_key_exists($code, $this->getData())) {
             $translated = $this->_data[$code];
         }
@@ -570,9 +570,8 @@ class Mage_Core_Model_Translate
         }
         return $translated;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

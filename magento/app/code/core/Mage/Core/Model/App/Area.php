@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -32,15 +32,15 @@ $str = <<<'EOD'
  */
 class Mage_Core_Model_App_Area
 {
-    const AREA_GLOBAL   = 'global';
-    const AREA_FRONTEND = 'frontend';
-    const AREA_ADMIN    = 'admin';
-    const AREA_ADMINHTML = 'adminhtml';
+    const AREA_GLOBAL   = \\'global\\';
+    const AREA_FRONTEND = \\'frontend\\';
+    const AREA_ADMIN    = \\'admin\\';
+    const AREA_ADMINHTML = \\'adminhtml\\';
 
-    const PART_CONFIG   = 'config';
-    const PART_EVENTS   = 'events';
-    const PART_TRANSLATE = 'translate';
-    const PART_DESIGN   = 'design';
+    const PART_CONFIG   = \\'config\\';
+    const PART_EVENTS   = \\'events\\';
+    const PART_TRANSLATE = \\'translate\\';
+    const PART_DESIGN   = \\'design\\';
 
     /**
      * Array of area loaded parts
@@ -110,7 +110,7 @@ class Mage_Core_Model_App_Area
         if (isset($this->_loadedParts[$part])) {
             return $this;
         }
-        Varien_Profiler::start('mage::dispatch::controller::action::predispatch::load_area::'.$this->_code.'::'.$part);
+        Varien_Profiler::start(\\'mage::dispatch::controller::action::predispatch::load_area::\\'.$this->_code.\\'::\\'.$part);
         switch ($part) {
             case self::PART_CONFIG:
                 $this->_initConfig();
@@ -126,7 +126,7 @@ class Mage_Core_Model_App_Area
                 break;
         }
         $this->_loadedParts[$part] = true;
-        Varien_Profiler::stop('mage::dispatch::controller::action::predispatch::load_area::'.$this->_code.'::'.$part);
+        Varien_Profiler::stop(\\'mage::dispatch::controller::action::predispatch::load_area::\\'.$this->_code.\\'::\\'.$part);
         return $this;
     }
 
@@ -153,13 +153,13 @@ class Mage_Core_Model_App_Area
         if (Mage::app()->getRequest()->isStraight()) {
             return $this;
         }
-        $designPackage = Mage::getSingleton('core/design_package');
+        $designPackage = Mage::getSingleton(\\'core/design_package\\');
         if ($designPackage->getArea() != self::AREA_FRONTEND)
             return;
 
         $currentStore = Mage::app()->getStore()->getStoreId();
 
-        $designChange = Mage::getSingleton('core/design')
+        $designChange = Mage::getSingleton(\\'core/design\\')
             ->loadChange($currentStore);
 
         if ($designChange->getData()) {
@@ -167,9 +167,8 @@ class Mage_Core_Model_App_Area
                 ->setTheme($designChange->getTheme());
         }
     }
-}
-EOD;
+}\';
 
-echo '<pre>';
+echo \'<pre>\';
 echo $str;
-echo '</pre>';
+echo \'</pre>\';

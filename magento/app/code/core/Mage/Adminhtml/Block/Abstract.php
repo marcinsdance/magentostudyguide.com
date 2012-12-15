@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -42,12 +42,11 @@ class Mage_Adminhtml_Block_Abstract extends Mage_Core_Block_Template
      */
     protected function _getUrlModelClass()
     {
-        return 'adminhtml/url';
+        return \'adminhtml/url\';
     }
 
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

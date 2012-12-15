@@ -368,7 +368,7 @@
         <li>(Ad.1) <a href="/magento/app/code/core/Mage/Adminhtml/Block/Abstract.php" class="file">Mage_Adminhtml_Block_Abstract</a></li>
         <li>(Ad.3,5) <a href="/magento/app/code/core/Mage/Core/Block/Text.php" class="file">Mage_Core_Block_Text</a></li>
         <li>(Ad.3,5) <a href="/magento/app/code/core/Mage/Core/Block/Text/List.php" class="file">Mage_Core_Block_Text_List</a></li>
-        <li>(Ad.5) Mage/Core/Block/*</li>
+        <li>(Ad.5) <a href="/magento/app/code/core/Mage/Core/Block/" class="file">Mage/Core/Block/*</a></li>
         <li>(Ad.5) <a href="/magento/app/code/core/Mage/Page/Block/Html/Head.php" class="file">Mage_Page_Block_Html_Head</a></li>
         <li>(Ad.6) <a href="/magento/app/code/core/Mage/Core/Controller/Varien/Action.php" class="file">Mage_Core_Controller_Varien_Action</a></li>
       </ul>

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -32,14 +32,14 @@ $str = <<<'EOD'
  */
 class Mage_Core_Model_Resource
 {
-    const AUTO_UPDATE_CACHE_KEY  = 'DB_AUTOUPDATE';
+    const AUTO_UPDATE_CACHE_KEY  = \'DB_AUTOUPDATE\';
     const AUTO_UPDATE_ONCE       = 0;
     const AUTO_UPDATE_NEVER      = -1;
     const AUTO_UPDATE_ALWAYS     = 1;
 
-    const DEFAULT_READ_RESOURCE  = 'core_read';
-    const DEFAULT_WRITE_RESOURCE = 'core_write';
-    const DEFAULT_SETUP_RESOURCE = 'core_setup';
+    const DEFAULT_READ_RESOURCE  = \'core_read\';
+    const DEFAULT_WRITE_RESOURCE = \'core_write\';
+    const DEFAULT_SETUP_RESOURCE = \'core_setup\';
 
     /**
      * Instances of classes for connection types
@@ -98,7 +98,7 @@ class Mage_Core_Model_Resource
             $this->_connections[$name] = $this->_getDefaultConnection($name);
             return $this->_connections[$name];
         }
-        if (!$connConfig->is('active', 1)) {
+        if (!$connConfig->is(\'active\', 1)) {
             return false;
         }
 
@@ -161,13 +161,13 @@ class Mage_Core_Model_Resource
         $className  = $this->_getConnectionAdapterClassName($type);
         if ($className) {
             // define profiler settings
-            $config['profiler'] = isset($config['profiler']) && $config['profiler'] != 'false';
+            $config[\'profiler\'] = isset($config[\'profiler\']) && $config[\'profiler\'] != \'false\';
 
             $connection = new $className($config);
             if ($connection instanceof Varien_Db_Adapter_Interface) {
                 // run after initialization statements
-                if (!empty($config['initStatements'])) {
-                    $connection->query($config['initStatements']);
+                if (!empty($config[\'initStatements\'])) {
+                    $connection->query($config[\'initStatements\']);
                 }
             } else {
                 $connection = false;
@@ -194,7 +194,7 @@ class Mage_Core_Model_Resource
      */
     protected function _getDefaultConnection($requiredConnectionName)
     {
-        if (strpos($requiredConnectionName, 'read') !== false) {
+        if (strpos($requiredConnectionName, \'read\') !== false) {
             return $this->getConnection(self::DEFAULT_READ_RESOURCE);
         }
         return $this->getConnection(self::DEFAULT_WRITE_RESOURCE);
@@ -203,7 +203,7 @@ class Mage_Core_Model_Resource
     /**
      * Get connection type instance
      *
-     * Creates new if doesn't exist
+     * Creates new if doesn\'t exist
      *
      * @param string $type
      * @return Mage_Core_Model_Resource_Type_Abstract
@@ -258,7 +258,7 @@ class Mage_Core_Model_Resource
             list($modelEntity, $tableSuffix) = $modelEntity;
         }
 
-        $parts = explode('/', $modelEntity);
+        $parts = explode(\'/\', $modelEntity);
         if (isset($parts[1])) {
             list($model, $entity) = $parts;
             $entityConfig = false;
@@ -270,17 +270,17 @@ class Mage_Core_Model_Resource
             if ($entityConfig && !empty($entityConfig->table)) {
                 $tableName = (string)$entityConfig->table;
             } else {
-                Mage::throwException(Mage::helper('core')->__('Can\'t retrieve entity config: %s', $modelEntity));
+                Mage::throwException(Mage::helper(\'core\')->__(\'Can\\\'t retrieve entity config: %s\', $modelEntity));
             }
         } else {
             $tableName = $modelEntity;
         }
 
-        Mage::dispatchEvent('resource_get_tablename', array(
-            'resource'      => $this,
-            'model_entity'  => $modelEntity,
-            'table_name'    => $tableName,
-            'table_suffix'  => $tableSuffix
+        Mage::dispatchEvent(\'resource_get_tablename\', array(
+            \'resource\'      => $this,
+            \'model_entity\'  => $modelEntity,
+            \'table_name\'    => $tableName,
+            \'table_suffix\'  => $tableSuffix
         ));
 
         $mappedTableName = $this->getMappedTableName($tableName);
@@ -292,7 +292,7 @@ class Mage_Core_Model_Resource
         }
 
         if (!is_null($tableSuffix)) {
-            $tableName .= '_' . $tableSuffix;
+            $tableName .= \'_\' . $tableSuffix;
         }
         return $this->getConnection(self::DEFAULT_READ_RESOURCE)->getTableName($tableName);
     }
@@ -337,7 +337,7 @@ class Mage_Core_Model_Resource
         if (!empty($row) && is_array($row)) {
             foreach ($row as $key=>&$value) {
                 if (is_string($value) && $value === $zeroDate) {
-                    $value = '';
+                    $value = \'\';
                 }
             }
         }
@@ -364,8 +364,8 @@ class Mage_Core_Model_Resource
 
     public function checkDbConnection()
     {
-        if (!$this->getConnection('core_read')) {
-            //Mage::app()->getResponse()->setRedirect(Mage::getUrl('install'));
+        if (!$this->getConnection(\'core_read\')) {
+            //Mage::app()->getResponse()->setRedirect(Mage::getUrl(\'install\'));
         }
     }
 
@@ -409,9 +409,8 @@ class Mage_Core_Model_Resource
             ->getForeignKeyName($this->getTableName($priTableName), $priColumnName,
                 $this->getTableName($refTableName), $refColumnName);
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

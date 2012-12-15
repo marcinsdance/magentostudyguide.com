@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -35,16 +35,16 @@ $str = <<<'EOD'
  */
 class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
 {
-    const XML_PATH_DEBUG_TEMPLATE_HINTS         = 'dev/debug/template_hints';
-    const XML_PATH_DEBUG_TEMPLATE_HINTS_BLOCKS  = 'dev/debug/template_hints_blocks';
-    const XML_PATH_TEMPLATE_ALLOW_SYMLINK       = 'dev/template/allow_symlink';
+    const XML_PATH_DEBUG_TEMPLATE_HINTS         = \'dev/debug/template_hints\';
+    const XML_PATH_DEBUG_TEMPLATE_HINTS_BLOCKS  = \'dev/debug/template_hints_blocks\';
+    const XML_PATH_TEMPLATE_ALLOW_SYMLINK       = \'dev/template/allow_symlink\';
 
     /**
      * View scripts directory
      *
      * @var string
      */
-    protected $_viewDir = '';
+    protected $_viewDir = \'\';
 
     /**
      * Assigned variables for view
@@ -84,12 +84,12 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
 
         /*
          * In case template was passed through constructor
-         * we assign it to block's property _template
+         * we assign it to block\'s property _template
          * Mainly for those cases when block created
          * not via Mage_Core_Model_Layout::addBlock()
          */
-        if ($this->hasData('template')) {
-            $this->setTemplate($this->getData('template'));
+        if ($this->hasData(\'template\')) {
+            $this->setTemplate($this->getData(\'template\'));
         }
     }
 
@@ -104,7 +104,7 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
     }
 
     /**
-     * Set path to template used for generating block's output.
+     * Set path to template used for generating block\'s output.
      *
      * @param string $template
      * @return Mage_Core_Block_Template
@@ -122,10 +122,10 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
      */
     public function getTemplateFile()
     {
-        $params = array('_relative'=>true);
+        $params = array(\'_relative\'=>true);
         $area = $this->getArea();
         if ($area) {
-            $params['_area'] = $area;
+            $params[\'_area\'] = $area;
         }
         $templateName = Mage::getDesign()->getTemplateFilename($this->getTemplate(), $params);
         return $templateName;
@@ -137,7 +137,7 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
      */
     public function getArea()
     {
-        return $this->_getData('area');
+        return $this->_getData(\'area\');
     }
 
     /**
@@ -169,10 +169,10 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
     public function setScriptPath($dir)
     {
         $scriptPath = realpath($dir);
-        if (strpos($scriptPath, realpath(Mage::getBaseDir('design'))) === 0 || $this->_getAllowSymlinks()) {
+        if (strpos($scriptPath, realpath(Mage::getBaseDir(\'design\'))) === 0 || $this->_getAllowSymlinks()) {
             $this->_viewDir = $dir;
         } else {
-            Mage::log('Not valid script path:' . $dir, Zend_Log::CRIT, null, null, true);
+            Mage::log(\'Not valid script path:\' . $dir, Zend_Log::CRIT, null, null, true);
         }
         return $this;
     }
@@ -194,9 +194,9 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
     {
         if (is_null(self::$_showTemplateHints)) {
             self::$_showTemplateHints = Mage::getStoreConfig(self::XML_PATH_DEBUG_TEMPLATE_HINTS)
-                && Mage::helper('core')->isDevAllowed();
+                && Mage::helper(\'core\')->isDevAllowed();
             self::$_showTemplateHintsBlocks = Mage::getStoreConfig(self::XML_PATH_DEBUG_TEMPLATE_HINTS_BLOCKS)
-                && Mage::helper('core')->isDevAllowed();
+                && Mage::helper(\'core\')->isDevAllowed();
         }
         return self::$_showTemplateHints;
     }
@@ -223,14 +223,14 @@ class Mage_Core_Block_Template extends Mage_Core_Block_Abstract
             echo <<<HTML
 <div style="position:relative; border:1px dotted red; margin:6px 2px; padding:18px 2px 2px 2px; zoom:1;">
 <div style="position:absolute; left:0; top:0; padding:2px 5px; background:red; color:white; font:normal 11px Arial;
-text-align:left !important; z-index:998;" onmouseover="this.style.zIndex='999'"
-onmouseout="this.style.zIndex='998'" title="{$fileName}">{$fileName}</div>
+text-align:left !important; z-index:998;" onmouseover="this.style.zIndex=\'999\'"
+onmouseout="this.style.zIndex=\'998\'" title="{$fileName}">{$fileName}</div>
 HTML;
             if (self::$_showTemplateHintsBlocks) {
                 $thisClass = get_class($this);
                 echo <<<HTML
 <div style="position:absolute; right:0; top:0; padding:2px 5px; background:red; color:blue; font:normal 11px Arial;
-text-align:left !important; z-index:998;" onmouseover="this.style.zIndex='999'" onmouseout="this.style.zIndex='998'"
+text-align:left !important; z-index:998;" onmouseover="this.style.zIndex=\'999\'" onmouseout="this.style.zIndex=\'998\'"
 title="{$thisClass}">{$thisClass}</div>
 HTML;
             }
@@ -241,7 +241,7 @@ HTML;
             if (strpos($includeFilePath, realpath($this->_viewDir)) === 0 || $this->_getAllowSymlinks()) {
                 include $includeFilePath;
             } else {
-                Mage::log('Not valid template file:'.$fileName, Zend_Log::CRIT, null, null, true);
+                Mage::log(\'Not valid template file:\'.$fileName, Zend_Log::CRIT, null, null, true);
             }
 
         } catch (Exception $e) {
@@ -250,13 +250,13 @@ HTML;
         }
 
         if ($this->getShowTemplateHints()) {
-            echo '</div>';
+            echo \'</div>\';
         }
 
         if (!$do) {
             $html = ob_get_clean();
         } else {
-            $html = '';
+            $html = \'\';
         }
         Varien_Profiler::stop($fileName);
         return $html;
@@ -269,7 +269,7 @@ HTML;
      */
     public function renderView()
     {
-        $this->setScriptPath(Mage::getBaseDir('design'));
+        $this->setScriptPath(Mage::getBaseDir(\'design\'));
         $html = $this->fetchView($this->getTemplateFile());
         return $html;
     }
@@ -282,7 +282,7 @@ HTML;
     protected function _toHtml()
     {
         if (!$this->getTemplate()) {
-            return '';
+            return \'\';
         }
         $html = $this->renderView();
         return $html;
@@ -309,10 +309,10 @@ HTML;
      * @param string $fileName
      * @return string
      */
-    public function getJsUrl($fileName='')
+    public function getJsUrl($fileName=\'\')
     {
         if (!$this->_jsUrl) {
-            $this->_jsUrl = Mage::getBaseUrl('js');
+            $this->_jsUrl = Mage::getBaseUrl(\'js\');
         }
         return $this->_jsUrl.$fileName;
     }
@@ -337,10 +337,10 @@ HTML;
     public function getCacheKeyInfo()
     {
         return array(
-            'BLOCK_TPL',
+            \'BLOCK_TPL\',
             Mage::app()->getStore()->getCode(),
             $this->getTemplateFile(),
-            'template' => $this->getTemplate()
+            \'template\' => $this->getTemplate()
         );
     }
 
@@ -356,9 +356,8 @@ HTML;
         }
         return $this->_allowSymlinks;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -36,7 +36,7 @@ $str = <<<'EOD'
 class Varien_Event_Observer extends Varien_Object
 {
     /**
-     * Checkes the observer's event_regex against event's name
+     * Checkes the observer\'s event_regex against event\'s name
      *
      * @param Varien_Event $event
      * @return boolean
@@ -47,7 +47,7 @@ class Varien_Event_Observer extends Varien_Object
     }
 
     /**
-     * Dispatches an event to observer's callback
+     * Dispatches an event to observer\'s callback
      *
      * @param Varien_Event $event
      * @return Varien_Event_Observer
@@ -61,7 +61,7 @@ class Varien_Event_Observer extends Varien_Object
         $callback = $this->getCallback();
         $this->setEvent($event);
 
-        $_profilerKey = 'OBSERVER: '.(is_object($callback[0]) ? get_class($callback[0]) : (string)$callback[0]).' -> '.$callback[1];
+        $_profilerKey = \'OBSERVER: \'.(is_object($callback[0]) ? get_class($callback[0]) : (string)$callback[0]).\' -> \'.$callback[1];
         Varien_Profiler::start($_profilerKey);
         call_user_func($callback, $this);
         Varien_Profiler::stop($_profilerKey);
@@ -71,32 +71,32 @@ class Varien_Event_Observer extends Varien_Object
 
     public function getName()
     {
-        return $this->getData('name');
+        return $this->getData(\'name\');
     }
 
     public function setName($data)
     {
-        return $this->setData('name', $data);
+        return $this->setData(\'name\', $data);
     }
 
     public function getEventName()
     {
-        return $this->getData('event_name');
+        return $this->getData(\'event_name\');
     }
 
     public function setEventName($data)
     {
-        return $this->setData('event_name', $data);
+        return $this->setData(\'event_name\', $data);
     }
 
     public function getCallback()
     {
-        return $this->getData('callback');
+        return $this->getData(\'callback\');
     }
 
     public function setCallback($data)
     {
-        return $this->setData('callback', $data);
+        return $this->setData(\'callback\', $data);
     }
 
     /**
@@ -106,15 +106,14 @@ class Varien_Event_Observer extends Varien_Object
      */
     public function getEvent()
     {
-        return $this->getData('event');
+        return $this->getData(\'event\');
     }
 
     public function setEvent($data)
     {
-        return $this->setData('event', $data);
+        return $this->setData(\'event\', $data);
     }
-}
-EOD;
+}';
 
 echo '<pre>';
 echo $str;
