@@ -447,6 +447,7 @@
         <li>How do table name lookups work, and what is the purpose of making table names configurable?</li>
         <li><a href="/answers/4q4.html" class="file">Which events are fired automatically during CRUD operations?</a></li>
         <li><a href="/answers/4q5.html" class="file">How does Magento figure out if a save() call needs to create an INSERT or an UPDATE query?</a></li>
+        <li>How does Magento figure out if a save() call needs to create an INSERT or an UPDATE query?</li>
         <li>How many ways exist to specify filters on a flat table collection?</li>
         <li><a href="/answers/4q7.html" class="file">Which methods exist to influence the ordering of the result set for flat table collections? How do the methods differ?</a></li>
         <li>Why and how does Magento differentiate between setup, read, and write database resources?</li>

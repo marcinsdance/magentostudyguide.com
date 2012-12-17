@@ -8,3 +8,36 @@ Mage::dispatchEvent('<strong>model_save_after</strong>', array('object'=>$this))
 Mage::dispatchEvent('<strong>model_delete_before</strong>', array('object'=>$this));<br/>
 Mage::dispatchEvent('<strong>model_delete_after</strong>', array('object'=>$this));<br/>
 Mage::dispatchEvent('<strong>model_delete_commit_after</strong>', array('object'=>$this));
+=======
+The events created in /app/code/core/Mage/Core/Model are:<br /><br />
+
+Mage/Core/Model/Layout/Update.php:        Mage::dispatchEvent('core_layout_update_updates_get_after', array('updates' => $updatesRoot));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_load_before', $params);<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_load_before', $params);<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_load_after', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_load_after', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_save_commit_after', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_save_commit_after', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_save_before', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_save_before', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_save_after', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_save_after', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_delete_before', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_delete_before', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_delete_after', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_delete_after', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent('model_delete_commit_after', array('object'=>$this));<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_delete_commit_after', $this->_getEventData());<br />
+Mage/Core/Model/Abstract.php:        Mage::dispatchEvent($this->_eventPrefix.'_clear', $this->_getEventData());<br />
+Mage/Core/Model/Layout.php:        Mage::dispatchEvent('core_layout_block_create_after', array('block'=>$block));<br />
+Mage/Core/Model/Locale.php:        Mage::dispatchEvent('core_locale_set_locale', array('locale'=>$this));<br />
+Mage/Core/Model/Locale.php:            Mage::dispatchEvent('currency_display_options_forming', array(<br />
+Mage/Core/Model/Resource.php:        Mage::dispatchEvent('resource_get_tablename', array(<br />
+Mage/Core/Model/App.php:        Mage::dispatchEvent('application_clean_cache', array('tags' => $tags));<br />
+Mage/Core/Model/Session/Abstract.php:            Mage::dispatchEvent('core_session_abstract_clear_messages');<br />
+Mage/Core/Model/Session/Abstract.php:        Mage::dispatchEvent('core_session_abstract_add_message');<br />
+Mage/Core/Model/Resource/Db/Collection/Abstract.php:        Mage::dispatchEvent('core_collection_abstract_load_before', array('collection' => $this));<br />
+Mage/Core/Model/Resource/Db/Collection/Abstract.php:            Mage::dispatchEvent($this->_eventPrefix.'_load_before', array(<br />
+Mage/Core/Model/Resource/Db/Collection/Abstract.php:        Mage::dispatchEvent('core_collection_abstract_load_after', array('collection' => $this));<br />
+Mage/Core/Model/Resource/Db/Collection/Abstract.php:            Mage::dispatchEvent($this->_eventPrefix.'_load_after', array(<br />
+Mage/Core/Model/Observer.php:        Mage::dispatchEvent('core_clean_cache');
