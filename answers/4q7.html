@@ -1,0 +1,13 @@
+Found in: /lib/Varien/Data/Collection/Db.php:<br/><br/>
+
+public function setOrder($field, $direction = self::SORT_ORDER_DESC)<br/>
+public function addOrder($field, $direction = self::SORT_ORDER_DESC)<br/>
+public function unshiftOrder($field, $direction = self::SORT_ORDER_DESC)<br/><br/>
+
+  <ul>
+    <li>The methods addOrder() and setOrder() are aliases within Varien_Data_Collection_Db.
+    Concrete module collections override these sometimes in different ways: for example,
+    for EAV collections, addOrder() only works for static entity attributes. In short,
+    <strong>always use setOrder()</strong> and you are OK, regardless of the collection type.</li>
+    <li>For EAV collections, the method unshiftOrder() also only works with static attributes.</li>
+  </ul>

@@ -1,0 +1,55 @@
+getTableName()?<br/><br/>
+
+<strong>app/code/core/Mage/Core/Model/Resource.php</strong><br/><br/>
+
+/**<br/>
+* Get resource table name, validated by db adapter<br/>
+*<br/>
+* @param   string|array $modelEntity<br/>
+* @return  string<br/>
+*/<br/>
+public function getTableName($modelEntity)<br/>
+{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$tableSuffix = null;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;if (is_array($modelEntity)) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list($modelEntity, $tableSuffix) = $modelEntity;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;$parts = explode('/', $modelEntity);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;if (isset($parts[1])) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list($model, $entity) = $parts;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$entityConfig = false;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!empty(Mage::getConfig()->getNode()->global->models->{$model}->resourceModel)) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$resourceModel = (string)Mage::getConfig()->getNode()->global->models->{$model}->resourceModel;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$entityConfig  = $this->getEntity($resourceModel, $entity);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($entityConfig && !empty($entityConfig->table)) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tableName = (string)$entityConfig->table;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mage::throwException(Mage::helper('core')->__('Can\'t retrieve entity config: %s', $modelEntity));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tableName = $modelEntity;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Mage::dispatchEvent('resource_get_tablename', array(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'resource'      => $this,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'model_entity'  => $modelEntity,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'table_name'    => $tableName,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'table_suffix'  => $tableSuffix<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;));<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;$mappedTableName = $this->getMappedTableName($tableName);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;if ($mappedTableName) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tableName = $mappedTableName;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tablePrefix = (string)Mage::getConfig()->getTablePrefix();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tableName = $tablePrefix . $tableName;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;if (!is_null($tableSuffix)) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$tableName .= '_' . $tableSuffix;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;return $this->getConnection(self::DEFAULT_READ_RESOURCE)->getTableName($tableName);<br/>
+}

@@ -435,20 +435,20 @@
         <li>49. Describe how Magento works with database tables</li>
         <li>50. Describe the load-and-save process for a regular entity</li>
         <li>51. Describe group save operations</li>
-        <li>52. Describe the role of Zend_Db_Select in Magento</li>
+        <li>52. <a href="/answers/52.html" class="file">Describe the role of Zend_Db_Select in Magento</a></li>
         <li>53. Describe the collection interface (filtering/sorting/grouping)</li>
         <li>54. Describe the hierarchy of database-related classes in Magento</li>
         <li>55. Describe the role and hierarchy of setup objects in Magento</li>
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Which methods exist to access the table of a resource model?</li>
-        <li>Which methods exist to create joins between tables on collections and on select instances?</li>
+        <li><a href="/answers/4q1.html" class="file">Which methods exist to access the table of a resource model?</a></li>
+        <li><a href="/answers/4q2.html" class="file">Which methods exist to create joins between tables on collections and on select instances?</a></li>
         <li>How do table name lookups work, and what is the purpose of making table names configurable?</li>
-        <li>Which events are fired automatically during CRUD operations?</li>
-        <li>How does Magento figure out if a save() call needs to create an INSERT or an UPDATE query?</li>
+        <li><a href="/answers/4q4.html" class="file">Which events are fired automatically during CRUD operations?</a></li>
+        <li><a href="/answers/4q5.html" class="file">How does Magento figure out if a save() call needs to create an INSERT or an UPDATE query?</a></li>
         <li>How many ways exist to specify filters on a flat table collection?</li>
-        <li>Which methods exist to influence the ordering of the result set for flat table collections? How do the methods differ?</li>
+        <li><a href="/answers/4q7.html" class="file">Which methods exist to influence the ordering of the result set for flat table collections? How do the methods differ?</a></li>
         <li>Why and how does Magento differentiate between setup, read, and write database resources?</li>
       </ul>
       <h5>Reference files</h5>
@@ -471,7 +471,7 @@
         <li><a href="/answers/4q9.html" class="file">Under which circumstances are setup scripts executed?</a></li>
         <li>How and where does Magento differentiate between install, upgrade, and downgrade scripts?</li>
         <li>What is the difference between the different classes used to execute setup scripts?</li>
-        <li>Which is the base setup class for flat table entities, and which one the base for EAV entities?</li>
+        <li><a href="/answers/4q12.html" class="file">Which is the base setup class for flat table entities, and which one the base for EAV entities?</a></li>
         <li>Which methods are generally available in setup scripts to manipulate database tables and indexes?</li>
         <li>What is the difference between addAttribute() and updateAttribute() in EAV setup scripts?</li>
         <li>How can you implement a rollback in Magento?</li>
@@ -677,7 +677,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>For what purpose is the _isAllowed() method used and which class types implement it</li>
+        <li><a href="/answers/6q37.html" class="file">For what purpose is the _isAllowed() method used and which class types implement it</a></li>
         <li>What is the XML syntax for adding new menu element</li>
         <li>What is adminhtml.xml used for? Which class parses it, and which class applies it</li>
         <li>Where is the code located that processes the ACL XML and where is the code that applies it</li>

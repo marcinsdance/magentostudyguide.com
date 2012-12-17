@@ -1,0 +1,10 @@
+Found in <strong>app/code/core/Mage/Core/Model/Abstract.php</strong><br/><br/>
+
+Mage::dispatchEvent('<strong>model_load_before</strong>', $params);<br/>
+Mage::dispatchEvent('<strong>model_load_after</strong>', array('object'=>$this));<br/>
+Mage::dispatchEvent('<strong>model_save_commit_after</strong>', array('object'=>$this));<br/>
+Mage::dispatchEvent('<strong>model_save_before</strong>', array('object'=>$this));<br/>
+Mage::dispatchEvent('<strong>model_save_after</strong>', array('object'=>$this));<br/>
+Mage::dispatchEvent('<strong>model_delete_before</strong>', array('object'=>$this));<br/>
+Mage::dispatchEvent('<strong>model_delete_after</strong>', array('object'=>$this));<br/>
+Mage::dispatchEvent('<strong>model_delete_commit_after</strong>', array('object'=>$this));
