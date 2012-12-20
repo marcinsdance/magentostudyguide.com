@@ -724,10 +724,10 @@
       <ul>
         <li><a href="/answers/7q1.html" class="file">Which product types exist in Magento</a></li>
         <li><a href="/answers/7q2.html" class="file">Which product types are implemented as part of the Mage_Catalog module, and which are not</a></li>
-        <li>What steps need to be taken in order to implement a custom product type</li>
-        <li>How do the different product types handle price calculation</li>
+        <li><a href="/answers/78.html" class="file">What steps need to be taken in order to implement a custom product type</a></li>
+        <li><a href="/answers/7q4.html" class="file">How do the different product types handle price calculation</a></li>
         <li>Which indexing processes does the product type influence</li>
-        <li>Which product types implement a parent-child relationship between product entities</li>
+        <li><a href="/answers/7q6.html" class="file">Which product types implement a parent-child relationship between product entities</a></li>
         <li>Which database tables are shared between product types, and which ones are specific to one product type</li>
       </ul>
       <h5>Reference files</h5>
@@ -806,7 +806,7 @@
       <ul>
         <li>84. Choose optimal catalog structure (EAV vs. Flat) for a given implementation</li>
         <li>85. Implement, troubleshoot, and modify Magento tax rules</li>
-        <li>86. Modify, extend, and troubleshoot the Magento layered("filter") navigation</li>
+        <li>86. <a href="/answers/86.html" class="file">Modify, extend, and troubleshoot the Magento layered("filter") navigation</a></li>
         <li>87. Troubleshoot and customize Magento indexes</li>
         <li>88. Describe custom product options in Magento</li>
       </ul>
