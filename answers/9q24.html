@@ -1,0 +1,37 @@
+<p>We find the customer's resource model in Mage/Customer/etc/config.xml:</p>
+<pre>
+
+&lt;models&gt;
+  &lt;customer&gt;
+    &lt;class&gt;Mage_Customer_Model&lt;/class&gt;
+    &lt;resourceModel&gt;customer_resource&lt;/resourceModel&gt;
+  &lt;/customer&gt;
+  &lt;customer_resource&gt;
+    &lt;class&gt;Mage_Customer_Model_Resource&lt;/class&gt;
+    &lt;deprecatedNode&gt;customer_mysql4&lt;/deprecatedNode&gt;
+    &lt;entities&gt;
+      &lt;entity&gt;
+        &lt;table&gt;customer_entity&lt;/table&gt;
+      &lt;/entity&gt;
+      &lt;address_entity&gt;
+        &lt;table&gt;customer_address_entity&lt;/table&gt;
+      &lt;/address_entity&gt;
+      &lt;value_prefix&gt;
+        &lt;table&gt;customer_entity&lt;/table&gt;
+      &lt;/value_prefix&gt;
+      &lt;customer_group&gt;
+        &lt;table&gt;customer_group&lt;/table&gt;
+      &lt;/customer_group&gt;
+      &lt;eav_attribute&gt;
+        &lt;table&gt;customer_eav_attribute&lt;/table&gt;
+      &lt;/eav_attribute&gt;
+      &lt;eav_attribute_website&gt;
+        &lt;table&gt;customer_eav_attribute_website&lt;/table&gt;
+      &lt;/eav_attribute_website&gt;
+      &lt;form_attribute&gt;
+        &lt;table&gt;customer_form_attribute&lt;/table&gt;
+      &lt;/form_attribute&gt;
+    &lt;/entities&gt;
+  &lt;/customer_resource&gt;
+&lt;/models&gt;
+</pre>

@@ -975,9 +975,9 @@
         <li>How does Magento calculate price when an order is created from the admin</li>
         <li>Which steps are necessary in order to create an order from the admin</li>
         <li>What happens when existing orders are edited in the admin</li>
-        <li>What is the difference between order status and order state</li>
+        <li><a href="/answers/9q5.html" class="file">What is the difference between order status and order state</a></li>
         <li>(Ad.99) Which classes and methods are responsible for credit card operations (for example authorization or capturing)</li>
-        <li>(Ad.99) What is the difference between
+        <li>(Ad.99) <a href="/answers/9q7.html" class="file">What is the difference between "pay" and "capture" operations?</a></li>
         <li>(Ad.99) What are the roles of the order, order_payment, invoice, and payment methods in the process of charging a card</li>
         <li>(Ad.99) What are the roles of the total models in the context of the invoice object</li>
         <li>(Ad.99) How does Magento store information about invoices</li>
@@ -1021,7 +1021,7 @@
       <h5>Questions</h5>
       <ul>
         <li>What is the structure of tables in which customer information is stored?</li>
-        <li>What is the customer resource model?</li>
+        <li><a href="/answers/9q24.html" class="file">What is the customer resource model?</a></li>
         <li>How is customer information validated?</li>
         <li>How can customer-related email templates be manipulated?</li>
         <li>What is the difference between shipping and billing addresses for a customer?</li>

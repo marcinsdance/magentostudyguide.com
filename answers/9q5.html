@@ -1,0 +1,21 @@
+<h3><a href="http://ka.lpe.sh/2012/04/21/magento-difference-between-order-states-and-statuses/" target="_blank">
+  Magento: Difference between order states and statuses</a> by <a href="http://ka.lpe.sh/about-me/" target="_blank">Kalpesh Mehta</a></h3>
+<p>If you are building website in Magento, you may have noticed that there are two columns in sales_flat_order table which are confusing.
+  These are state and status. You might think what is the difference between these two, both having same meaning.</p>
+
+<p>Well, this is not the case. They both are different.
+  State is used by magento to tell if the order is new, processing, complete, holded, closed, canceled, etc.;
+  while Statuses are the one that YOU would be defining at the backend in System -> Order Statuses.
+  Magento displays order STATUSES and not STATES in the backend order detail page to let you know which status is assigned as per your mapping.
+  Remember, multiple statuses can be mapped with one state, while vice versa is not possible.</p>
+
+<p>Consider an example, your customer places an order as Cash on Delivery,
+  you will need something like COD_Pending as the order status so that you know it is not yet paid.
+  Magento will have state new for this, which makes you unpredictable of what kind of transaction is this, COD or Prepaid.
+  The STATUS can be anything, as you define, for your understanding; while STATE is something which Magento needs to understand, internally.</p>
+
+  <h3>More links:</h3>
+  <ul>
+    <li><a href="http://tweetorials.tumblr.com/post/9954849018/magento-order-state-and-order-status" target="_blank">http://tweetorials.tumblr.com/post/9954849018/magento-order-state-and-order-status</a></li>
+    <li><a href="http://tweetorials.tumblr.com/post/9954863818/more-on-order-state-and-status" target="_blank">http://tweetorials.tumblr.com/post/9954863818/more-on-order-state-and-status</a></li>
+  </ul>
