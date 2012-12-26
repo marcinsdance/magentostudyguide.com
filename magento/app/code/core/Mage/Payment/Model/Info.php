@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -48,16 +48,16 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
      * @param   mixed $index
      * @return unknown
      */
-    public function getData($key='', $index=null)
+    public function getData($key=\'\', $index=null)
     {
-        if ('cc_number'===$key) {
-            if (empty($this->_data['cc_number']) && !empty($this->_data['cc_number_enc'])) {
-                $this->_data['cc_number'] = $this->decrypt($this->getCcNumberEnc());
+        if (\'cc_number\'===$key) {
+            if (empty($this->_data[\'cc_number\']) && !empty($this->_data[\'cc_number_enc\'])) {
+                $this->_data[\'cc_number\'] = $this->decrypt($this->getCcNumberEnc());
             }
         }
-        if ('cc_cid'===$key) {
-            if (empty($this->_data['cc_cid']) && !empty($this->_data['cc_cid_enc'])) {
-                $this->_data['cc_cid'] = $this->decrypt($this->getCcCidEnc());
+        if (\'cc_cid\'===$key) {
+            if (empty($this->_data[\'cc_cid\']) && !empty($this->_data[\'cc_cid_enc\'])) {
+                $this->_data[\'cc_cid\'] = $this->decrypt($this->getCcCidEnc());
             }
         }
         return parent::getData($key, $index);
@@ -73,17 +73,17 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
     {
         if (!$this->hasMethodInstance()) {
             if ($this->getMethod()) {
-                $instance = Mage::helper('payment')->getMethodInstance($this->getMethod());
+                $instance = Mage::helper(\'payment\')->getMethodInstance($this->getMethod());
                 if ($instance) {
                     $instance->setInfoInstance($this);
                     $this->setMethodInstance($instance);
                     return $instance;
                 }
             }
-            Mage::throwException(Mage::helper('payment')->__('The requested Payment Method is not available.'));
+            Mage::throwException(Mage::helper(\'payment\')->__(\'The requested Payment Method is not available.\'));
         }
 
-        return $this->_getData('method_instance');
+        return $this->_getData(\'method_instance\');
     }
 
     /**
@@ -95,7 +95,7 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
     public function encrypt($data)
     {
         if ($data) {
-            return Mage::helper('core')->encrypt($data);
+            return Mage::helper(\'core\')->encrypt($data);
         }
         return $data;
     }
@@ -109,15 +109,15 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
     public function decrypt($data)
     {
         if ($data) {
-            return Mage::helper('core')->decrypt($data);
+            return Mage::helper(\'core\')->decrypt($data);
         }
         return $data;
     }
 
     /**
      * Additional information setter
-     * Updates data inside the 'additional_information' array
-     * or all 'additional_information' if key is data array
+     * Updates data inside the \'additional_information\' array
+     * or all \'additional_information\' if key is data array
      *
      * @param string|array $key
      * @param mixed $value
@@ -127,7 +127,7 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
     public function setAdditionalInformation($key, $value = null)
     {
         if (is_object($value)) {
-            Mage::throwException(Mage::helper('sales')->__('Payment disallow storing objects.'));
+            Mage::throwException(Mage::helper(\'sales\')->__(\'Payment disallow storing objects.\'));
         }
         $this->_initAdditionalInformation();
         if (is_array($key) && is_null($value)) {
@@ -135,7 +135,7 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
         } else {
             $this->_additionalInformation[$key] = $value;
         }
-        return $this->setData('additional_information', $this->_additionalInformation);
+        return $this->setData(\'additional_information\', $this->_additionalInformation);
     }
 
     /**
@@ -163,10 +163,10 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
     {
         if ($key && isset($this->_additionalInformation[$key])) {
             unset($this->_additionalInformation[$key]);
-            return $this->setData('additional_information', $this->_additionalInformation);
+            return $this->setData(\'additional_information\', $this->_additionalInformation);
         }
         $this->_additionalInformation = -1;
-        return $this->unsetData('additional_information');
+        return $this->unsetData(\'additional_information\');
     }
 
     /**
@@ -189,15 +189,14 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
     protected function _initAdditionalInformation()
     {
         if (-1 === $this->_additionalInformation) {
-            $this->_additionalInformation = $this->_getData('additional_information');
+            $this->_additionalInformation = $this->_getData(\'additional_information\');
         }
         if (null === $this->_additionalInformation) {
             $this->_additionalInformation = array();
         }
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

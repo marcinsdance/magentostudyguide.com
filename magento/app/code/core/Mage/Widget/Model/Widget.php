@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -41,16 +41,16 @@ class Mage_Widget_Model_Widget extends Varien_Object
      */
     public function getXmlConfig()
     {
-        $cachedXml = Mage::app()->loadCache('widget_config');
+        $cachedXml = Mage::app()->loadCache(\'widget_config\');
         if ($cachedXml) {
             $xmlConfig = new Varien_Simplexml_Config($cachedXml);
         } else {
             $config = new Varien_Simplexml_Config();
-            $config->loadString('<?xml version="1.0"?><widgets></widgets>');
-            Mage::getConfig()->loadModulesConfiguration('widget.xml', $config);
+            $config->loadString(\'<?xml version="1.0"?><widgets></widgets>\');
+            Mage::getConfig()->loadModulesConfiguration(\'widget.xml\', $config);
             $xmlConfig = $config;
-            if (Mage::app()->useCache('config')) {
-                Mage::app()->saveCache($config->getXmlString(), 'widget_config',
+            if (Mage::app()->useCache(\'config\')) {
+                Mage::app()->saveCache($config->getXmlString(), \'widget_config\',
                     array(Mage_Core_Model_Config::CACHE_TAG));
             }
         }
@@ -65,7 +65,7 @@ class Mage_Widget_Model_Widget extends Varien_Object
      */
     public function getXmlElementByType($type)
     {
-        $elements = $this->getXmlConfig()->getXpath('*[@type="' . $type . '"]');
+        $elements = $this->getXmlConfig()->getXpath(\'*[@type="\' . $type . \'"]\');
         if (is_array($elements) && isset($elements[0]) && $elements[0] instanceof Varien_Simplexml_Element) {
             return $elements[0];
         }
@@ -103,42 +103,42 @@ class Mage_Widget_Model_Widget extends Varien_Object
         $object->setData($xml->asCanonicalArray());
 
         // Set module for translations etc.
-        $module = $object->getData('@/module');
+        $module = $object->getData(\'@/module\');
         if ($module) {
             $object->setModule($module);
         }
 
         // Correct widget parameters and convert its data to objects
-        $params = $object->getData('parameters');
+        $params = $object->getData(\'parameters\');
         $newParams = array();
         if (is_array($params)) {
             $sortOrder = 0;
             foreach ($params as $key => $data) {
                 if (is_array($data)) {
-                    $data['key'] = $key;
-                    $data['sort_order'] = isset($data['sort_order']) ? (int)$data['sort_order'] : $sortOrder;
+                    $data[\'key\'] = $key;
+                    $data[\'sort_order\'] = isset($data[\'sort_order\']) ? (int)$data[\'sort_order\'] : $sortOrder;
 
                     // prepare values (for drop-dawns) specified directly in configuration
                     $values = array();
-                    if (isset($data['values']) && is_array($data['values'])) {
-                        foreach ($data['values'] as $value) {
-                            if (isset($value['label']) && isset($value['value'])) {
+                    if (isset($data[\'values\']) && is_array($data[\'values\'])) {
+                        foreach ($data[\'values\'] as $value) {
+                            if (isset($value[\'label\']) && isset($value[\'value\'])) {
                                 $values[] = $value;
                             }
                         }
                     }
-                    $data['values'] = $values;
+                    $data[\'values\'] = $values;
 
                     // prepare helper block object
-                    if (isset($data['helper_block'])) {
+                    if (isset($data[\'helper_block\'])) {
                         $helper = new Varien_Object();
-                        if (isset($data['helper_block']['data']) && is_array($data['helper_block']['data'])) {
-                            $helper->addData($data['helper_block']['data']);
+                        if (isset($data[\'helper_block\'][\'data\']) && is_array($data[\'helper_block\'][\'data\'])) {
+                            $helper->addData($data[\'helper_block\'][\'data\']);
                         }
-                        if (isset($data['helper_block']['type'])) {
-                            $helper->setType($data['helper_block']['type']);
+                        if (isset($data[\'helper_block\'][\'type\'])) {
+                            $helper->setType($data[\'helper_block\'][\'type\']);
                         }
-                        $data['helper_block'] = $helper;
+                        $data[\'helper_block\'] = $helper;
                     }
 
                     $newParams[$key] = new Varien_Object($data);
@@ -146,8 +146,8 @@ class Mage_Widget_Model_Widget extends Varien_Object
                 }
             }
         }
-        uasort($newParams, array($this, '_sortParameters'));
-        $object->setData('parameters', $newParams);
+        uasort($newParams, array($this, \'_sortParameters\'));
+        $object->setData(\'parameters\', $newParams);
 
         return $object;
     }
@@ -191,22 +191,22 @@ class Mage_Widget_Model_Widget extends Varien_Object
      */
     public function getWidgetsArray($filters = array())
     {
-        if (!$this->_getData('widgets_array')) {
+        if (!$this->_getData(\'widgets_array\')) {
             $result = array();
             foreach ($this->getWidgetsXml($filters) as $widget) {
-                $helper = $widget->getAttribute('module') ? $widget->getAttribute('module') : 'widget';
+                $helper = $widget->getAttribute(\'module\') ? $widget->getAttribute(\'module\') : \'widget\';
                 $helper = Mage::helper($helper);
                 $result[$widget->getName()] = array(
-                    'name'          => $helper->__((string)$widget->name),
-                    'code'          => $widget->getName(),
-                    'type'          => $widget->getAttribute('type'),
-                    'description'   => $helper->__((string)$widget->description)
+                    \'name\'          => $helper->__((string)$widget->name),
+                    \'code\'          => $widget->getName(),
+                    \'type\'          => $widget->getAttribute(\'type\'),
+                    \'description\'   => $helper->__((string)$widget->description)
                 );
             }
             usort($result, array($this, "_sortWidgets"));
-            $this->setData('widgets_array', $result);
+            $this->setData(\'widgets_array\', $result);
         }
-        return $this->_getData('widgets_array');
+        return $this->_getData(\'widgets_array\');
     }
 
     /**
@@ -219,13 +219,13 @@ class Mage_Widget_Model_Widget extends Varien_Object
      */
     public function getWidgetDeclaration($type, $params = array(), $asIs = true)
     {
-        $directive = '{{widget type="' . $type . '"';
+        $directive = \'{{widget type="\' . $type . \'"\';
 
         foreach ($params as $name => $value) {
             // Retrieve default option value if pre-configured
             if (is_array($value)) {
-                $value = implode(',', $value);
-            } elseif (trim($value) == '') {
+                $value = implode(\',\', $value);
+            } elseif (trim($value) == \'\') {
                 $widget = $this->getConfigAsObject($type);
                 $parameters = $widget->getParameters();
                 if (isset($parameters[$name]) && is_object($parameters[$name])) {
@@ -233,26 +233,26 @@ class Mage_Widget_Model_Widget extends Varien_Object
                 }
             }
             if ($value) {
-                $directive .= sprintf(' %s="%s"', $name, $value);
+                $directive .= sprintf(\' %s="%s"\', $name, $value);
             }
         }
-        $directive .= '}}';
+        $directive .= \'}}\';
 
         if ($asIs) {
             return $directive;
         }
 
-        $config = Mage::getSingleton('widget/widget_config');
-        $imageName = str_replace('/', '__', $type) . '.gif';
+        $config = Mage::getSingleton(\'widget/widget_config\');
+        $imageName = str_replace(\'/\', \'__\', $type) . \'.gif\';
         if (is_file($config->getPlaceholderImagesBaseDir() . DS . $imageName)) {
             $image = $config->getPlaceholderImagesBaseUrl() . $imageName;
         } else {
-            $image = $config->getPlaceholderImagesBaseUrl() . 'default.gif';
+            $image = $config->getPlaceholderImagesBaseUrl() . \'default.gif\';
         }
-        $html = sprintf('<img id="%s" src="%s" title="%s">',
+        $html = sprintf(\'<img id="%s" src="%s" title="%s">\',
             $this->_idEncode($directive),
             $image,
-            Mage::helper('core')->urlEscape($directive)
+            Mage::helper(\'core\')->urlEscape($directive)
         );
         return $html;
     }
@@ -267,7 +267,7 @@ class Mage_Widget_Model_Widget extends Varien_Object
         $result = array();
         foreach ($this->getWidgetsXml() as $widget) {
             if ($widget->js) {
-                foreach (explode(',', (string)$widget->js) as $js) {
+                foreach (explode(\',\', (string)$widget->js) as $js) {
                     $result[] = $js;
                 }
             }
@@ -283,7 +283,7 @@ class Mage_Widget_Model_Widget extends Varien_Object
      */
     protected function _idEncode($string)
     {
-        return strtr(base64_encode($string), '+/=', ':_-');
+        return strtr(base64_encode($string), \'+/=\', \':_-\');
     }
 
     /**
@@ -307,13 +307,12 @@ class Mage_Widget_Model_Widget extends Varien_Object
      */
     protected function _sortParameters($a, $b)
     {
-        $aOrder = (int)$a->getData('sort_order');
-        $bOrder = (int)$b->getData('sort_order');
+        $aOrder = (int)$a->getData(\'sort_order\');
+        $bOrder = (int)$b->getData(\'sort_order\');
         return $aOrder < $bOrder ? -1 : ($aOrder > $bOrder ? 1 : 0);
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

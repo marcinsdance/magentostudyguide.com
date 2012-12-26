@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -69,7 +69,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
      */
     public function getName()
     {
-        return Mage::helper('catalog')->__('Product Attributes');
+        return Mage::helper(\'catalog\')->__(\'Product Attributes\');
     }
 
     /**
@@ -79,7 +79,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
      */
     public function getDescription()
     {
-        return Mage::helper('catalog')->__('Index product attributes for layered navigation building');
+        return Mage::helper(\'catalog\')->__(\'Index product attributes for layered navigation building\');
     }
 
     /**
@@ -88,7 +88,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
      */
     protected function _construct()
     {
-        $this->_init('catalog/product_indexer_eav');
+        $this->_init(\'catalog/product_indexer_eav\');
     }
 
     /**
@@ -121,7 +121,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
                     break;
             }
         } else if ($entity == Mage_Catalog_Model_Convert_Adapter_Product::ENTITY) {
-            $event->addNewData('catalog_product_eav_reindex_all', true);
+            $event->addNewData(\'catalog_product_eav_reindex_all\', true);
         }
     }
 
@@ -134,7 +134,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
     protected function _attributeIsIndexable($attribute)
     {
         if (!$attribute instanceof Mage_Catalog_Model_Resource_Eav_Attribute) {
-            $attribute = Mage::getSingleton('eav/config')
+            $attribute = Mage::getSingleton(\'eav/config\')
                 ->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute);
         }
 
@@ -162,7 +162,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
         }
 
         if ($reindexEav) {
-            $event->addNewData('reindex_eav', $reindexEav);
+            $event->addNewData(\'reindex_eav\', $reindexEav);
         }
 
         return $this;
@@ -181,7 +181,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
 
         $parentIds  = $this->_getResource()->getRelationsByChild($product->getId());
         if ($parentIds) {
-            $event->addNewData('reindex_eav_parent_ids', $parentIds);
+            $event->addNewData(\'reindex_eav_parent_ids\', $parentIds);
         }
 
         return $this;
@@ -217,7 +217,7 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
 
         // register affected products
         if ($reindexEav) {
-            $event->addNewData('reindex_eav_product_ids', $actionObject->getProductIds());
+            $event->addNewData(\'reindex_eav_product_ids\', $actionObject->getProductIds());
         }
 
         return $this;
@@ -234,17 +234,17 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
         /* @var $attribute Mage_Catalog_Model_Resource_Eav_Attribute */
         $attribute = $event->getDataObject();
         if ($attribute->isIndexable()) {
-            $before = $attribute->getOrigData('is_filterable')
-                || $attribute->getOrigData('is_filterable_in_search')
-                || $attribute->getOrigData('is_visible_in_advanced_search');
-            $after  = $attribute->getData('is_filterable')
-                || $attribute->getData('is_filterable_in_search')
-                || $attribute->getData('is_visible_in_advanced_search');
+            $before = $attribute->getOrigData(\'is_filterable\')
+                || $attribute->getOrigData(\'is_filterable_in_search\')
+                || $attribute->getOrigData(\'is_visible_in_advanced_search\');
+            $after  = $attribute->getData(\'is_filterable\')
+                || $attribute->getData(\'is_filterable_in_search\')
+                || $attribute->getData(\'is_visible_in_advanced_search\');
 
             if (!$before && $after || $before && !$after) {
-                $event->addNewData('reindex_attribute', 1);
-                $event->addNewData('attribute_index_type', $attribute->getIndexType());
-                $event->addNewData('is_indexable', $after);
+                $event->addNewData(\'reindex_attribute\', 1);
+                $event->addNewData(\'attribute_index_type\', $attribute->getIndexType());
+                $event->addNewData(\'is_indexable\', $after);
             }
         }
 
@@ -259,16 +259,15 @@ class Mage_Catalog_Model_Product_Indexer_Eav extends Mage_Index_Model_Indexer_Ab
     protected function _processEvent(Mage_Index_Model_Event $event)
     {
         $data = $event->getNewData();
-        if (!empty($data['catalog_product_eav_reindex_all'])) {
+        if (!empty($data[\'catalog_product_eav_reindex_all\'])) {
             $this->reindexAll();
         }
-        if (empty($data['catalog_product_eav_skip_call_event_handler'])) {
+        if (empty($data[\'catalog_product_eav_skip_call_event_handler\'])) {
             $this->callEventHandler($event);
         }
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

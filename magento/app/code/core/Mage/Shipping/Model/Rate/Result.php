@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -146,11 +146,11 @@ class Mage_Shipping_Model_Rate_Result
         $rates = array();
         $allRates = $this->getAllRates();
         foreach ($allRates as $rate) {
-            $rates[$rate->getCarrier()]['title'] = $rate->getCarrierTitle();
-            $rates[$rate->getCarrier()]['methods'][$rate->getMethod()] = array(
-                'title' => $rate->getMethodTitle(),
-                'price' => $rate->getPrice(),
-                'price_formatted' => $currencyFilter->filter($rate->getPrice()),
+            $rates[$rate->getCarrier()][\'title\'] = $rate->getCarrierTitle();
+            $rates[$rate->getCarrier()][\'methods\'][$rate->getMethod()] = array(
+                \'title\' => $rate->getMethodTitle(),
+                \'price\' => $rate->getPrice(),
+                \'price_formatted\' => $currencyFilter->filter($rate->getPrice()),
             );
         }
         return $rates;
@@ -216,9 +216,8 @@ class Mage_Shipping_Model_Rate_Result
 
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

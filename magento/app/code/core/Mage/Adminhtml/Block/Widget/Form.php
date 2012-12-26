@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -49,8 +49,8 @@ class Mage_Adminhtml_Block_Widget_Form extends Mage_Adminhtml_Block_Widget
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('widget/form.phtml');
-        $this->setDestElementId('edit_form');
+        $this->setTemplate(\'widget/form.phtml\');
+        $this->setDestElementId(\'edit_form\');
         $this->setShowGlobalIcon(false);
     }
 
@@ -64,13 +64,13 @@ class Mage_Adminhtml_Block_Widget_Form extends Mage_Adminhtml_Block_Widget
     protected function _prepareLayout()
     {
         Varien_Data_Form::setElementRenderer(
-            $this->getLayout()->createBlock('adminhtml/widget_form_renderer_element')
+            $this->getLayout()->createBlock(\'adminhtml/widget_form_renderer_element\')
         );
         Varien_Data_Form::setFieldsetRenderer(
-            $this->getLayout()->createBlock('adminhtml/widget_form_renderer_fieldset')
+            $this->getLayout()->createBlock(\'adminhtml/widget_form_renderer_fieldset\')
         );
         Varien_Data_Form::setFieldsetElementRenderer(
-            $this->getLayout()->createBlock('adminhtml/widget_form_renderer_fieldset_element')
+            $this->getLayout()->createBlock(\'adminhtml/widget_form_renderer_fieldset_element\')
         );
 
         return parent::_prepareLayout();
@@ -108,7 +108,7 @@ class Mage_Adminhtml_Block_Widget_Form extends Mage_Adminhtml_Block_Widget
         if (is_object($this->getForm())) {
             return $this->getForm()->getHtml();
         }
-        return '';
+        return \'\';
     }
 
     /**
@@ -175,38 +175,38 @@ class Mage_Adminhtml_Block_Widget_Form extends Mage_Adminhtml_Block_Widget
             }
             if ( ($inputType = $attribute->getFrontend()->getInputType())
                  && !in_array($attribute->getAttributeCode(), $exclude)
-                 && ('media_image' != $inputType)
+                 && (\'media_image\' != $inputType)
                  ) {
 
                 $fieldType      = $inputType;
                 $rendererClass  = $attribute->getFrontend()->getInputRendererClass();
                 if (!empty($rendererClass)) {
-                    $fieldType  = $inputType . '_' . $attribute->getAttributeCode();
+                    $fieldType  = $inputType . \'_\' . $attribute->getAttributeCode();
                     $fieldset->addType($fieldType, $rendererClass);
                 }
 
                 $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
                     array(
-                        'name'      => $attribute->getAttributeCode(),
-                        'label'     => $attribute->getFrontend()->getLabel(),
-                        'class'     => $attribute->getFrontend()->getClass(),
-                        'required'  => $attribute->getIsRequired(),
-                        'note'      => $attribute->getNote(),
+                        \'name\'      => $attribute->getAttributeCode(),
+                        \'label\'     => $attribute->getFrontend()->getLabel(),
+                        \'class\'     => $attribute->getFrontend()->getClass(),
+                        \'required\'  => $attribute->getIsRequired(),
+                        \'note\'      => $attribute->getNote(),
                     )
                 )
                 ->setEntityAttribute($attribute);
 
                 $element->setAfterElementHtml($this->_getAdditionalElementHtml($element));
 
-                if ($inputType == 'select') {
+                if ($inputType == \'select\') {
                     $element->setValues($attribute->getSource()->getAllOptions(true, true));
-                } else if ($inputType == 'multiselect') {
+                } else if ($inputType == \'multiselect\') {
                     $element->setValues($attribute->getSource()->getAllOptions(false, true));
                     $element->setCanBeEmpty(true);
-                } else if ($inputType == 'date') {
-                    $element->setImage($this->getSkinUrl('images/grid-cal.gif'));
+                } else if ($inputType == \'date\') {
+                    $element->setImage($this->getSkinUrl(\'images/grid-cal.gif\'));
                     $element->setFormat(Mage::app()->getLocale()->getDateFormatWithLongYear());
-                } else if ($inputType == 'multiline') {
+                } else if ($inputType == \'multiline\') {
                     $element->setLineCount($attribute->getMultilineCount());
                 }
             }
@@ -244,12 +244,11 @@ class Mage_Adminhtml_Block_Widget_Form extends Mage_Adminhtml_Block_Widget
      */
     protected function _getAdditionalElementHtml($element)
     {
-        return '';
+        return \'\';
     }
 
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

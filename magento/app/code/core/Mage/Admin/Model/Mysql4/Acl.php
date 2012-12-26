@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -35,9 +35,8 @@ $str = <<<'EOD'
  */
 class Mage_Admin_Model_Mysql4_Acl extends Mage_Admin_Model_Resource_Acl
 {
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

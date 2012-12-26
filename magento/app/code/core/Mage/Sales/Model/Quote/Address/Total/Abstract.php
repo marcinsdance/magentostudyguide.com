@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -86,7 +86,7 @@ abstract class Mage_Sales_Model_Quote_Address_Total_Abstract
      */
     public function getLabel()
     {
-        return '';
+        return \'\';
     }
 
     /**
@@ -140,7 +140,7 @@ abstract class Mage_Sales_Model_Quote_Address_Total_Abstract
     {
         if ($this->_address === null) {
             Mage::throwException(
-                Mage::helper('sales')->__('Address model is not defined.')
+                Mage::helper(\'sales\')->__(\'Address model is not defined.\')
             );
         }
         return $this->_address;
@@ -238,7 +238,7 @@ abstract class Mage_Sales_Model_Quote_Address_Total_Abstract
         if (!$this->_itemRowTotalKey) {
             return 0;
         }
-        return $item->getDataUsingMethod('base_' . $this->_itemRowTotalKey);
+        return $item->getDataUsingMethod(\'base_\' . $this->_itemRowTotalKey);
     }
 
     /**
@@ -267,9 +267,8 @@ abstract class Mage_Sales_Model_Quote_Address_Total_Abstract
     {
         return $config;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

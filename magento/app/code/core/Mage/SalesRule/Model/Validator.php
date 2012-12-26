@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -58,7 +58,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
     protected $_isFirstTimeProcessRun = false;
 
     /**
-     * Defines if method Mage_SalesRule_Model_Validator::reset() wasn't called
+     * Defines if method Mage_SalesRule_Model_Validator::reset() wasn\'t called
      * Used for clearing applied rule ids in Quote and in Address
      *
      * @var bool
@@ -94,9 +94,9 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
             ->setCustomerGroupId($customerGroupId)
             ->setCouponCode($couponCode);
 
-        $key = $websiteId . '_' . $customerGroupId . '_' . $couponCode;
+        $key = $websiteId . \'_\' . $customerGroupId . \'_\' . $couponCode;
         if (!isset($this->_rules[$key])) {
-            $this->_rules[$key] = Mage::getResourceModel('salesrule/rule_collection')
+            $this->_rules[$key] = Mage::getResourceModel(\'salesrule/rule_collection\')
                 ->setValidationFilter($websiteId, $customerGroupId, $couponCode)
                 ->load();
         }
@@ -110,7 +110,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
      */
     protected function _getRules()
     {
-        $key = $this->getWebsiteId() . '_' . $this->getCustomerGroupId() . '_' . $this->getCouponCode();
+        $key = $this->getWebsiteId() . \'_\' . $this->getCustomerGroupId() . \'_\' . $this->getCouponCode();
         return $this->_rules[$key];
     }
 
@@ -151,8 +151,8 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
         if ($rule->getCouponType() != Mage_SalesRule_Model_Rule::COUPON_TYPE_NO_COUPON) {
             $couponCode = $address->getQuote()->getCouponCode();
             if (strlen($couponCode)) {
-                $coupon = Mage::getModel('salesrule/coupon');
-                $coupon->load($couponCode, 'code');
+                $coupon = Mage::getModel(\'salesrule/coupon\');
+                $coupon->load($couponCode, \'code\');
                 if ($coupon->getId()) {
                     // check entire usage limit
                     if ($coupon->getUsageLimit() && $coupon->getTimesUsed() >= $coupon->getUsageLimit()) {
@@ -163,7 +163,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
                     $customerId = $address->getQuote()->getCustomerId();
                     if ($customerId && $coupon->getUsagePerCustomer()) {
                         $couponUsage = new Varien_Object();
-                        Mage::getResourceModel('salesrule/coupon_usage')->loadByCustomerCoupon(
+                        Mage::getResourceModel(\'salesrule/coupon_usage\')->loadByCustomerCoupon(
                             $couponUsage, $customerId, $coupon->getId());
                         if ($couponUsage->getCouponId() &&
                             $couponUsage->getTimesUsed() >= $coupon->getUsagePerCustomer()
@@ -182,7 +182,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
         $ruleId = $rule->getId();
         if ($ruleId && $rule->getUsesPerCustomer()) {
             $customerId     = $address->getQuote()->getCustomerId();
-            $ruleCustomer   = Mage::getModel('salesrule/rule_customer');
+            $ruleCustomer   = Mage::getModel(\'salesrule/rule_customer\');
             $ruleCustomer->loadByCustomerRule($customerId, $ruleId);
             if ($ruleCustomer->getId()) {
                 if ($ruleCustomer->getTimesUsed() >= $rule->getUsesPerCustomer()) {
@@ -193,7 +193,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
         }
         $rule->afterLoad();
         /**
-         * quote does not meet rule's conditions
+         * quote does not meet rule\'s conditions
          */
         if (!$rule->validate($address)) {
             $rule->setIsValidForAddress($address, false);
@@ -254,8 +254,8 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
     public function reset(Mage_Sales_Model_Quote_Address $address)
     {
         if ($this->_isFirstTimeResetRun) {
-            $address->setAppliedRuleIds('');
-            $address->getQuote()->setAppliedRuleIds('');
+            $address->setAppliedRuleIds(\'\');
+            $address->getQuote()->setAppliedRuleIds(\'\');
             $this->_isFirstTimeResetRun = false;
         }
 
@@ -347,7 +347,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
 
                 case Mage_SalesRule_Model_Rule::CART_FIXED_ACTION:
                     if (empty($this->_rulesItemTotals[$rule->getId()])) {
-                        Mage::throwException(Mage::helper('salesrule')->__('Item totals are not set for rule.'));
+                        Mage::throwException(Mage::helper(\'salesrule\')->__(\'Item totals are not set for rule.\'));
                     }
 
                     /**
@@ -367,17 +367,17 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
                     }
 
                     if ($cartRules[$rule->getId()] > 0) {
-                        if ($this->_rulesItemTotals[$rule->getId()]['items_count'] <= 1) {
+                        if ($this->_rulesItemTotals[$rule->getId()][\'items_count\'] <= 1) {
                             $quoteAmount = $quote->getStore()->convertPrice($cartRules[$rule->getId()]);
                             $baseDiscountAmount = min($baseItemPrice * $qty, $cartRules[$rule->getId()]);
                         } else {
                             $discountRate = $baseItemPrice * $qty /
-                                            $this->_rulesItemTotals[$rule->getId()]['base_items_price'];
+                                            $this->_rulesItemTotals[$rule->getId()][\'base_items_price\'];
                             $maximumItemDiscount = $rule->getDiscountAmount() * $discountRate;
                             $quoteAmount = $quote->getStore()->convertPrice($maximumItemDiscount);
 
                             $baseDiscountAmount = min($baseItemPrice * $qty, $maximumItemDiscount);
-                            $this->_rulesItemTotals[$rule->getId()]['items_count']--;
+                            $this->_rulesItemTotals[$rule->getId()][\'items_count\']--;
                         }
 
                         $discountAmount = min($itemPrice * $qty, $quoteAmount);
@@ -420,16 +420,16 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
             }
 
             $result = new Varien_Object(array(
-                'discount_amount'      => $discountAmount,
-                'base_discount_amount' => $baseDiscountAmount,
+                \'discount_amount\'      => $discountAmount,
+                \'base_discount_amount\' => $baseDiscountAmount,
             ));
-            Mage::dispatchEvent('salesrule_validator_process', array(
-                'rule'    => $rule,
-                'item'    => $item,
-                'address' => $address,
-                'quote'   => $quote,
-                'qty'     => $qty,
-                'result'  => $result,
+            Mage::dispatchEvent(\'salesrule_validator_process\', array(
+                \'rule\'    => $rule,
+                \'item\'    => $item,
+                \'address\' => $address,
+                \'quote\'   => $quote,
+                \'qty\'     => $qty,
+                \'result\'  => $result,
             ));
 
             $discountAmount = $result->getDiscountAmount();
@@ -459,7 +459,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
             }
 
             /**
-             * We can't use row total here because row total not include tax
+             * We can\'t use row total here because row total not include tax
              * Discount can be applied on price included tax
              */
 
@@ -485,7 +485,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
             }
         }
 
-        $item->setAppliedRuleIds(join(',',$appliedRuleIds));
+        $item->setAppliedRuleIds(join(\',\',$appliedRuleIds));
         $address->setAppliedRuleIds($this->mergeIds($address->getAppliedRuleIds(), $appliedRuleIds));
         $quote->setAppliedRuleIds($this->mergeIds($quote->getAppliedRuleIds(), $appliedRuleIds));
 
@@ -593,14 +593,14 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
     public function mergeIds($a1, $a2, $asString = true)
     {
         if (!is_array($a1)) {
-            $a1 = empty($a1) ? array() : explode(',', $a1);
+            $a1 = empty($a1) ? array() : explode(\',\', $a1);
         }
         if (!is_array($a2)) {
-            $a2 = empty($a2) ? array() : explode(',', $a2);
+            $a2 = empty($a2) ? array() : explode(\',\', $a2);
         }
         $a = array_unique(array_merge($a1, $a2));
         if ($asString) {
-           $a = implode(',', $a);
+           $a = implode(\',\', $a);
         }
         return $a;
     }
@@ -669,9 +669,9 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
                 }
 
                 $this->_rulesItemTotals[$rule->getId()] = array(
-                    'items_price' => $ruleTotalItemsPrice,
-                    'base_items_price' => $ruleTotalBaseItemsPrice,
-                    'items_count' => $validItemsCount,
+                    \'items_price\' => $ruleTotalItemsPrice,
+                    \'base_items_price\' => $ruleTotalBaseItemsPrice,
+                    \'items_count\' => $validItemsCount,
                 );
             }
         }
@@ -690,8 +690,8 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
     protected function _maintainAddressCouponCode($address, $rule)
     {
         /*
-        Rule is a part of rules collection, which includes only rules with 'No Coupon' type or with validated coupon.
-        As a result, if rule uses coupon code(s) ('Specific' or 'Auto' Coupon Type), it always contains validated coupon
+        Rule is a part of rules collection, which includes only rules with \'No Coupon\' type or with validated coupon.
+        As a result, if rule uses coupon code(s) (\'Specific\' or \'Auto\' Coupon Type), it always contains validated coupon
         */
         if ($rule->getCouponType() != Mage_SalesRule_Model_Rule::COUPON_TYPE_NO_COUPON) {
             $address->setCouponCode($this->getCouponCode());
@@ -711,7 +711,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
     {
         $description = $address->getDiscountDescriptionArray();
         $ruleLabel = $rule->getStoreLabel($address->getQuote()->getStore());
-        $label = '';
+        $label = \'\';
         if ($ruleLabel) {
             $label = $ruleLabel;
         } else if (strlen($address->getCouponCode())) {
@@ -748,7 +748,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
      */
     protected function _getItemOriginalPrice($item)
     {
-        return Mage::helper('tax')->getPrice($item, $item->getOriginalPrice(), true);
+        return Mage::helper(\'tax\')->getPrice($item, $item->getOriginalPrice(), true);
     }
 
     /**
@@ -771,7 +771,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
      */
     protected function _getItemBaseOriginalPrice($item)
     {
-        return Mage::helper('tax')->getPrice($item, $item->getBaseOriginalPrice(), true);
+        return Mage::helper(\'tax\')->getPrice($item, $item->getBaseOriginalPrice(), true);
     }
 
     /**
@@ -794,7 +794,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
      * @param string $separator
      * @return Mage_SalesRule_Model_Validator
      */
-    public function prepareDescription($address, $separator=', ')
+    public function prepareDescription($address, $separator=\', \')
     {
         $description = $address->getDiscountDescriptionArray();
 
@@ -802,7 +802,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
             $description = array_unique($description);
             $description = implode($separator, $description);
         } else {
-            $description = '';
+            $description = \'\';
         }
         $address->setDiscountDescription($description);
         return $this;
@@ -810,9 +810,8 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
 
 
 
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

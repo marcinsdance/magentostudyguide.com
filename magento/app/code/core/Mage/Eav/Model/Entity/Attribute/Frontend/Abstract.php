@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -84,7 +84,7 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
     public function getLabel()
     {
         $label = $this->getAttribute()->getFrontendLabel();
-        if (($label === null) || $label == '') {
+        if (($label === null) || $label == \'\') {
             $label = $this->getAttribute()->getAttributeCode();
         }
 
@@ -100,24 +100,24 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
     public function getValue(Varien_Object $object)
     {
         $value = $object->getData($this->getAttribute()->getAttributeCode());
-        if (in_array($this->getConfigField('input'), array('select','boolean'))) {
+        if (in_array($this->getConfigField(\'input\'), array(\'select\',\'boolean\'))) {
             $valueOption = $this->getOption($value);
             if (!$valueOption) {
-                $opt     = Mage::getModel('eav/entity_attribute_source_boolean');
+                $opt     = Mage::getModel(\'eav/entity_attribute_source_boolean\');
                 $options = $opt->getAllOptions();
                 if ($options) {
                     foreach ($options as $option) {
-                        if ($option['value'] == $value) {
-                            $valueOption = $option['label'];
+                        if ($option[\'value\'] == $value) {
+                            $valueOption = $option[\'label\'];
                         }
                     }
                 }
             }
             $value = $valueOption;
-        } elseif ($this->getConfigField('input') == 'multiselect') {
+        } elseif ($this->getConfigField(\'input\') == \'multiselect\') {
             $value = $this->getOption($value);
             if (is_array($value)) {
-                $value = implode(', ', $value);
+                $value = implode(\', \', $value);
             }
         }
 
@@ -131,7 +131,7 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
      */
     public function isVisible()
     {
-        return $this->getConfigField('frontend_visible');
+        return $this->getConfigField(\'frontend_visible\');
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
         $out    = array();
         $out[]  = $this->getAttribute()->getFrontendClass();
         if ($this->getAttribute()->getIsRequired()) {
-            $out[]  = 'required-entry';
+            $out[]  = \'required-entry\';
         }
 
         $inputRuleClass = $this->_getInputValidateClass();
@@ -152,9 +152,9 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
              $out[] = $inputRuleClass;
         }
         if (!empty($out)) {
-            $out = implode(' ', $out);
+            $out = implode(\' \', $out);
         } else {
-            $out = '';
+            $out = \'\';
         }
         return $out;
     }
@@ -168,22 +168,22 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
     {
         $class          = false;
         $validateRules  = $this->getAttribute()->getValidateRules();
-        if (!empty($validateRules['input_validation'])) {
-            switch ($validateRules['input_validation']) {
-                case 'alphanumeric':
-                    $class = 'validate-alphanum';
+        if (!empty($validateRules[\'input_validation\'])) {
+            switch ($validateRules[\'input_validation\']) {
+                case \'alphanumeric\':
+                    $class = \'validate-alphanum\';
                     break;
-                case 'numeric':
-                    $class = 'validate-digits';
+                case \'numeric\':
+                    $class = \'validate-digits\';
                     break;
-                case 'alpha':
-                    $class = 'validate-alpha';
+                case \'alpha\':
+                    $class = \'validate-alpha\';
                     break;
-                case 'email':
-                    $class = 'validate-email';
+                case \'email\':
+                    $class = \'validate-email\';
                     break;
-                case 'url':
-                    $class = 'validate-url';
+                case \'url\':
+                    $class = \'validate-url\';
                     break;
                 default:
                     $class = false;
@@ -201,11 +201,11 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
      */
     public function getConfigField($fieldName)
     {
-        return $this->getAttribute()->getData('frontend_' . $fieldName);
+        return $this->getAttribute()->getData(\'frontend_\' . $fieldName);
     }
 
     /**
-     * Get select options in case it's select box and options source is defined
+     * Get select options in case it\'s select box and options source is defined
      *
      * @return array
      */
@@ -235,15 +235,14 @@ abstract class Mage_Eav_Model_Entity_Attribute_Frontend_Abstract
      * @return string
      */
     public function getInputRendererClass() {
-        $className = $this->getAttribute()->getData('frontend_input_renderer');
+        $className = $this->getAttribute()->getData(\'frontend_input_renderer\');
         if ($className) {
             return Mage::getConfig()->getBlockClassName($className);
         }
         return null;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

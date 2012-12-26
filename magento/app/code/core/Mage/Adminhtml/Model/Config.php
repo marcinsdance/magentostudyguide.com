@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -88,12 +88,12 @@ class Mage_Adminhtml_Model_Config extends Varien_Simplexml_Config
      */
     protected function _initSectionsAndTabs()
     {
-        $config = Mage::getConfig()->loadModulesConfiguration('system.xml')
+        $config = Mage::getConfig()->loadModulesConfiguration(\'system.xml\')
             ->applyExtends();
 
-        Mage::dispatchEvent('adminhtml_init_system_config', array('config' => $config));
-        $this->_sections = $config->getNode('sections');
-        $this->_tabs = $config->getNode('tabs');
+        Mage::dispatchEvent(\'adminhtml_init_system_config\', array(\'config\' => $config));
+        $this->_sections = $config->getNode(\'sections\');
+        $this->_tabs = $config->getNode(\'tabs\');
     }
 
     /**
@@ -176,18 +176,18 @@ class Mage_Adminhtml_Model_Config extends Varien_Simplexml_Config
      */
     function getAttributeModule($sectionNode = null, $groupNode = null, $fieldNode = null)
     {
-        $moduleName = 'adminhtml';
-        if (is_object($sectionNode) && method_exists($sectionNode, 'attributes')) {
+        $moduleName = \'adminhtml\';
+        if (is_object($sectionNode) && method_exists($sectionNode, \'attributes\')) {
             $sectionAttributes = $sectionNode->attributes();
-            $moduleName = isset($sectionAttributes['module']) ? (string)$sectionAttributes['module'] : $moduleName;
+            $moduleName = isset($sectionAttributes[\'module\']) ? (string)$sectionAttributes[\'module\'] : $moduleName;
         }
-        if (is_object($groupNode) && method_exists($groupNode, 'attributes')) {
+        if (is_object($groupNode) && method_exists($groupNode, \'attributes\')) {
             $groupAttributes = $groupNode->attributes();
-            $moduleName = isset($groupAttributes['module']) ? (string)$groupAttributes['module'] : $moduleName;
+            $moduleName = isset($groupAttributes[\'module\']) ? (string)$groupAttributes[\'module\'] : $moduleName;
         }
-        if (is_object($fieldNode) && method_exists($fieldNode, 'attributes')) {
+        if (is_object($fieldNode) && method_exists($fieldNode, \'attributes\')) {
             $fieldAttributes = $fieldNode->attributes();
-            $moduleName = isset($fieldAttributes['module']) ? (string)$fieldAttributes['module'] : $moduleName;
+            $moduleName = isset($fieldAttributes[\'module\']) ? (string)$fieldAttributes[\'module\'] : $moduleName;
         }
 
         return $moduleName;
@@ -203,21 +203,21 @@ class Mage_Adminhtml_Model_Config extends Varien_Simplexml_Config
      */
     public function getSystemConfigNodeLabel($sectionName, $groupName = null, $fieldName = null)
     {
-        $sectionName = trim($sectionName, '/');
-        $path = '//sections/' . $sectionName;
+        $sectionName = trim($sectionName, \'/\');
+        $path = \'//sections/\' . $sectionName;
         $groupNode = $fieldNode = null;
         $sectionNode = $this->_sections->xpath($path);
         if (!empty($groupName)) {
-            $path .= '/groups/' . trim($groupName, '/');
+            $path .= \'/groups/\' . trim($groupName, \'/\');
             $groupNode = $this->_sections->xpath($path);
         }
         if (!empty($fieldName)) {
             if (!empty($groupName)) {
-                $path .= '/fields/' . trim($fieldName, '/');
+                $path .= \'/fields/\' . trim($fieldName, \'/\');
                 $fieldNode = $this->_sections->xpath($path);
             }
             else {
-                Mage::throwException(Mage::helper('adminhtml')->__('The group node name must be specified with field node name.'));
+                Mage::throwException(Mage::helper(\'adminhtml\')->__(\'The group node name must be specified with field node name.\'));
             }
         }
         $moduleName = $this->getAttributeModule($sectionNode, $groupNode, $fieldNode);
@@ -225,7 +225,7 @@ class Mage_Adminhtml_Model_Config extends Varien_Simplexml_Config
         foreach ($systemNode as $node) {
             return Mage::helper($moduleName)->__((string)$node->label);
         }
-        return '';
+        return \'\';
     }
 
     /**
@@ -238,25 +238,24 @@ class Mage_Adminhtml_Model_Config extends Varien_Simplexml_Config
         $paths = array();
         $configSections = $this->getSections();
         if ($configSections) {
-            foreach ($configSections->xpath('//sections/*/groups/*/fields/*/backend_model') as $node) {
-                if ('adminhtml/system_config_backend_encrypted' === (string)$node) {
+            foreach ($configSections->xpath(\'//sections/*/groups/*/fields/*/backend_model\') as $node) {
+                if (\'adminhtml/system_config_backend_encrypted\' === (string)$node) {
                     $section = $node->getParent()->getParent()->getParent()->getParent()->getParent()->getName();
                     $group   = $node->getParent()->getParent()->getParent()->getName();
                     $field   = $node->getParent()->getName();
                     if ($explodePathToEntities) {
-                        $paths[] = array('section' => $section, 'group' => $group, 'field' => $field);
+                        $paths[] = array(\'section\' => $section, \'group\' => $group, \'field\' => $field);
                     }
                     else {
-                        $paths[] = $section . '/' . $group . '/' . $field;
+                        $paths[] = $section . \'/\' . $group . \'/\' . $field;
                     }
                 }
             }
         }
         return $paths;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

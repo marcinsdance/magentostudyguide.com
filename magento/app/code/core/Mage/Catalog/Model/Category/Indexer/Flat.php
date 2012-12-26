@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -38,7 +38,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
     /**
      * Data key for matching result to be saved in
      */
-    const EVENT_MATCH_RESULT_KEY = 'catalog_category_flat_match_result';
+    const EVENT_MATCH_RESULT_KEY = \'catalog_category_flat_match_result\';
 
     /**
      * Matched entity events
@@ -65,7 +65,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
      */
     public function getName()
     {
-        return Mage::helper('catalog')->__('Category Flat Data');
+        return Mage::helper(\'catalog\')->__(\'Category Flat Data\');
     }
 
     /**
@@ -75,7 +75,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
      */
     public function getDescription()
     {
-        return Mage::helper('catalog')->__('Reorganize EAV category structure to flat structure');
+        return Mage::helper(\'catalog\')->__(\'Reorganize EAV category structure to flat structure\');
     }
 
     /**
@@ -85,7 +85,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
      */
     protected function _getIndexer()
     {
-        return Mage::getResourceSingleton('catalog/category_flat');
+        return Mage::getResourceSingleton(\'catalog/category_flat\');
     }
 
     /**
@@ -98,7 +98,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
      */
     public function matchEvent(Mage_Index_Model_Event $event)
     {
-        if (!Mage::helper('catalog/category_flat')->isEnabled(true)) {
+        if (!Mage::helper(\'catalog/category_flat\')->isEnabled(true)) {
             return false;
         }
 
@@ -115,8 +115,8 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
                 /** @var $store Mage_Core_Model_Store */
                 $store = $event->getDataObject();
                 if ($store && ($store->isObjectNew()
-                    || $store->dataHasChangedFor('group_id')
-                    || $store->dataHasChangedFor('root_category_id')
+                    || $store->dataHasChangedFor(\'group_id\')
+                    || $store->dataHasChangedFor(\'root_category_id\')
                 )) {
                     $result = true;
                 } else {
@@ -129,7 +129,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
             /** @var $storeGroup Mage_Core_Model_Store_Group */
             $storeGroup = $event->getDataObject();
             if ($storeGroup
-                && ($storeGroup->dataHasChangedFor('website_id') || $storeGroup->dataHasChangedFor('root_category_id'))
+                && ($storeGroup->dataHasChangedFor(\'website_id\') || $storeGroup->dataHasChangedFor(\'root_category_id\'))
             ) {
                 $result = true;
             } else {
@@ -163,7 +163,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
                     break;
                 }
             case Mage_Core_Model_Store_Group::ENTITY:
-                $event->addNewData('catalog_category_flat_skip_call_event_handler', true);
+                $event->addNewData(\'catalog_category_flat_skip_call_event_handler\', true);
                 $process = $event->getProcess();
                 $process->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
                 break;
@@ -188,9 +188,9 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
                  */
                 $affectedCategoryIds = $category->getAffectedCategoryIds();
                 if ($affectedCategoryIds) {
-                    $event->addNewData('catalog_category_flat_affected_category_ids', $affectedCategoryIds);
+                    $event->addNewData(\'catalog_category_flat_affected_category_ids\', $affectedCategoryIds);
                 } else {
-                    $event->addNewData('catalog_category_flat_category_id', $category->getId());
+                    $event->addNewData(\'catalog_category_flat_category_id\', $category->getId());
                 }
 
                 break;
@@ -209,7 +209,7 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
         if ($event->getType() == Mage_Index_Model_Event::TYPE_DELETE) {
             /* @var $store Mage_Core_Model_Store */
             $store = $event->getDataObject();
-            $event->addNewData('catalog_category_flat_delete_store_id', $store->getId());
+            $event->addNewData(\'catalog_category_flat_delete_store_id\', $store->getId());
         }
         return $this;
     }
@@ -223,17 +223,17 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
     {
         $data = $event->getNewData();
 
-        if (!empty($data['catalog_category_flat_reindex_all'])) {
+        if (!empty($data[\'catalog_category_flat_reindex_all\'])) {
             $this->reindexAll();
-        } else if (!empty($data['catalog_category_flat_category_id'])) {
+        } else if (!empty($data[\'catalog_category_flat_category_id\'])) {
             // catalog_product save
-            $categoryId = $data['catalog_category_flat_category_id'];
+            $categoryId = $data[\'catalog_category_flat_category_id\'];
             $this->_getIndexer()->synchronize($categoryId);
-        } else if (!empty($data['catalog_category_flat_affected_category_ids'])) {
-            $categoryIds = $data['catalog_category_flat_affected_category_ids'];
+        } else if (!empty($data[\'catalog_category_flat_affected_category_ids\'])) {
+            $categoryIds = $data[\'catalog_category_flat_affected_category_ids\'];
             $this->_getIndexer()->move($categoryIds);
-        } else if (!empty($data['catalog_category_flat_delete_store_id'])) {
-            $storeId = $data['catalog_category_flat_delete_store_id'];
+        } else if (!empty($data[\'catalog_category_flat_delete_store_id\'])) {
+            $storeId = $data[\'catalog_category_flat_delete_store_id\'];
             $this->_getIndexer()->deleteStores($storeId);
         }
     }
@@ -246,9 +246,8 @@ class Mage_Catalog_Model_Category_Indexer_Flat extends Mage_Index_Model_Indexer_
     {
         $this->_getIndexer()->reindexAll();
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

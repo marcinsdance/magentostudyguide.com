@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -35,9 +35,8 @@ $str = <<<'EOD'
  */
 class Mage_Customer_Model_Entity_Customer extends Mage_Customer_Model_Resource_Customer
 {
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

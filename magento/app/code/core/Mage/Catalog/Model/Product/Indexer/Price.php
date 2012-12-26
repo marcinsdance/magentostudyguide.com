@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -56,12 +56,12 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
     /**
      * Data key for matching result to be saved in
      */
-    const EVENT_MATCH_RESULT_KEY = 'catalog_product_price_match_result';
+    const EVENT_MATCH_RESULT_KEY = \'catalog_product_price_match_result\';
 
     /**
      * Reindex price event type
      */
-    const EVENT_TYPE_REINDEX_PRICE = 'catalog_reindex_price';
+    const EVENT_TYPE_REINDEX_PRICE = \'catalog_reindex_price\';
 
     /**
      * Matched Entities instruction array
@@ -97,7 +97,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
      */
     protected function _construct()
     {
-        $this->_init('catalog/product_indexer_price');
+        $this->_init(\'catalog/product_indexer_price\');
     }
 
     /**
@@ -107,7 +107,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
      */
     public function getName()
     {
-        return Mage::helper('catalog')->__('Product Prices');
+        return Mage::helper(\'catalog\')->__(\'Product Prices\');
     }
 
     /**
@@ -117,7 +117,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
      */
     public function getDescription()
     {
-        return Mage::helper('catalog')->__('Index product prices');
+        return Mage::helper(\'catalog\')->__(\'Index product prices\');
     }
 
     /**
@@ -128,14 +128,14 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
     protected function _getDependentAttributes()
     {
         return array(
-            'price',
-            'special_price',
-            'special_from_date',
-            'special_to_date',
-            'tax_class_id',
-            'status',
-            'required_options',
-            'force_reindex_required'
+            \'price\',
+            \'special_price\',
+            \'special_from_date\',
+            \'special_to_date\',
+            \'tax_class_id\',
+            \'status\',
+            \'required_options\',
+            \'force_reindex_required\'
         );
     }
 
@@ -183,7 +183,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
 
         $parentIds = $this->_getResource()->getProductParentsByChild($product->getId());
         if ($parentIds) {
-            $event->addNewData('reindex_price_parent_ids', $parentIds);
+            $event->addNewData(\'reindex_price_parent_ids\', $parentIds);
         }
     }
 
@@ -198,7 +198,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
         $product      = $event->getDataObject();
         $attributes   = $this->_getDependentAttributes();
         $reindexPrice = $product->getIsRelationsChanged() || $product->getIsCustomOptionChanged()
-            || $product->dataHasChangedFor('tier_price_changed')
+            || $product->dataHasChangedFor(\'tier_price_changed\')
             || $product->getIsChangedWebsites()
             || $product->getForceReindexRequired();
 
@@ -207,8 +207,8 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
         }
 
         if ($reindexPrice) {
-            $event->addNewData('product_type_id', $product->getTypeId());
-            $event->addNewData('reindex_price', 1);
+            $event->addNewData(\'product_type_id\', $product->getTypeId());
+            $event->addNewData(\'reindex_price\', 1);
         }
     }
 
@@ -237,7 +237,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
 
         // register affected products
         if ($reindexPrice) {
-            $event->addNewData('reindex_price_product_ids', $actionObject->getProductIds());
+            $event->addNewData(\'reindex_price_product_ids\', $actionObject->getProductIds());
         }
     }
 
@@ -255,7 +255,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
             $process = $event->getProcess();
             $process->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
         } else if ($entity == Mage_Catalog_Model_Convert_Adapter_Product::ENTITY) {
-            $event->addNewData('catalog_product_price_reindex_all', true);
+            $event->addNewData(\'catalog_product_price_reindex_all\', true);
         } else if ($entity == Mage_Catalog_Model_Product::ENTITY) {
             switch ($event->getType()) {
                 case Mage_Index_Model_Event::TYPE_DELETE:
@@ -270,7 +270,7 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
                     $this->_registerCatalogProductMassActionEvent($event);
                     break;
                 case self::EVENT_TYPE_REINDEX_PRICE:
-                    $event->addNewData('id', $event->getDataObject()->getId());
+                    $event->addNewData(\'id\', $event->getDataObject()->getId());
                     break;
             }
 
@@ -291,19 +291,18 @@ class Mage_Catalog_Model_Product_Indexer_Price extends Mage_Index_Model_Indexer_
     {
         $data = $event->getNewData();
         if ($event->getType() == self::EVENT_TYPE_REINDEX_PRICE) {
-            $this->_getResource()->reindexProductIds($data['id']);
+            $this->_getResource()->reindexProductIds($data[\'id\']);
             return;
         }
-        if (!empty($data['catalog_product_price_reindex_all'])) {
+        if (!empty($data[\'catalog_product_price_reindex_all\'])) {
             $this->reindexAll();
         }
-        if (empty($data['catalog_product_price_skip_call_event_handler'])) {
+        if (empty($data[\'catalog_product_price_skip_call_event_handler\'])) {
             $this->callEventHandler($event);
         }
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

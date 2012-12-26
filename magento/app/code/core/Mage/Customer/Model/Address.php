@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -38,7 +38,7 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
 
     protected function _construct()
     {
-        $this->_init('customer/address');
+        $this->_init(\'customer/address\');
     }
 
     /**
@@ -48,7 +48,7 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
      */
     public function getCustomerId()
     {
-        return $this->_getData('customer_id') ? $this->_getData('customer_id') : $this->getParentId();
+        return $this->_getData(\'customer_id\') ? $this->_getData(\'customer_id\') : $this->getParentId();
     }
 
     /**
@@ -60,7 +60,7 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
     public function setCustomerId($id)
     {
         $this->setParentId($id);
-        $this->setData('customer_id', $id);
+        $this->setData(\'customer_id\', $id);
         return $this;
     }
 
@@ -75,7 +75,7 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
             return false;
         }
         if (empty($this->_customer)) {
-            $this->_customer = Mage::getModel('customer/customer')
+            $this->_customer = Mage::getModel(\'customer/customer\')
                 ->load($this->getCustomerId());
         }
         return $this->_customer;
@@ -112,12 +112,12 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
      */
     public function getAttributes()
     {
-        $attributes = $this->getData('attributes');
+        $attributes = $this->getData(\'attributes\');
         if (is_null($attributes)) {
             $attributes = $this->_getResource()
                 ->loadAllAttributes($this)
                 ->getSortedAttributes();
-            $this->setData('attributes', $attributes);
+            $this->setData(\'attributes\', $attributes);
         }
         return $attributes;
     }
@@ -144,10 +144,10 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
      */
     public function getEntityTypeId()
     {
-        $entityTypeId = $this->getData('entity_type_id');
+        $entityTypeId = $this->getData(\'entity_type_id\');
         if (!$entityTypeId) {
             $entityTypeId = $this->getEntityType()->getId();
-            $this->setData('entity_type_id', $entityTypeId);
+            $this->setData(\'entity_type_id\', $entityTypeId);
         }
         return $entityTypeId;
     }
@@ -159,7 +159,7 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
      */
     public function getRegionId()
     {
-        return (int)$this->getData('region_id');
+        return (int)$this->getData(\'region_id\');
     }
 
     /**
@@ -170,12 +170,11 @@ class Mage_Customer_Model_Address extends Mage_Customer_Model_Address_Abstract
      */
     public function setRegionId($regionId)
     {
-        $this->setData('region_id', (int)$regionId);
+        $this->setData(\'region_id\', (int)$regionId);
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

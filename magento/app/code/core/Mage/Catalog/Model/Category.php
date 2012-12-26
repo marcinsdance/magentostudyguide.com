@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -39,30 +39,30 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      * Entity code.
      * Can be used as part of method name for entity processing
      */
-    const ENTITY                = 'catalog_category';
+    const ENTITY                = \'catalog_category\';
     /**
      * Category display modes
      */
-    const DM_PRODUCT            = 'PRODUCTS';
-    const DM_PAGE               = 'PAGE';
-    const DM_MIXED              = 'PRODUCTS_AND_PAGE';
+    const DM_PRODUCT            = \'PRODUCTS\';
+    const DM_PAGE               = \'PAGE\';
+    const DM_MIXED              = \'PRODUCTS_AND_PAGE\';
     const TREE_ROOT_ID          = 1;
 
-    const CACHE_TAG             = 'catalog_category';
+    const CACHE_TAG             = \'catalog_category\';
 
     /**
      * Prefix of model events names
      *
      * @var string
      */
-    protected $_eventPrefix     = 'catalog_category';
+    protected $_eventPrefix     = \'catalog_category\';
 
     /**
      * Parameter name in event
      *
      * @var string
      */
-    protected $_eventObject     = 'category';
+    protected $_eventObject     = \'category\';
 
     /**
      * Model cache tag for clear cache in after save and after delete
@@ -96,12 +96,12 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      * @var array
      */
     private $_designAttributes  = array(
-        'custom_design',
-        'custom_design_from',
-        'custom_design_to',
-        'page_layout',
-        'custom_layout_update',
-        'custom_apply_to_products'
+        \'custom_design\',
+        \'custom_design_from\',
+        \'custom_design_to\',
+        \'page_layout\',
+        \'custom_layout_update\',
+        \'custom_apply_to_products\'
     );
 
     /**
@@ -117,11 +117,11 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     protected function _construct()
     {
-        if (Mage::helper('catalog/category_flat')->isEnabled()) {
-            $this->_init('catalog/category_flat');
+        if (Mage::helper(\'catalog/category_flat\')->isEnabled()) {
+            $this->_init(\'catalog/category_flat\');
             $this->_useFlatResource = true;
         } else {
-            $this->_init('catalog/category');
+            $this->_init(\'catalog/category\');
         }
     }
 
@@ -133,7 +133,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     public function getUrlInstance()
     {
         if (!self::$_url) {
-            self::$_url = Mage::getModel('core/url');
+            self::$_url = Mage::getModel(\'core/url\');
         }
         return self::$_url;
     }
@@ -146,7 +146,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     public function getUrlRewrite()
     {
         if (!self::$_urlRewrite) {
-            self::$_urlRewrite = Mage::getModel('core/url_rewrite');
+            self::$_urlRewrite = Mage::getModel(\'core/url_rewrite\');
         }
         return self::$_urlRewrite;
     }
@@ -158,7 +158,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getTreeModel()
     {
-        return Mage::getResourceModel('catalog/category_tree');
+        return Mage::getResourceModel(\'catalog/category_tree\');
     }
 
     /**
@@ -169,7 +169,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     public function getTreeModelInstance()
     {
         if (is_null($this->_treeModel)) {
-            $this->_treeModel = Mage::getResourceSingleton('catalog/category_tree');
+            $this->_treeModel = Mage::getResourceSingleton(\'catalog/category_tree\');
         }
         return $this->_treeModel;
     }
@@ -187,23 +187,23 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
          * Validate new parent category id. (category model is used for backward
          * compatibility in event params)
          */
-        $parent = Mage::getModel('catalog/category')
+        $parent = Mage::getModel(\'catalog/category\')
             ->setStoreId($this->getStoreId())
             ->load($parentId);
 
         if (!$parent->getId()) {
             Mage::throwException(
-                Mage::helper('catalog')->__('Category move operation is not possible: the new parent category was not found.')
+                Mage::helper(\'catalog\')->__(\'Category move operation is not possible: the new parent category was not found.\')
             );
         }
 
         if (!$this->getId()) {
             Mage::throwException(
-                Mage::helper('catalog')->__('Category move operation is not possible: the current category was not found.')
+                Mage::helper(\'catalog\')->__(\'Category move operation is not possible: the current category was not found.\')
             );
         } elseif ($parent->getId() == $this->getId()) {
             Mage::throwException(
-                Mage::helper('catalog')->__('Category move operation is not possible: parent category is equal to child category.')
+                Mage::helper(\'catalog\')->__(\'Category move operation is not possible: parent category is equal to child category.\')
             );
         }
 
@@ -214,10 +214,10 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
 
         $eventParams = array(
             $this->_eventObject => $this,
-            'parent'        => $parent,
-            'category_id'   => $this->getId(),
-            'prev_parent_id'=> $this->getParentId(),
-            'parent_id'     => $parentId
+            \'parent\'        => $parent,
+            \'category_id\'   => $this->getId(),
+            \'prev_parent_id\'=> $this->getParentId(),
+            \'parent_id\'     => $parentId
         );
         $moveComplete = false;
 
@@ -227,13 +227,13 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
              * catalog_category_tree_move_before and catalog_category_tree_move_after
              * events declared for backward compatibility
              */
-            Mage::dispatchEvent('catalog_category_tree_move_before', $eventParams);
-            Mage::dispatchEvent($this->_eventPrefix.'_move_before', $eventParams);
+            Mage::dispatchEvent(\'catalog_category_tree_move_before\', $eventParams);
+            Mage::dispatchEvent($this->_eventPrefix.\'_move_before\', $eventParams);
 
             $this->getResource()->changeParent($this, $parent, $afterCategoryId);
 
-            Mage::dispatchEvent($this->_eventPrefix.'_move_after', $eventParams);
-            Mage::dispatchEvent('catalog_category_tree_move_after', $eventParams);
+            Mage::dispatchEvent($this->_eventPrefix.\'_move_after\', $eventParams);
+            Mage::dispatchEvent(\'catalog_category_tree_move_after\', $eventParams);
             $this->_getResource()->commit();
 
             // Set data for indexer
@@ -245,8 +245,8 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             throw $e;
         }
         if ($moveComplete) {
-            Mage::dispatchEvent('category_move', $eventParams);
-            Mage::getSingleton('index/indexer')->processEntityAction(
+            Mage::dispatchEvent(\'category_move\', $eventParams);
+            Mage::getSingleton(\'index/indexer\')->processEntityAction(
                 $this, self::ENTITY, Mage_Index_Model_Event::TYPE_SAVE
             );
             Mage::app()->cleanCache(array(self::CACHE_TAG));
@@ -272,7 +272,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getProductCollection()
     {
-        $collection = Mage::getResourceModel('catalog/product_collection')
+        $collection = Mage::getResourceModel(\'catalog/product_collection\')
             ->setStoreId($this->getStoreId())
             ->addCategoryFilter($this);
         return $collection;
@@ -302,7 +302,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     }
 
     /**
-     * Retrieve array of product id's for category
+     * Retrieve array of product id\'s for category
      *
      * array($productId => $position)
      *
@@ -314,10 +314,10 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             return array();
         }
 
-        $array = $this->getData('products_position');
+        $array = $this->getData(\'products_position\');
         if (is_null($array)) {
             $array = $this->getResource()->getProductsPosition($this);
-            $this->setData('products_position', $array);
+            $this->setData(\'products_position\', $array);
         }
         return $array;
     }
@@ -333,7 +333,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             return array();
         }
 
-        if ($storeIds = $this->getData('store_ids')) {
+        if ($storeIds = $this->getData(\'store_ids\')) {
             return $storeIds;
         }
 
@@ -347,7 +347,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
         }
 
         $storeIds = array();
-        $storeCollection = Mage::getModel('core/store')->getCollection()->loadByCategoryIds($nodes);
+        $storeCollection = Mage::getModel(\'core/store\')->getCollection()->loadByCategoryIds($nodes);
         foreach ($storeCollection as $store) {
             $storeIds[$store->getId()] = $store->getId();
         }
@@ -360,7 +360,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             array_unshift($storeIds, 0);
         }
 
-        $this->setData('store_ids', $storeIds);
+        $this->setData(\'store_ids\', $storeIds);
         return $storeIds;
     }
 
@@ -371,12 +371,12 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getLayoutUpdateHandle()
     {
-        $layout = 'catalog_category_';
+        $layout = \'catalog_category_\';
         if ($this->getIsAnchor()) {
-            $layout .= 'layered';
+            $layout .= \'layered\';
         }
         else {
-            $layout .= 'default';
+            $layout .= \'default\';
         }
         return $layout;
     }
@@ -390,8 +390,8 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getStoreId()
     {
-        if ($this->hasData('store_id')) {
-            return $this->_getData('store_id');
+        if ($this->hasData(\'store_id\')) {
+            return $this->_getData(\'store_id\');
         }
         return Mage::app()->getStore()->getId();
     }
@@ -407,7 +407,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
         if (!is_numeric($storeId)) {
             $storeId = Mage::app($storeId)->getStore()->getId();
         }
-        $this->setData('store_id', $storeId);
+        $this->setData(\'store_id\', $storeId);
         $this->getResource()->setStoreId($storeId);
         return $this;
     }
@@ -419,35 +419,35 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getUrl()
     {
-        $url = $this->_getData('url');
+        $url = $this->_getData(\'url\');
         if (is_null($url)) {
-            Varien_Profiler::start('REWRITE: '.__METHOD__);
+            Varien_Profiler::start(\'REWRITE: \'.__METHOD__);
 
-            if ($this->hasData('request_path') && $this->getRequestPath() != '') {
-                $this->setData('url', $this->getUrlInstance()->getDirectUrl($this->getRequestPath()));
-                Varien_Profiler::stop('REWRITE: '.__METHOD__);
-                return $this->getData('url');
+            if ($this->hasData(\'request_path\') && $this->getRequestPath() != \'\') {
+                $this->setData(\'url\', $this->getUrlInstance()->getDirectUrl($this->getRequestPath()));
+                Varien_Profiler::stop(\'REWRITE: \'.__METHOD__);
+                return $this->getData(\'url\');
             }
 
-            Varien_Profiler::stop('REWRITE: '.__METHOD__);
+            Varien_Profiler::stop(\'REWRITE: \'.__METHOD__);
 
             $rewrite = $this->getUrlRewrite();
             if ($this->getStoreId()) {
                 $rewrite->setStoreId($this->getStoreId());
             }
-            $idPath = 'category/' . $this->getId();
+            $idPath = \'category/\' . $this->getId();
             $rewrite->loadByIdPath($idPath);
 
             if ($rewrite->getId()) {
-                $this->setData('url', $this->getUrlInstance()->getDirectUrl($rewrite->getRequestPath()));
-                Varien_Profiler::stop('REWRITE: '.__METHOD__);
-                return $this->getData('url');
+                $this->setData(\'url\', $this->getUrlInstance()->getDirectUrl($rewrite->getRequestPath()));
+                Varien_Profiler::stop(\'REWRITE: \'.__METHOD__);
+                return $this->getData(\'url\');
             }
 
-            Varien_Profiler::stop('REWRITE: '.__METHOD__);
+            Varien_Profiler::stop(\'REWRITE: \'.__METHOD__);
 
-            $this->setData('url', $this->getCategoryIdUrl());
-            return $this->getData('url');
+            $this->setData(\'url\', $this->getCategoryIdUrl());
+            return $this->getData(\'url\');
         }
         return $url;
     }
@@ -459,13 +459,13 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getCategoryIdUrl()
     {
-        Varien_Profiler::start('REGULAR: '.__METHOD__);
+        Varien_Profiler::start(\'REGULAR: \'.__METHOD__);
         $urlKey = $this->getUrlKey() ? $this->getUrlKey() : $this->formatUrlKey($this->getName());
-        $url = $this->getUrlInstance()->getUrl('catalog/category/view', array(
-            's'=>$urlKey,
-            'id'=>$this->getId(),
+        $url = $this->getUrlInstance()->getUrl(\'catalog/category/view\', array(
+            \'s\'=>$urlKey,
+            \'id\'=>$this->getId(),
         ));
-        Varien_Profiler::stop('REGULAR: '.__METHOD__);
+        Varien_Profiler::stop(\'REGULAR: \'.__METHOD__);
         return $url;
     }
 
@@ -477,10 +477,10 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function formatUrlKey($str)
     {
-        $str = Mage::helper('core')->removeAccents($str);
-        $urlKey = preg_replace('#[^0-9a-z]+#i', '-', $str);
+        $str = Mage::helper(\'core\')->removeAccents($str);
+        $urlKey = preg_replace(\'#[^0-9a-z]+#i\', \'-\', $str);
         $urlKey = strtolower($urlKey);
-        $urlKey = trim($urlKey, '-');
+        $urlKey = trim($urlKey, \'-\');
         return $urlKey;
     }
 
@@ -493,7 +493,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     {
         $url = false;
         if ($image = $this->getImage()) {
-            $url = Mage::getBaseUrl('media').'catalog/category/'.$image;
+            $url = Mage::getBaseUrl(\'media\').\'catalog/category/\'.$image;
         }
         return $url;
     }
@@ -505,7 +505,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getUrlPath()
     {
-        $path = $this->getData('url_path');
+        $path = $this->getData(\'url_path\');
         if ($path) {
             return $path;
         }
@@ -513,8 +513,8 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
         $path = $this->getUrlKey();
 
         if ($this->getParentId()) {
-            $parentPath = Mage::getModel('catalog/category')->load($this->getParentId())->getCategoryPath();
-            $path = $parentPath.'/'.$path;
+            $parentPath = Mage::getModel(\'catalog/category\')->load($this->getParentId())->getCategoryPath();
+            $path = $parentPath.\'/\'.$path;
         }
 
         $this->setUrlPath($path);
@@ -529,10 +529,10 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getParentCategory()
     {
-        if (!$this->hasData('parent_category')) {
-            $this->setData('parent_category', Mage::getModel('catalog/category')->load($this->getParentId()));
+        if (!$this->hasData(\'parent_category\')) {
+            $this->setData(\'parent_category\', Mage::getModel(\'catalog/category\')->load($this->getParentId()));
         }
-        return $this->_getData('parent_category');
+        return $this->_getData(\'parent_category\');
     }
 
     /**
@@ -564,8 +564,8 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     public function getCustomDesignDate()
     {
         $result = array();
-        $result['from'] = $this->getData('custom_design_from');
-        $result['to'] = $this->getData('custom_design_to');
+        $result[\'from\'] = $this->getData(\'custom_design_from\');
+        $result[\'to\'] = $this->getData(\'custom_design_to\');
 
         return $result;
     }
@@ -596,7 +596,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             $attribute = $this->getResource()->getAttribute($attributeCode);
         }
         else {
-            $attribute = Mage::getSingleton('catalog/config')
+            $attribute = Mage::getSingleton(\'catalog/config\')
                 ->getAttribute(self::ENTITY, $attributeCode);
         }
         return $attribute;
@@ -615,7 +615,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             return $children;
         }
         else {
-            return implode(',', $children);
+            return implode(\',\', $children);
         }
 
 //        $this->getTreeModelInstance()->load();
@@ -632,7 +632,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
 //            return $children;
 //        }
 //        else {
-//            return implode(',', $children);
+//            return implode(\',\', $children);
 //        }
     }
 
@@ -643,7 +643,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getChildren()
     {
-        return implode(',', $this->getResource()->getChildren($this, false));
+        return implode(\',\', $this->getResource()->getChildren($this, false));
     }
 
     /**
@@ -663,7 +663,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             }
             $result[] = $itemId;
         }
-        return implode(',', $result);
+        return implode(\',\', $result);
     }
 
     /**
@@ -685,10 +685,10 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getPathIds()
     {
-        $ids = $this->getData('path_ids');
+        $ids = $this->getData(\'path_ids\');
         if (is_null($ids)) {
-            $ids = explode('/', $this->getPath());
-            $this->setData('path_ids', $ids);
+            $ids = explode(\'/\', $this->getPath());
+            $this->setData(\'path_ids\', $ids);
         }
         return $ids;
     }
@@ -701,9 +701,9 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     public function getLevel()
     {
         if (!$this->hasLevel()) {
-            return count(explode('/', $this->getPath())) - 1;
+            return count(explode(\'/\', $this->getPath())) - 1;
         }
-        return $this->getData('level');
+        return $this->getData(\'level\');
     }
 
     /**
@@ -734,7 +734,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getRequestPath()
     {
-        return $this->_getData('request_path');
+        return $this->_getData(\'request_path\');
     }
 
     /**
@@ -744,7 +744,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getName()
     {
-        return $this->_getData('name');
+        return $this->_getData(\'name\');
     }
 
     /**
@@ -756,7 +756,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     {
         $this->_protectFromNonAdmin();
         if ($this->getResource()->isForbiddenToDelete($this->getId())) {
-            Mage::throwException("Can't delete root category.");
+            Mage::throwException("Can\'t delete root category.");
         }
         return parent::_beforeDelete();
     }
@@ -779,12 +779,12 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
             $anchors = $this->_getResource()->getAnchorsAbove($path, $this->getStoreId());
         }
         else {
-            if (!Mage::registry('_category_is_anchor_attribute')) {
-                $model = $this->_getAttribute('is_anchor');
-                Mage::register('_category_is_anchor_attribute', $model);
+            if (!Mage::registry(\'_category_is_anchor_attribute\')) {
+                $model = $this->_getAttribute(\'is_anchor\');
+                Mage::register(\'_category_is_anchor_attribute\', $model);
             }
 
-            if ($isAnchorAttribute = Mage::registry('_category_is_anchor_attribute')) {
+            if ($isAnchorAttribute = Mage::registry(\'_category_is_anchor_attribute\')) {
                 $anchors = $this->getResource()->findWhereAttributeIs($path, $isAnchorAttribute, 1);
             }
         }
@@ -800,9 +800,9 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     {
         if (!$this->hasProductCount()) {
             $count = $this->_getResource()->getProductCount($this); // load product count
-            $this->setData('product_count', $count);
+            $this->setData(\'product_count\', $count);
         }
-        return $this->getData('product_count');
+        return $this->getData(\'product_count\');
     }
 
     /**
@@ -869,12 +869,12 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getAvailableSortBy()
     {
-        $available = $this->getData('available_sort_by');
+        $available = $this->getData(\'available_sort_by\');
         if (empty($available)) {
             return array();
         }
         if ($available && !is_array($available)) {
-            $available = explode(',', $available);
+            $available = explode(\',\', $available);
         }
         return $available;
     }
@@ -887,7 +887,7 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      */
     public function getAvailableSortByOptions() {
         $availableSortBy = array();
-        $defaultSortBy   = Mage::getSingleton('catalog/config')
+        $defaultSortBy   = Mage::getSingleton(\'catalog/config\')
             ->getAttributeUsedForSortByArray();
         if ($this->getAvailableSortBy()) {
             foreach ($this->getAvailableSortBy() as $sortBy) {
@@ -910,8 +910,8 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
      * @return string
      */
     public function getDefaultSortBy() {
-        if (!$sortBy = $this->getData('default_sort_by')) {
-            $sortBy = Mage::getSingleton('catalog/config')
+        if (!$sortBy = $this->getData(\'default_sort_by\')) {
+            $sortBy = Mage::getSingleton(\'catalog/config\')
                 ->getProductListDefaultSortBy($this->getStoreId());
         }
         $available = $this->getAvailableSortByOptions();
@@ -942,14 +942,13 @@ class Mage_Catalog_Model_Category extends Mage_Catalog_Model_Abstract
     protected function _afterSave()
     {
         $result = parent::_afterSave();
-        Mage::getSingleton('index/indexer')->processEntityAction(
+        Mage::getSingleton(\'index/indexer\')->processEntityAction(
             $this, self::ENTITY, Mage_Index_Model_Event::TYPE_SAVE
         );
         return $result;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -36,9 +36,8 @@ $str = <<<'EOD'
 class Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Type_Configurable
     extends Mage_Catalog_Model_Resource_Product_Type_Configurable
 {
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

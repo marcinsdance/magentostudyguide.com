@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -37,7 +37,7 @@ class Mage_Sales_Model_Quote_Address_Total_Collector extends Mage_Sales_Model_Co
     /**
      * Path to sort order values of checkout totals
      */
-    const XML_PATH_SALES_TOTALS_SORT = 'sales/totals_sort';
+    const XML_PATH_SALES_TOTALS_SORT = \'sales/totals_sort\';
 
     /**
      * Total models array ordered for right display sequence
@@ -58,14 +58,14 @@ class Mage_Sales_Model_Quote_Address_Total_Collector extends Mage_Sales_Model_Co
      *
      * @var string
      */
-    protected $_totalsConfigNode = 'global/sales/quote/totals';
+    protected $_totalsConfigNode = \'global/sales/quote/totals\';
 
     /**
      * Cache key for collectors
      *
      * @var string
      */
-    protected $_collectorsCacheKey = 'sorted_quote_collectors';
+    protected $_collectorsCacheKey = \'sorted_quote_collectors\';
 
     /**
      * Init corresponding total models
@@ -74,8 +74,8 @@ class Mage_Sales_Model_Quote_Address_Total_Collector extends Mage_Sales_Model_Co
      */
     public function __construct($options)
     {
-        if (isset($options['store'])) {
-            $this->_store = $options['store'];
+        if (isset($options[\'store\'])) {
+            $this->_store = $options[\'store\'];
         } else {
             $this->_store = Mage::app()->getStore();
         }
@@ -117,7 +117,7 @@ class Mage_Sales_Model_Quote_Address_Total_Collector extends Mage_Sales_Model_Co
         $model = Mage::getModel($class);
         if (!$model instanceof Mage_Sales_Model_Quote_Address_Total_Abstract) {
             Mage::throwException(
-                Mage::helper('sales')->__('The address total model should be extended from Mage_Sales_Model_Quote_Address_Total_Abstract.')
+                Mage::helper(\'sales\')->__(\'The address total model should be extended from Mage_Sales_Model_Quote_Address_Total_Abstract.\')
             );
         }
 
@@ -175,9 +175,8 @@ class Mage_Sales_Model_Quote_Address_Total_Collector extends Mage_Sales_Model_Co
         }
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -35,52 +35,52 @@ $str = <<<'EOD'
 
 class Mage_Adminhtml_Block_Widget_Form_Container extends Mage_Adminhtml_Block_Widget_Container
 {
-    protected $_objectId = 'id';
+    protected $_objectId = \'id\';
     protected $_formScripts = array();
     protected $_formInitScripts = array();
-    protected $_mode = 'edit';
-    protected $_blockGroup = 'adminhtml';
+    protected $_mode = \'edit\';
+    protected $_blockGroup = \'adminhtml\';
 
     public function __construct()
     {
         parent::__construct();
 
-        if (!$this->hasData('template')) {
-            $this->setTemplate('widget/form/container.phtml');
+        if (!$this->hasData(\'template\')) {
+            $this->setTemplate(\'widget/form/container.phtml\');
         }
 
-        $this->_addButton('back', array(
-            'label'     => Mage::helper('adminhtml')->__('Back'),
-            'onclick'   => 'setLocation(\'' . $this->getBackUrl() . '\')',
-            'class'     => 'back',
+        $this->_addButton(\'back\', array(
+            \'label\'     => Mage::helper(\'adminhtml\')->__(\'Back\'),
+            \'onclick\'   => \'setLocation(\\\'\' . $this->getBackUrl() . \'\\\')\',
+            \'class\'     => \'back\',
         ), -1);
-        $this->_addButton('reset', array(
-            'label'     => Mage::helper('adminhtml')->__('Reset'),
-            'onclick'   => 'setLocation(window.location.href)',
+        $this->_addButton(\'reset\', array(
+            \'label\'     => Mage::helper(\'adminhtml\')->__(\'Reset\'),
+            \'onclick\'   => \'setLocation(window.location.href)\',
         ), -1);
 
         $objId = $this->getRequest()->getParam($this->_objectId);
 
         if (! empty($objId)) {
-            $this->_addButton('delete', array(
-                'label'     => Mage::helper('adminhtml')->__('Delete'),
-                'class'     => 'delete',
-                'onclick'   => 'deleteConfirm(\''. Mage::helper('adminhtml')->__('Are you sure you want to do this?')
-                    .'\', \'' . $this->getDeleteUrl() . '\')',
+            $this->_addButton(\'delete\', array(
+                \'label\'     => Mage::helper(\'adminhtml\')->__(\'Delete\'),
+                \'class\'     => \'delete\',
+                \'onclick\'   => \'deleteConfirm(\\\'\'. Mage::helper(\'adminhtml\')->__(\'Are you sure you want to do this?\')
+                    .\'\\\', \\\'\' . $this->getDeleteUrl() . \'\\\')\',
             ));
         }
 
-        $this->_addButton('save', array(
-            'label'     => Mage::helper('adminhtml')->__('Save'),
-            'onclick'   => 'editForm.submit();',
-            'class'     => 'save',
+        $this->_addButton(\'save\', array(
+            \'label\'     => Mage::helper(\'adminhtml\')->__(\'Save\'),
+            \'onclick\'   => \'editForm.submit();\',
+            \'class\'     => \'save\',
         ), 1);
     }
 
     protected function _prepareLayout()
     {
         if ($this->_blockGroup && $this->_controller && $this->_mode) {
-            $this->setChild('form', $this->getLayout()->createBlock($this->_blockGroup . '/' . $this->_controller . '_' . $this->_mode . '_form'));
+            $this->setChild(\'form\', $this->getLayout()->createBlock($this->_blockGroup . \'/\' . $this->_controller . \'_\' . $this->_mode . \'_form\'));
         }
         return parent::_prepareLayout();
     }
@@ -92,12 +92,12 @@ class Mage_Adminhtml_Block_Widget_Form_Container extends Mage_Adminhtml_Block_Wi
      */
     public function getBackUrl()
     {
-        return $this->getUrl('*/*/');
+        return $this->getUrl(\'*/*/\');
     }
 
     public function getDeleteUrl()
     {
-        return $this->getUrl('*/*/delete', array($this->_objectId => $this->getRequest()->getParam($this->_objectId)));
+        return $this->getUrl(\'*/*/delete\', array($this->_objectId => $this->getRequest()->getParam($this->_objectId)));
     }
 
     /**
@@ -120,46 +120,46 @@ class Mage_Adminhtml_Block_Widget_Form_Container extends Mage_Adminhtml_Block_Wi
     public function getFormActionUrl()
     {
         if ($this->hasFormActionUrl()) {
-            return $this->getData('form_action_url');
+            return $this->getData(\'form_action_url\');
         }
-        return $this->getUrl('*/' . $this->_controller . '/save');
+        return $this->getUrl(\'*/\' . $this->_controller . \'/save\');
     }
 
     public function getFormHtml()
     {
-        $this->getChild('form')->setData('action', $this->getSaveUrl());
-        return $this->getChildHtml('form');
+        $this->getChild(\'form\')->setData(\'action\', $this->getSaveUrl());
+        return $this->getChildHtml(\'form\');
     }
 
     public function getFormInitScripts()
     {
         if ( !empty($this->_formInitScripts) && is_array($this->_formInitScripts) ) {
-            return '<script type="text/javascript">' . implode("\n", $this->_formInitScripts) . '</script>';
+            return \'<script type="text/javascript">\' . implode("\n", $this->_formInitScripts) . \'</script>\';
         }
-        return '';
+        return \'\';
     }
 
     public function getFormScripts()
     {
         if ( !empty($this->_formScripts) && is_array($this->_formScripts) ) {
-            return '<script type="text/javascript">' . implode("\n", $this->_formScripts) . '</script>';
+            return \'<script type="text/javascript">\' . implode("\n", $this->_formScripts) . \'</script>\';
         }
-        return '';
+        return \'\';
     }
 
     public function getHeaderWidth()
     {
-        return '';
+        return \'\';
     }
 
     public function getHeaderCssClass()
     {
-        return 'icon-head head-' . strtr($this->_controller, '_', '-');
+        return \'icon-head head-\' . strtr($this->_controller, \'_\', \'-\');
     }
 
     public function getHeaderHtml()
     {
-        return '<h3 class="' . $this->getHeaderCssClass() . '">' . $this->getHeaderText() . '</h3>';
+        return \'<h3 class="\' . $this->getHeaderCssClass() . \'">\' . $this->getHeaderText() . \'</h3>\';
     }
 
     /**
@@ -170,13 +170,12 @@ class Mage_Adminhtml_Block_Widget_Form_Container extends Mage_Adminhtml_Block_Wi
      */
     public function setDataObject($object)
     {
-        $this->getChild('form')->setDataObject($object);
-        return $this->setData('data_object', $object);
+        $this->getChild(\'form\')->setDataObject($object);
+        return $this->setData(\'data_object\', $object);
     }
 
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -50,8 +50,8 @@ class Mage_Catalog_Model_Product_Type_Configurable_Price extends Mage_Catalog_Mo
         $basePrice = $this->getBasePrice($product, $qty);
         $finalPrice = $basePrice;
         $product->setFinalPrice($finalPrice);
-        Mage::dispatchEvent('catalog_product_get_final_price', array('product' => $product, 'qty' => $qty));
-        $finalPrice = $product->getData('final_price');
+        Mage::dispatchEvent(\'catalog_product_get_final_price\', array(\'product\' => $product, \'qty\' => $qty));
+        $finalPrice = $product->getData(\'final_price\');
 
         $finalPrice += $this->getTotalConfigurableItemsPrice($product, $finalPrice);
         $finalPrice += $this->_applyOptionsPrice($product, $qty, $basePrice) - $basePrice;
@@ -78,8 +78,8 @@ class Mage_Catalog_Model_Product_Type_Configurable_Price extends Mage_Catalog_Mo
                 ->getConfigurableAttributes($product);
 
         $selectedAttributes = array();
-        if ($product->getCustomOption('attributes')) {
-            $selectedAttributes = unserialize($product->getCustomOption('attributes')->getValue());
+        if ($product->getCustomOption(\'attributes\')) {
+            $selectedAttributes = unserialize($product->getCustomOption(\'attributes\')->getValue());
         }
 
         foreach ($attributes as $attribute) {
@@ -90,11 +90,11 @@ class Mage_Catalog_Model_Product_Type_Configurable_Price extends Mage_Catalog_Mo
             );
             $product->setParentId(true);
             if ($value) {
-                if ($value['pricing_value'] != 0) {
+                if ($value[\'pricing_value\'] != 0) {
                     $product->setConfigurablePrice($this->_calcSelectionPrice($value, $finalPrice));
                     Mage::dispatchEvent(
-                        'catalog_product_type_configurable_price',
-                        array('product' => $product)
+                        \'catalog_product_type_configurable_price\',
+                        array(\'product\' => $product)
                     );
                     $price += $product->getConfigurablePrice();
                 }
@@ -112,26 +112,25 @@ class Mage_Catalog_Model_Product_Type_Configurable_Price extends Mage_Catalog_Mo
      */
     protected function _calcSelectionPrice($priceInfo, $productPrice)
     {
-        if($priceInfo['is_percent']) {
-            $ratio = $priceInfo['pricing_value']/100;
+        if($priceInfo[\'is_percent\']) {
+            $ratio = $priceInfo[\'pricing_value\']/100;
             $price = $productPrice * $ratio;
         } else {
-            $price = $priceInfo['pricing_value'];
+            $price = $priceInfo[\'pricing_value\'];
         }
         return $price;
     }
 
     protected function _getValueByIndex($values, $index) {
         foreach ($values as $value) {
-            if($value['value_index'] == $index) {
+            if($value[\'value_index\'] == $index) {
                 return $value;
             }
         }
         return false;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

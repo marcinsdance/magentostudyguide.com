@@ -633,8 +633,8 @@
         <li><a href="/magento/app/code/core/Mage/Adminhtml/Block/Widget/Grid/Column/Renderer/" class="file">Mage_Adminhtml_Block_Widget_Grid_Column_Renderer/*</a></li>
         <li><a href="/magento/app/code/core/Mage/Adminhtml/Block/Widget/Grid/Column/Filter/" class="file">Mage_Adminhtml_Block_Widget_Grid_Column_Filter/*</a></li>
         <li><a href="/magento/app/code/core/Mage/Adminhtml/Block/Widget/Grid/Container.php" class="file">Mage_Adminhtml_Block_Widget_Grid_Container</a></li>
-        <li><a href="/magento/app/design/adminhtml/default/default/template/sales/widget/grid/" class="file">app/design/adminhtml/default/default/template/sales/widget/grid.phtml</a></li>
-        <li><a href="/magento/app/design/adminhtml/default/default/template/sales/widget/grid/" class="file">app/design/adminhtml/default/default/template/sales/widget/grid/container.phtml</a></li>
+        <li>app/design/adminhtml/default/default/template/sales/widget/grid.phtml (no such file)</li>
+        <li>app/design/adminhtml/default/default/template/sales/widget/grid/container.phtml (no such file)</li>
       </ul>
     </li>
     <li><h4>System configuration</h4>

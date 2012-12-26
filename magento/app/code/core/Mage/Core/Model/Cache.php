@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -33,14 +33,14 @@ $str = <<<'EOD'
 class Mage_Core_Model_Cache
 {
     const DEFAULT_LIFETIME  = 7200;
-    const OPTIONS_CACHE_ID  = 'core_cache_options';
-    const INVALIDATED_TYPES = 'core_cache_invalidate';
-    const XML_PATH_TYPES    = 'global/cache/types';
+    const OPTIONS_CACHE_ID  = \'core_cache_options\';
+    const INVALIDATED_TYPES = \'core_cache_invalidate\';
+    const XML_PATH_TYPES    = \'global/cache/types\';
 
     /**
      * @var string
      */
-    protected $_idPrefix    = '';
+    protected $_idPrefix    = \'\';
 
     /**
      * Cache frontend API
@@ -55,8 +55,8 @@ class Mage_Core_Model_Cache
      * @var array
      */
     protected $_shmBackends = array(
-        'apc', 'memcached', 'xcache',
-        'zendserver_shmem', 'zendserver_disk', 'varien_eaccelerator',
+        \'apc\', \'memcached\', \'xcache\',
+        \'zendserver_shmem\', \'zendserver_disk\', \'varien_eaccelerator\',
     );
 
     /**
@@ -64,7 +64,7 @@ class Mage_Core_Model_Cache
      *
      * @var string
      */
-    protected $_defaultBackend = 'File';
+    protected $_defaultBackend = \'File\';
 
     /**
      * Default iotions for default backend
@@ -72,9 +72,9 @@ class Mage_Core_Model_Cache
      * @var array
      */
     protected $_defaultBackendOptions = array(
-        'hashed_directory_level'    => 1,
-        'hashed_directory_umask'    => 0777,
-        'file_name_prefix'          => 'mage',
+        \'hashed_directory_level\'    => 1,
+        \'hashed_directory_umask\'    => 0777,
+        \'file_name_prefix\'          => \'mage\',
     );
 
     /**
@@ -105,36 +105,36 @@ class Mage_Core_Model_Cache
      */
     public function __construct(array $options = array())
     {
-        $this->_defaultBackendOptions['cache_dir'] = Mage::getBaseDir('cache');
+        $this->_defaultBackendOptions[\'cache_dir\'] = Mage::getBaseDir(\'cache\');
         /**
          * Initialize id prefix
          */
-        $this->_idPrefix = isset($options['id_prefix']) ? $options['id_prefix'] : '';
-        if (!$this->_idPrefix && isset($options['prefix'])) {
-            $this->_idPrefix = $options['prefix'];
+        $this->_idPrefix = isset($options[\'id_prefix\']) ? $options[\'id_prefix\'] : \'\';
+        if (!$this->_idPrefix && isset($options[\'prefix\'])) {
+            $this->_idPrefix = $options[\'prefix\'];
         }
         if (empty($this->_idPrefix)) {
-            $this->_idPrefix = substr(md5(Mage::getConfig()->getOptions()->getEtcDir()), 0, 3).'_';
+            $this->_idPrefix = substr(md5(Mage::getConfig()->getOptions()->getEtcDir()), 0, 3).\'_\';
         }
 
         $backend    = $this->_getBackendOptions($options);
         $frontend   = $this->_getFrontendOptions($options);
 
-        $this->_frontend = Zend_Cache::factory('Varien_Cache_Core', $backend['type'], $frontend, $backend['options'],
+        $this->_frontend = Zend_Cache::factory(\'Varien_Cache_Core\', $backend[\'type\'], $frontend, $backend[\'options\'],
             true, true, true
         );
 
-        if (isset($options['request_processors'])) {
-            $this->_requestProcessors = $options['request_processors'];
+        if (isset($options[\'request_processors\'])) {
+            $this->_requestProcessors = $options[\'request_processors\'];
         }
 
-        if (isset($options['disallow_save'])) {
-            $this->_disallowSave = $options['disallow_save'];
+        if (isset($options[\'disallow_save\'])) {
+            $this->_disallowSave = $options[\'disallow_save\'];
         }
     }
 
     /**
-     * Get cache backend options. Result array contain backend type ('type' key) and backend options ('options')
+     * Get cache backend options. Result array contain backend type (\'type\' key) and backend options (\'options\')
      *
      * @param   array $cacheOptions
      * @return  array
@@ -142,56 +142,56 @@ class Mage_Core_Model_Cache
     protected function _getBackendOptions(array $cacheOptions)
     {
         $enable2levels = false;
-        $type   = isset($cacheOptions['backend']) ? $cacheOptions['backend'] : $this->_defaultBackend;
-        if (isset($cacheOptions['backend_options']) && is_array($cacheOptions['backend_options'])) {
-            $options = $cacheOptions['backend_options'];
+        $type   = isset($cacheOptions[\'backend\']) ? $cacheOptions[\'backend\'] : $this->_defaultBackend;
+        if (isset($cacheOptions[\'backend_options\']) && is_array($cacheOptions[\'backend_options\'])) {
+            $options = $cacheOptions[\'backend_options\'];
         } else {
             $options = array();
         }
 
         $backendType = false;
         switch (strtolower($type)) {
-            case 'sqlite':
-                if (extension_loaded('sqlite') && isset($options['cache_db_complete_path'])) {
-                    $backendType = 'Sqlite';
+            case \'sqlite\':
+                if (extension_loaded(\'sqlite\') && isset($options[\'cache_db_complete_path\'])) {
+                    $backendType = \'Sqlite\';
                 }
                 break;
-            case 'memcached':
-                if (extension_loaded('memcached')) {
-                    if (isset($cacheOptions['memcached'])) {
-                        $options = $cacheOptions['memcached'];
+            case \'memcached\':
+                if (extension_loaded(\'memcached\')) {
+                    if (isset($cacheOptions[\'memcached\'])) {
+                        $options = $cacheOptions[\'memcached\'];
                     }
                     $enable2levels = true;
-                    $backendType = 'Libmemcached';
-                } elseif (extension_loaded('memcache')) {
-                    if (isset($cacheOptions['memcached'])) {
-                        $options = $cacheOptions['memcached'];
+                    $backendType = \'Libmemcached\';
+                } elseif (extension_loaded(\'memcache\')) {
+                    if (isset($cacheOptions[\'memcached\'])) {
+                        $options = $cacheOptions[\'memcached\'];
                     }
                     $enable2levels = true;
-                    $backendType = 'Memcached';
+                    $backendType = \'Memcached\';
                 }
                 break;
-            case 'apc':
-                if (extension_loaded('apc') && ini_get('apc.enabled')) {
+            case \'apc\':
+                if (extension_loaded(\'apc\') && ini_get(\'apc.enabled\')) {
                     $enable2levels = true;
-                    $backendType = 'Apc';
+                    $backendType = \'Apc\';
                 }
                 break;
-            case 'xcache':
-                if (extension_loaded('xcache')) {
+            case \'xcache\':
+                if (extension_loaded(\'xcache\')) {
                     $enable2levels = true;
-                    $backendType = 'Xcache';
+                    $backendType = \'Xcache\';
                 }
                 break;
-            case 'eaccelerator':
-            case 'varien_cache_backend_eaccelerator':
-                if (extension_loaded('eaccelerator') && ini_get('eaccelerator.enable')) {
+            case \'eaccelerator\':
+            case \'varien_cache_backend_eaccelerator\':
+                if (extension_loaded(\'eaccelerator\') && ini_get(\'eaccelerator.enable\')) {
                     $enable2levels = true;
-                    $backendType = 'Varien_Cache_Backend_Eaccelerator';
+                    $backendType = \'Varien_Cache_Backend_Eaccelerator\';
                 }
                 break;
-            case 'database':
-                $backendType = 'Varien_Cache_Backend_Database';
+            case \'database\':
+                $backendType = \'Varien_Cache_Backend_Database\';
                 $options = $this->getDbAdapterOptions();
                 break;
             default:
@@ -199,7 +199,7 @@ class Mage_Core_Model_Cache
                     try {
                         if (class_exists($type, true)) {
                             $implements = class_implements($type, true);
-                            if (in_array('Zend_Cache_Backend_Interface', $implements)) {
+                            if (in_array(\'Zend_Cache_Backend_Interface\', $implements)) {
                                 $backendType = $type;
                             }
                         }
@@ -217,7 +217,7 @@ class Mage_Core_Model_Cache
             }
         }
 
-        $backendOptions = array('type' => $backendType, 'options' => $options);
+        $backendOptions = array(\'type\' => $backendType, \'options\' => $options);
         if ($enable2levels) {
             $backendOptions = $this->_getTwoLevelsBackendOptions($backendOptions, $cacheOptions);
         }
@@ -231,9 +231,9 @@ class Mage_Core_Model_Cache
      */
     protected function getDbAdapterOptions()
     {
-        $options['adapter_callback'] = array($this, 'getDbAdapter');
-        $options['data_table']  = Mage::getSingleton('core/resource')->getTableName('core/cache');
-        $options['tags_table']  = Mage::getSingleton('core/resource')->getTableName('core/cache_tag');
+        $options[\'adapter_callback\'] = array($this, \'getDbAdapter\');
+        $options[\'data_table\']  = Mage::getSingleton(\'core/resource\')->getTableName(\'core/cache\');
+        $options[\'tags_table\']  = Mage::getSingleton(\'core/resource\')->getTableName(\'core/cache_tag\');
         return $options;
     }
 
@@ -247,41 +247,41 @@ class Mage_Core_Model_Cache
     protected function _getTwoLevelsBackendOptions($fastOptions, $cacheOptions)
     {
         $options = array();
-        $options['fast_backend']                = $fastOptions['type'];
-        $options['fast_backend_options']        = $fastOptions['options'];
-        $options['fast_backend_custom_naming']  = true;
-        $options['fast_backend_autoload']       = true;
-        $options['slow_backend_custom_naming']  = true;
-        $options['slow_backend_autoload']       = true;
+        $options[\'fast_backend\']                = $fastOptions[\'type\'];
+        $options[\'fast_backend_options\']        = $fastOptions[\'options\'];
+        $options[\'fast_backend_custom_naming\']  = true;
+        $options[\'fast_backend_autoload\']       = true;
+        $options[\'slow_backend_custom_naming\']  = true;
+        $options[\'slow_backend_autoload\']       = true;
 
-        if (isset($cacheOptions['auto_refresh_fast_cache'])) {
-            $options['auto_refresh_fast_cache'] = (bool)$cacheOptions['auto_refresh_fast_cache'];
+        if (isset($cacheOptions[\'auto_refresh_fast_cache\'])) {
+            $options[\'auto_refresh_fast_cache\'] = (bool)$cacheOptions[\'auto_refresh_fast_cache\'];
         } else {
-            $options['auto_refresh_fast_cache'] = false;
+            $options[\'auto_refresh_fast_cache\'] = false;
         }
-        if (isset($cacheOptions['slow_backend'])) {
-            $options['slow_backend'] = $cacheOptions['slow_backend'];
+        if (isset($cacheOptions[\'slow_backend\'])) {
+            $options[\'slow_backend\'] = $cacheOptions[\'slow_backend\'];
         } else {
-            $options['slow_backend'] = $this->_defaultBackend;
+            $options[\'slow_backend\'] = $this->_defaultBackend;
         }
-        if (isset($cacheOptions['slow_backend_options'])) {
-            $options['slow_backend_options'] = $cacheOptions['slow_backend_options'];
+        if (isset($cacheOptions[\'slow_backend_options\'])) {
+            $options[\'slow_backend_options\'] = $cacheOptions[\'slow_backend_options\'];
         } else {
-            $options['slow_backend_options'] = $this->_defaultBackendOptions;
+            $options[\'slow_backend_options\'] = $this->_defaultBackendOptions;
         }
-        if ($options['slow_backend'] == 'database') {
-            $options['slow_backend'] = 'Varien_Cache_Backend_Database';
-            $options['slow_backend_options'] = $this->getDbAdapterOptions();
-            if (isset($cacheOptions['slow_backend_store_data'])) {
-                $options['slow_backend_options']['store_data'] = (bool)$cacheOptions['slow_backend_store_data'];
+        if ($options[\'slow_backend\'] == \'database\') {
+            $options[\'slow_backend\'] = \'Varien_Cache_Backend_Database\';
+            $options[\'slow_backend_options\'] = $this->getDbAdapterOptions();
+            if (isset($cacheOptions[\'slow_backend_store_data\'])) {
+                $options[\'slow_backend_options\'][\'store_data\'] = (bool)$cacheOptions[\'slow_backend_store_data\'];
             } else {
-                $options['slow_backend_options']['store_data'] = false;
+                $options[\'slow_backend_options\'][\'store_data\'] = false;
             }
         }
 
         $backend = array(
-            'type'      => 'TwoLevels',
-            'options'   => $options
+            \'type\'      => \'TwoLevels\',
+            \'options\'   => $options
         );
         return $backend;
     }
@@ -294,18 +294,18 @@ class Mage_Core_Model_Cache
      */
     protected function _getFrontendOptions(array $cacheOptions)
     {
-        $options = isset($cacheOptions['frontend_options']) ? $cacheOptions['frontend_options'] : array();
-        if (!array_key_exists('caching', $options)) {
-            $options['caching'] = true;
+        $options = isset($cacheOptions[\'frontend_options\']) ? $cacheOptions[\'frontend_options\'] : array();
+        if (!array_key_exists(\'caching\', $options)) {
+            $options[\'caching\'] = true;
         }
-        if (!array_key_exists('lifetime', $options)) {
-            $options['lifetime'] = isset($cacheOptions['lifetime']) ? $cacheOptions['lifetime']
+        if (!array_key_exists(\'lifetime\', $options)) {
+            $options[\'lifetime\'] = isset($cacheOptions[\'lifetime\']) ? $cacheOptions[\'lifetime\']
                 : self::DEFAULT_LIFETIME;
         }
-        if (!array_key_exists('automatic_cleaning_factor', $options)) {
-            $options['automatic_cleaning_factor'] = 0;
+        if (!array_key_exists(\'automatic_cleaning_factor\', $options)) {
+            $options[\'automatic_cleaning_factor\'] = 0;
         }
-        $options['cache_id_prefix'] = $this->_idPrefix;
+        $options[\'cache_id_prefix\'] = $this->_idPrefix;
         return $options;
     }
 
@@ -431,7 +431,7 @@ class Mage_Core_Model_Cache
      */
     public function getDbAdapter()
     {
-        return Mage::getSingleton('core/resource')->getConnection('core_write');
+        return Mage::getSingleton(\'core/resource\')->getConnection(\'core_write\');
     }
 
     /**
@@ -441,7 +441,7 @@ class Mage_Core_Model_Cache
      */
     protected function _getResource()
     {
-        return Mage::getResourceSingleton('core/cache');
+        return Mage::getResourceSingleton(\'core/cache\');
     }
 
     /**
@@ -464,7 +464,7 @@ class Mage_Core_Model_Cache
             $this->_allowedCacheOptions = unserialize($options);
         }
 
-        if (Mage::getConfig()->getOptions()->getData('global_ban_use_cache')) {
+        if (Mage::getConfig()->getOptions()->getData(\'global_ban_use_cache\')) {
             foreach ($this->_allowedCacheOptions as $key => $val) {
                 $this->_allowedCacheOptions[$key] = false;
             }
@@ -528,11 +528,11 @@ class Mage_Core_Model_Cache
      */
     public function getTagsByType($type)
     {
-        $path = self::XML_PATH_TYPES.'/'.$type.'/tags';
+        $path = self::XML_PATH_TYPES.\'/\'.$type.\'/tags\';
         $tagsConfig = Mage::getConfig()->getNode($path);
         if ($tagsConfig) {
             $tags = (string) $tagsConfig;
-            $tags = explode(',', $tags);
+            $tags = explode(\',\', $tags);
         } else {
             $tags = false;
         }
@@ -551,11 +551,11 @@ class Mage_Core_Model_Cache
         if ($config) {
             foreach ($config->children() as $type=>$node) {
                 $types[$type] = new Varien_Object(array(
-                    'id'            => $type,
-                    'cache_type'    => Mage::helper('core')->__((string)$node->label),
-                    'description'   => Mage::helper('core')->__((string)$node->description),
-                    'tags'          => strtoupper((string) $node->tags),
-                    'status'        => (int)$this->canUse($type),
+                    \'id\'            => $type,
+                    \'cache_type\'    => Mage::helper(\'core\')->__((string)$node->label),
+                    \'description\'   => Mage::helper(\'core\')->__((string)$node->description),
+                    \'tags\'          => strtoupper((string) $node->tags),
+                    \'status\'        => (int)$this->canUse($type),
                 ));
             }
         }
@@ -680,9 +680,8 @@ class Mage_Core_Model_Cache
         $processor = new $processor;
         return $processor;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

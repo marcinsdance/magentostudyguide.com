@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -84,11 +84,11 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     protected function _initBlocks()
     {
-        $this->_stateBlockName              = 'catalog/layer_state';
-        $this->_categoryBlockName           = 'catalog/layer_filter_category';
-        $this->_attributeFilterBlockName    = 'catalog/layer_filter_attribute';
-        $this->_priceFilterBlockName        = 'catalog/layer_filter_price';
-        $this->_decimalFilterBlockName      = 'catalog/layer_filter_decimal';
+        $this->_stateBlockName              = \'catalog/layer_state\';
+        $this->_categoryBlockName           = \'catalog/layer_filter_category\';
+        $this->_attributeFilterBlockName    = \'catalog/layer_filter_attribute\';
+        $this->_priceFilterBlockName        = \'catalog/layer_filter_price\';
+        $this->_decimalFilterBlockName      = \'catalog/layer_filter_decimal\';
     }
 
     /**
@@ -100,7 +100,7 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     protected function _getAttributeFilterBlockName()
     {
-        return 'catalog/layer_filter_attribute';
+        return \'catalog/layer_filter_attribute\';
     }
 
     /**
@@ -117,20 +117,20 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
             ->setLayer($this->getLayer())
             ->init();
 
-        $this->setChild('layer_state', $stateBlock);
-        $this->setChild('category_filter', $categoryBlock);
+        $this->setChild(\'layer_state\', $stateBlock);
+        $this->setChild(\'category_filter\', $categoryBlock);
 
         $filterableAttributes = $this->_getFilterableAttributes();
         foreach ($filterableAttributes as $attribute) {
-            if ($attribute->getAttributeCode() == 'price') {
+            if ($attribute->getAttributeCode() == \'price\') {
                 $filterBlockName = $this->_priceFilterBlockName;
-            } elseif ($attribute->getBackendType() == 'decimal') {
+            } elseif ($attribute->getBackendType() == \'decimal\') {
                 $filterBlockName = $this->_decimalFilterBlockName;
             } else {
                 $filterBlockName = $this->_attributeFilterBlockName;
             }
 
-            $this->setChild($attribute->getAttributeCode() . '_filter',
+            $this->setChild($attribute->getAttributeCode() . \'_filter\',
                 $this->getLayout()->createBlock($filterBlockName)
                     ->setLayer($this->getLayer())
                     ->setAttributeModel($attribute)
@@ -149,7 +149,7 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     public function getLayer()
     {
-        return Mage::getSingleton('catalog/layer');
+        return Mage::getSingleton(\'catalog/layer\');
     }
 
     /**
@@ -159,10 +159,10 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     protected function _getFilterableAttributes()
     {
-        $attributes = $this->getData('_filterable_attributes');
+        $attributes = $this->getData(\'_filterable_attributes\');
         if (is_null($attributes)) {
             $attributes = $this->getLayer()->getFilterableAttributes();
-            $this->setData('_filterable_attributes', $attributes);
+            $this->setData(\'_filterable_attributes\', $attributes);
         }
 
         return $attributes;
@@ -175,7 +175,7 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     public function getStateHtml()
     {
-        return $this->getChildHtml('layer_state');
+        return $this->getChildHtml(\'layer_state\');
     }
 
     /**
@@ -192,7 +192,7 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
 
         $filterableAttributes = $this->_getFilterableAttributes();
         foreach ($filterableAttributes as $attribute) {
-            $filters[] = $this->getChild($attribute->getAttributeCode() . '_filter');
+            $filters[] = $this->getChild($attribute->getAttributeCode() . \'_filter\');
         }
 
         return $filters;
@@ -205,7 +205,7 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     protected function _getCategoryFilter()
     {
-        return $this->getChild('category_filter');
+        return $this->getChild(\'category_filter\');
     }
 
     /**
@@ -241,21 +241,20 @@ class Mage_Catalog_Block_Layer_View extends Mage_Core_Block_Template
      */
     protected function _getPriceFilter()
     {
-        return $this->getChild('_price_filter');
+        return $this->getChild(\'_price_filter\');
     }
 
     /**
-     * Get url for 'Clear All' link
+     * Get url for \'Clear All\' link
      *
      * @return string
      */
     public function getClearUrl()
     {
-        return $this->getChild('layer_state')->getClearUrl();
+        return $this->getChild(\'layer_state\')->getClearUrl();
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

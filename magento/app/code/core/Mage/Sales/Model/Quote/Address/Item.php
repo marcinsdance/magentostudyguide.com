@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -121,7 +121,7 @@ class Mage_Sales_Model_Quote_Address_Item extends Mage_Sales_Model_Quote_Item_Ab
 
     protected function _construct()
     {
-        $this->_init('sales/quote_address_item');
+        $this->_init(\'sales/quote_address_item\');
     }
 
     protected function _beforeSave()
@@ -195,9 +195,8 @@ class Mage_Sales_Model_Quote_Address_Item extends Mage_Sales_Model_Quote_Item_Ab
         }
         return null;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

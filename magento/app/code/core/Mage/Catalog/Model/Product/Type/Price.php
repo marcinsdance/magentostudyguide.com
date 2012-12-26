@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -34,7 +34,7 @@ $str = <<<'EOD'
  */
 class Mage_Catalog_Model_Product_Type_Price
 {
-    const CACHE_TAG = 'PRODUCT_PRICE';
+    const CACHE_TAG = \'PRODUCT_PRICE\';
 
     static $attributeCache = array();
 
@@ -45,7 +45,7 @@ class Mage_Catalog_Model_Product_Type_Price
      */
     public function getPrice($product)
     {
-        return $product->getData('price');
+        return $product->getData(\'price\');
     }
 
     /**
@@ -81,9 +81,9 @@ class Mage_Catalog_Model_Product_Type_Price
         $finalPrice = $this->getBasePrice($product, $qty);
         $product->setFinalPrice($finalPrice);
 
-        Mage::dispatchEvent('catalog_product_get_final_price', array('product' => $product, 'qty' => $qty));
+        Mage::dispatchEvent(\'catalog_product_get_final_price\', array(\'product\' => $product, \'qty\' => $qty));
 
-        $finalPrice = $product->getData('final_price');
+        $finalPrice = $product->getData(\'final_price\');
         $finalPrice = $this->_applyOptionsPrice($product, $qty, $finalPrice);
         $finalPrice = max(0, $finalPrice);
         $product->setFinalPrice($finalPrice);
@@ -121,13 +121,13 @@ class Mage_Catalog_Model_Product_Type_Price
     public function getGroupPrice($product)
     {
 
-        $groupPrices = $product->getData('group_price');
+        $groupPrices = $product->getData(\'group_price\');
 
         if (is_null($groupPrices)) {
-            $attribute = $product->getResource()->getAttribute('group_price');
+            $attribute = $product->getResource()->getAttribute(\'group_price\');
             if ($attribute) {
                 $attribute->getBackend()->afterLoad($product);
-                $groupPrices = $product->getData('group_price');
+                $groupPrices = $product->getData(\'group_price\');
             }
         }
 
@@ -139,8 +139,8 @@ class Mage_Catalog_Model_Product_Type_Price
 
         $matchedPrice = $product->getPrice();
         foreach ($groupPrices as $groupPrice) {
-            if ($groupPrice['cust_group'] == $customerGroup && $groupPrice['website_price'] < $matchedPrice) {
-                $matchedPrice = $groupPrice['website_price'];
+            if ($groupPrice[\'cust_group\'] == $customerGroup && $groupPrice[\'website_price\'] < $matchedPrice) {
+                $matchedPrice = $groupPrice[\'website_price\'];
                 break;
             }
         }
@@ -179,13 +179,13 @@ class Mage_Catalog_Model_Product_Type_Price
     public function getTierPrice($qty = null, $product)
     {
         $allGroups = Mage_Customer_Model_Group::CUST_GROUP_ALL;
-        $prices = $product->getData('tier_price');
+        $prices = $product->getData(\'tier_price\');
 
         if (is_null($prices)) {
-            $attribute = $product->getResource()->getAttribute('tier_price');
+            $attribute = $product->getResource()->getAttribute(\'tier_price\');
             if ($attribute) {
                 $attribute->getBackend()->afterLoad($product);
-                $prices = $product->getData('tier_price');
+                $prices = $product->getData(\'tier_price\');
             }
         }
 
@@ -194,10 +194,10 @@ class Mage_Catalog_Model_Product_Type_Price
                 return $product->getPrice();
             }
             return array(array(
-                'price'         => $product->getPrice(),
-                'website_price' => $product->getPrice(),
-                'price_qty'     => 1,
-                'cust_group'    => $allGroups,
+                \'price\'         => $product->getPrice(),
+                \'website_price\' => $product->getPrice(),
+                \'price_qty\'     => 1,
+                \'cust_group\'    => $allGroups,
             ));
         }
 
@@ -208,44 +208,44 @@ class Mage_Catalog_Model_Product_Type_Price
             $prevGroup = $allGroups;
 
             foreach ($prices as $price) {
-                if ($price['cust_group']!=$custGroup && $price['cust_group']!=$allGroups) {
+                if ($price[\'cust_group\']!=$custGroup && $price[\'cust_group\']!=$allGroups) {
                     // tier not for current customer group nor is for all groups
                     continue;
                 }
-                if ($qty < $price['price_qty']) {
+                if ($qty < $price[\'price_qty\']) {
                     // tier is higher than product qty
                     continue;
                 }
-                if ($price['price_qty'] < $prevQty) {
+                if ($price[\'price_qty\'] < $prevQty) {
                     // higher tier qty already found
                     continue;
                 }
-                if ($price['price_qty'] == $prevQty && $prevGroup != $allGroups && $price['cust_group'] == $allGroups) {
+                if ($price[\'price_qty\'] == $prevQty && $prevGroup != $allGroups && $price[\'cust_group\'] == $allGroups) {
                     // found tier qty is same as current tier qty but current tier group is ALL_GROUPS
                     continue;
                 }
-                if ($price['website_price'] < $prevPrice) {
-                    $prevPrice  = $price['website_price'];
-                    $prevQty    = $price['price_qty'];
-                    $prevGroup  = $price['cust_group'];
+                if ($price[\'website_price\'] < $prevPrice) {
+                    $prevPrice  = $price[\'website_price\'];
+                    $prevQty    = $price[\'price_qty\'];
+                    $prevGroup  = $price[\'cust_group\'];
                 }
             }
             return $prevPrice;
         } else {
             $qtyCache = array();
             foreach ($prices as $i => $price) {
-                if ($price['cust_group'] != $custGroup && $price['cust_group'] != $allGroups) {
+                if ($price[\'cust_group\'] != $custGroup && $price[\'cust_group\'] != $allGroups) {
                     unset($prices[$i]);
-                } else if (isset($qtyCache[$price['price_qty']])) {
-                    $j = $qtyCache[$price['price_qty']];
-                    if ($prices[$j]['website_price'] > $price['website_price']) {
+                } else if (isset($qtyCache[$price[\'price_qty\']])) {
+                    $j = $qtyCache[$price[\'price_qty\']];
+                    if ($prices[$j][\'website_price\'] > $price[\'website_price\']) {
                         unset($prices[$j]);
-                        $qtyCache[$price['price_qty']] = $i;
+                        $qtyCache[$price[\'price_qty\']] = $i;
                     } else {
                         unset($prices[$i]);
                     }
                 } else {
-                    $qtyCache[$price['price_qty']] = $i;
+                    $qtyCache[$price[\'price_qty\']] = $i;
                 }
             }
         }
@@ -258,7 +258,7 @@ class Mage_Catalog_Model_Product_Type_Price
         if ($product->getCustomerGroupId()) {
             return $product->getCustomerGroupId();
         }
-        return Mage::getSingleton('customer/session')->getCustomerGroupId();
+        return Mage::getSingleton(\'customer/session\')->getCustomerGroupId();
     }
 
     /**
@@ -299,8 +299,8 @@ class Mage_Catalog_Model_Product_Type_Price
         $price = $product->getTierPrice($qty);
         if (is_array($price)) {
             foreach ($price as $index => $value) {
-                $price[$index]['formated_price'] = Mage::app()->getStore()->convertPrice(
-                        $price[$index]['website_price'], true
+                $price[$index][\'formated_price\'] = Mage::app()->getStore()->convertPrice(
+                        $price[$index][\'website_price\'], true
                 );
             }
         }
@@ -332,11 +332,11 @@ class Mage_Catalog_Model_Product_Type_Price
      */
     protected function _applyOptionsPrice($product, $qty, $finalPrice)
     {
-        if ($optionIds = $product->getCustomOption('option_ids')) {
+        if ($optionIds = $product->getCustomOption(\'option_ids\')) {
             $basePrice = $finalPrice;
-            foreach (explode(',', $optionIds->getValue()) as $optionId) {
+            foreach (explode(\',\', $optionIds->getValue()) as $optionId) {
                 if ($option = $product->getOptionById($optionId)) {
-                    $confItemOption = $product->getCustomOption('option_'.$option->getId());
+                    $confItemOption = $product->getCustomOption(\'option_\'.$option->getId());
 
                     $group = $option->groupFactory($option->getType())
                         ->setOption($option)
@@ -365,7 +365,7 @@ class Mage_Catalog_Model_Product_Type_Price
     public static function calculatePrice($basePrice, $specialPrice, $specialPriceFrom, $specialPriceTo,
             $rulePrice = false, $wId = null, $gId = null, $productId = null)
     {
-        Varien_Profiler::start('__PRODUCT_CALCULATE_PRICE__');
+        Varien_Profiler::start(\'__PRODUCT_CALCULATE_PRICE__\');
         if ($wId instanceof Mage_Core_Model_Store) {
             $sId = $wId->getId();
             $wId = $wId->getWebsiteId();
@@ -382,7 +382,7 @@ class Mage_Catalog_Model_Product_Type_Price
 
         if ($rulePrice === false) {
             $storeTimestamp = Mage::app()->getLocale()->storeTimeStamp($sId);
-            $rulePrice = Mage::getResourceModel('catalogrule/rule')
+            $rulePrice = Mage::getResourceModel(\'catalogrule/rule\')
                 ->getRulePrice($storeTimestamp, $wId, $gId, $productId);
         }
 
@@ -391,7 +391,7 @@ class Mage_Catalog_Model_Product_Type_Price
         }
 
         $finalPrice = max($finalPrice, 0);
-        Varien_Profiler::stop('__PRODUCT_CALCULATE_PRICE__');
+        Varien_Profiler::stop(\'__PRODUCT_CALCULATE_PRICE__\');
         return $finalPrice;
     }
 
@@ -435,9 +435,8 @@ class Mage_Catalog_Model_Product_Type_Price
     {
         return true;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

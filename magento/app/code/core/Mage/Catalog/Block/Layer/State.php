@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -41,7 +41,7 @@ class Mage_Catalog_Block_Layer_State extends Mage_Core_Block_Template
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplate('catalog/layer/state.phtml');
+        $this->setTemplate(\'catalog/layer/state.phtml\');
     }
 
     /**
@@ -69,11 +69,11 @@ class Mage_Catalog_Block_Layer_State extends Mage_Core_Block_Template
         foreach ($this->getActiveFilters() as $item) {
             $filterState[$item->getFilter()->getRequestVar()] = $item->getFilter()->getCleanValue();
         }
-        $params['_current']     = true;
-        $params['_use_rewrite'] = true;
-        $params['_query']       = $filterState;
-        $params['_escape']      = true;
-        return Mage::getUrl('*/*/*', $params);
+        $params[\'_current\']     = true;
+        $params[\'_use_rewrite\'] = true;
+        $params[\'_query\']       = $filterState;
+        $params[\'_escape\']      = true;
+        return Mage::getUrl(\'*/*/*\', $params);
     }
 
     /**
@@ -83,14 +83,13 @@ class Mage_Catalog_Block_Layer_State extends Mage_Core_Block_Template
      */
     public function getLayer()
     {
-        if (!$this->hasData('layer')) {
-            $this->setLayer(Mage::getSingleton('catalog/layer'));
+        if (!$this->hasData(\'layer\')) {
+            $this->setLayer(Mage::getSingleton(\'catalog/layer\'));
         }
-        return $this->_getData('layer');
+        return $this->_getData(\'layer\');
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -34,13 +34,12 @@ abstract class Mage_Shipping_Model_Rate_Abstract extends Mage_Core_Model_Abstrac
     {
         $code = $this->getCarrier();
         if (!isset(self::$_instances[$code])) {
-            self::$_instances[$code] = Mage::getModel('shipping/config')->getCarrierInstance($code);
+            self::$_instances[$code] = Mage::getModel(\'shipping/config\')->getCarrierInstance($code);
         }
         return self::$_instances[$code];
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

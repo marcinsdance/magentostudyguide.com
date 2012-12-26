@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -139,7 +139,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      *
      * @var string
      */
-    protected $_eventPrefix = 'sales_quote_item';
+    protected $_eventPrefix = \'sales_quote_item\';
 
     /**
      * Parameter name in event
@@ -148,7 +148,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      *
      * @var string
      */
-    protected $_eventObject = 'item';
+    protected $_eventObject = \'item\';
 
     /**
      * Quote model object
@@ -176,7 +176,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      *
      * @var array
      */
-    protected $_notRepresentOptions = array('info_buyRequest');
+    protected $_notRepresentOptions = array(\'info_buyRequest\');
 
     /**
      * Flag stating that options were successfully saved
@@ -197,8 +197,8 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     protected function _construct()
     {
-        $this->_init('sales/quote_item');
-        $this->_errorInfos = Mage::getModel('sales/status_list');
+        $this->_init(\'sales/quote_item\');
+        $this->_errorInfos = Mage::getModel(\'sales/status_list\');
     }
 
     /**
@@ -209,7 +209,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     protected function _initOldFieldsMap()
     {
-        $this->_oldFieldsMap = Mage::helper('sales')->getOldFieldMap('quote_item');
+        $this->_oldFieldsMap = Mage::helper(\'sales\')->getOldFieldMap(\'quote_item\');
         return $this;
     }
 
@@ -276,7 +276,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
         $qty = $this->_prepareQty($qty);
 
         /**
-         * We can't modify quontity of existing items which have parent
+         * We can\'t modify quontity of existing items which have parent
          * This qty declared just once duering add process and is not editable
          */
         if (!$this->getParentItem() || !$this->getId()) {
@@ -295,16 +295,16 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
     public function setQty($qty)
     {
         $qty    = $this->_prepareQty($qty);
-        $oldQty = $this->_getData('qty');
-        $this->setData('qty', $qty);
+        $oldQty = $this->_getData(\'qty\');
+        $this->setData(\'qty\', $qty);
 
-        Mage::dispatchEvent('sales_quote_item_qty_set_after', array('item'=>$this));
+        Mage::dispatchEvent(\'sales_quote_item_qty_set_after\', array(\'item\'=>$this));
 
         if ($this->getQuote() && $this->getQuote()->getIgnoreOldQty()) {
             return $this;
         }
         if ($this->getUseOldQty()) {
-            $this->setData('qty', $oldQty);
+            $this->setData(\'qty\', $oldQty);
         }
 
         return $this;
@@ -314,14 +314,14 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      * Retrieve option product with Qty
      *
      * Return array
-     * 'qty'        => the qty
-     * 'product'    => the product model
+     * \'qty\'        => the qty
+     * \'product\'    => the product model
      *
      * @return array
      */
     public function getQtyOptions()
     {
-        $qtyOptions = $this->getData('qty_options');
+        $qtyOptions = $this->getData(\'qty_options\');
         if (is_null($qtyOptions)) {
             $productIds = array();
             $qtyOptions = array();
@@ -335,13 +335,13 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
             }
 
             foreach ($productIds as $productId) {
-                $option = $this->getOptionByCode('product_qty_' . $productId);
+                $option = $this->getOptionByCode(\'product_qty_\' . $productId);
                 if ($option) {
                     $qtyOptions[$productId] = $option;
                 }
             }
 
-            $this->setData('qty_options', $qtyOptions);
+            $this->setData(\'qty_options\', $qtyOptions);
         }
 
         return $qtyOptions;
@@ -355,7 +355,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     public function setQtyOptions($qtyOptions)
     {
-        return $this->setData('qty_options', $qtyOptions);
+        return $this->setData(\'qty_options\', $qtyOptions);
     }
 
     /**
@@ -368,9 +368,9 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
         $parent = parent::checkData();
         if ($this->getProduct()->getHasError()) {
             $this->setHasError(true);
-            $this->setMessage(Mage::helper('sales')->__('Item options declaration error.'));
+            $this->setMessage(Mage::helper(\'sales\')->__(\'Item options declaration error.\'));
             $this->getQuote()->setHasError(true);
-            $this->getQuote()->addMessage($this->getProduct()->getMessage(), 'options');
+            $this->getQuote()->addMessage($this->getProduct()->getMessage(), \'options\');
         }
         return $parent;
     }
@@ -387,7 +387,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
             $product->setStoreId($this->getQuote()->getStoreId());
             $product->setCustomerGroupId($this->getQuote()->getCustomerGroupId());
         }
-        $this->setData('product', $product)
+        $this->setData(\'product\', $product)
             ->setProductId($product->getId())
             ->setProductType($product->getTypeId())
             ->setSku($this->getProduct()->getSku())
@@ -402,9 +402,9 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
             $this->setIsQtyDecimal($product->getStockItem()->getIsQtyDecimal());
         }
 
-        Mage::dispatchEvent('sales_quote_item_set_product', array(
-            'product' => $product,
-            'quote_item'=>$this
+        Mage::dispatchEvent(\'sales_quote_item_set_product\', array(
+            \'product\' => $product,
+            \'quote_item\'=>$this
         ));
 
 
@@ -505,8 +505,8 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
                         $itemOptionValue = $_itemOptionValue;
                         $optionValue     = $_optionValue;
                         // looks like it does not break bundle selection qty
-                        unset($itemOptionValue['qty'], $itemOptionValue['uenc']);
-                        unset($optionValue['qty'], $optionValue['uenc']);
+                        unset($itemOptionValue[\'qty\'], $itemOptionValue[\'uenc\']);
+                        unset($optionValue[\'qty\'], $optionValue[\'uenc\']);
                     }
                 }
 
@@ -528,13 +528,13 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     public function getProductType()
     {
-        if ($option = $this->getOptionByCode('product_type')) {
+        if ($option = $this->getOptionByCode(\'product_type\')) {
             return $option->getValue();
         }
         if ($product = $this->getProduct()) {
             return $product->getTypeId();
         }
-        return $this->_getData('product_type');
+        return $this->_getData(\'product_type\');
     }
 
     /**
@@ -544,7 +544,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     public function getRealProductType()
     {
-        return $this->_getData('product_type');
+        return $this->_getData(\'product_type\');
     }
 
     /**
@@ -558,7 +558,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
         $data = parent::toArray($arrAttributes);
 
         if ($product = $this->getProduct()) {
-            $data['product'] = $product->toArray();
+            $data[\'product\'] = $product->toArray();
         }
         return $data;
     }
@@ -606,11 +606,11 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
     public function addOption($option)
     {
         if (is_array($option)) {
-            $option = Mage::getModel('sales/quote_item_option')->setData($option)
+            $option = Mage::getModel(\'sales/quote_item_option\')->setData($option)
                 ->setItem($this);
         }
         elseif (($option instanceof Varien_Object) && !($option instanceof Mage_Sales_Model_Quote_Item_Option)) {
-            $option = Mage::getModel('sales/quote_item_option')->setData($option->getData())
+            $option = Mage::getModel(\'sales/quote_item_option\')->setData($option->getData())
                ->setProduct($option->getProduct())
                ->setItem($this);
         }
@@ -618,7 +618,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
             $option->setItem($this);
         }
         else {
-            Mage::throwException(Mage::helper('sales')->__('Invalid item option format.'));
+            Mage::throwException(Mage::helper(\'sales\')->__(\'Invalid item option format.\'));
         }
 
         if ($exOption = $this->getOptionByCode($option->getCode())) {
@@ -684,7 +684,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
             $this->_optionsByCode[$option->getCode()] = $option;
         }
         else {
-            Mage::throwException(Mage::helper('sales')->__('An item option with code %s already exists.', $option->getCode()));
+            Mage::throwException(Mage::helper(\'sales\')->__(\'An item option with code %s already exists.\', $option->getCode()));
         }
         return $this;
     }
@@ -705,7 +705,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
 
     /**
      * Checks that item model has data changes.
-     * Call save item options if model isn't need to save in DB
+     * Call save item options if model isn\'t need to save in DB
      *
      * @return boolean
      */
@@ -793,7 +793,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     public function getBuyRequest()
     {
-        $option = $this->getOptionByCode('info_buyRequest');
+        $option = $this->getOptionByCode(\'info_buyRequest\');
         $buyRequest = new Varien_Object($option ? unserialize($option->getValue()) : null);
 
         // Overwrite standard buy request qty, because item qty could have changed since adding to quote
@@ -811,14 +811,14 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
      */
     protected function _setHasError($flag)
     {
-        return $this->setData('has_error', $flag);
+        return $this->setData(\'has_error\', $flag);
     }
 
     /**
      * Sets flag, whether this quote item has some error associated with it.
-     * When TRUE - also adds 'unknown' error information to list of quote item errors.
+     * When TRUE - also adds \'unknown\' error information to list of quote item errors.
      * When FALSE - clears whole list of quote item errors.
-     * It's recommended to use addErrorInfo() instead - to be able to remove error statuses later.
+     * It\'s recommended to use addErrorInfo() instead - to be able to remove error statuses later.
      *
      * @param bool $flag
      * @return Mage_Sales_Model_Quote_Item
@@ -881,7 +881,7 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
     /**
      * Removes error infos, that have parameters equal to passed in $params.
      * $params can have following keys (if not set - then any item is good for this key):
-     *   'origin', 'code', 'message'
+     *   \'origin\', \'code\', \'message\'
      *
      * @param array $params
      * @return Mage_Sales_Model_Quote_Item
@@ -890,8 +890,8 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
     {
         $removedItems = $this->_errorInfos->removeItemsByParams($params);
         foreach ($removedItems as $item) {
-            if ($item['message'] !== null) {
-                $this->removeMessageByText($item['message']);
+            if ($item[\'message\'] !== null) {
+                $this->removeMessageByText($item[\'message\']);
             }
         }
 
@@ -901,9 +901,8 @@ class Mage_Sales_Model_Quote_Item extends Mage_Sales_Model_Quote_Item_Abstract
 
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

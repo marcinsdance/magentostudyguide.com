@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -134,7 +134,7 @@ abstract class Mage_Eav_Model_Entity_Attribute_Backend_Abstract
                 $this->_table = $this->getAttribute()->getBackendTable();
             } else {
                 $entity = $this->getAttribute()->getEntity();
-                $tableName = sprintf('%s_%s', $entity->getValueTablePrefix(), $this->getType());
+                $tableName = sprintf(\'%s_%s\', $entity->getValueTablePrefix(), $this->getType());
                 $this->_table = $tableName;
             }
         }
@@ -249,7 +249,7 @@ abstract class Mage_Eav_Model_Entity_Attribute_Backend_Abstract
 
         if ($this->getAttribute()->getIsUnique()
             && !$this->getAttribute()->getIsRequired()
-            && ($value == '' || $this->getAttribute()->isValueEmpty($value)))
+            && ($value == \'\' || $this->getAttribute()->isValueEmpty($value)))
         {
             return true;
         }
@@ -257,8 +257,8 @@ abstract class Mage_Eav_Model_Entity_Attribute_Backend_Abstract
         if ($this->getAttribute()->getIsUnique()) {
             if (!$this->getAttribute()->getEntity()->checkAttributeUniqueValue($this->getAttribute(), $object)) {
                 $label = $this->getAttribute()->getFrontend()->getLabel();
-                throw Mage::exception('Mage_Eav',
-                    Mage::helper('eav')->__('The value of attribute "%s" must be unique', $label)
+                throw Mage::exception(\'Mage_Eav\',
+                    Mage::helper(\'eav\')->__(\'The value of attribute "%s" must be unique\', $label)
                 );
             }
         }
@@ -324,9 +324,8 @@ abstract class Mage_Eav_Model_Entity_Attribute_Backend_Abstract
     {
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

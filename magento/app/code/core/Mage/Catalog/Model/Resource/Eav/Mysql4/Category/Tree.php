@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -35,9 +35,8 @@ $str = <<<'EOD'
  */
 class Mage_Catalog_Model_Resource_Eav_Mysql4_Category_Tree extends Mage_Catalog_Model_Resource_Category_Tree
 {
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

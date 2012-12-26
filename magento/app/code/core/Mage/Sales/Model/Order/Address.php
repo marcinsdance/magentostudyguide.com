@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -76,15 +76,15 @@ class Mage_Sales_Model_Order_Address extends Mage_Customer_Model_Address_Abstrac
 {
     protected $_order;
 
-    protected $_eventPrefix = 'sales_order_address';
-    protected $_eventObject = 'address';
+    protected $_eventPrefix = \'sales_order_address\';
+    protected $_eventObject = \'address\';
 
     /**
      * Initialize resource
      */
     protected function _construct()
     {
-        $this->_init('sales/order_address');
+        $this->_init(\'sales/order_address\');
     }
 
     /**
@@ -94,7 +94,7 @@ class Mage_Sales_Model_Order_Address extends Mage_Customer_Model_Address_Abstrac
      */
     protected function _initOldFieldsMap()
     {
-        $this->_oldFieldsMap = Mage::helper('sales')->getOldFieldMap('order_address');
+        $this->_oldFieldsMap = Mage::helper(\'sales\')->getOldFieldMap(\'order_address\');
         return $this;
     }
 
@@ -117,7 +117,7 @@ class Mage_Sales_Model_Order_Address extends Mage_Customer_Model_Address_Abstrac
     public function getOrder()
     {
         if (!$this->_order) {
-            $this->_order = Mage::getModel('sales/order')->load($this->getParentId());
+            $this->_order = Mage::getModel(\'sales/order\')->load($this->getParentId());
         }
         return $this->_order;
     }
@@ -142,9 +142,8 @@ class Mage_Sales_Model_Order_Address extends Mage_Customer_Model_Address_Abstrac
 
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

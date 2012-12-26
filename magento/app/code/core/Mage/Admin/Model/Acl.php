@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -39,13 +39,13 @@ class Mage_Admin_Model_Acl extends Zend_Acl
      * All the group roles are prepended by G
      *
      */
-    const ROLE_TYPE_GROUP = 'G';
+    const ROLE_TYPE_GROUP = \'G\';
     
     /**
      * All the user roles are prepended by U
      *
      */
-    const ROLE_TYPE_USER = 'U';
+    const ROLE_TYPE_USER = \'U\';
     
     /**
      * Permission level to deny access
@@ -73,7 +73,7 @@ class Mage_Admin_Model_Acl extends Zend_Acl
     protected function _getRoleRegistry()
     {
         if (null === $this->_roleRegistry) {
-            $this->_roleRegistry = Mage::getModel('admin/acl_role_registry');
+            $this->_roleRegistry = Mage::getModel(\'admin/acl_role_registry\');
         }
         return $this->_roleRegistry;
     }
@@ -90,9 +90,8 @@ class Mage_Admin_Model_Acl extends Zend_Acl
         $this->_getRoleRegistry()->addParent($role, $parent);
         return $this;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';

@@ -1,5 +1,5 @@
 <?php
-$str = <<<'EOD'
+$str = '
 /**
  * Magento
  *
@@ -37,15 +37,15 @@ class Mage_Catalog_Model_Product_Type
     /**
      * Available product types
      */
-    const TYPE_SIMPLE       = 'simple';
-    const TYPE_BUNDLE       = 'bundle';
-    const TYPE_CONFIGURABLE = 'configurable';
-    const TYPE_GROUPED      = 'grouped';
-    const TYPE_VIRTUAL      = 'virtual';
+    const TYPE_SIMPLE       = \'simple\';
+    const TYPE_BUNDLE       = \'bundle\';
+    const TYPE_CONFIGURABLE = \'configurable\';
+    const TYPE_GROUPED      = \'grouped\';
+    const TYPE_VIRTUAL      = \'virtual\';
 
-    const DEFAULT_TYPE      = 'simple';
-    const DEFAULT_TYPE_MODEL    = 'catalog/product_type_simple';
-    const DEFAULT_PRICE_MODEL   = 'catalog/product_type_price';
+    const DEFAULT_TYPE      = \'simple\';
+    const DEFAULT_TYPE_MODEL    = \'catalog/product_type_simple\';
+    const DEFAULT_PRICE_MODEL   = \'catalog/product_type_price\';
 
     static protected $_types;
     static protected $_compositeTypes;
@@ -64,8 +64,8 @@ class Mage_Catalog_Model_Product_Type
         $types = self::getTypes();
         $typeId = $product->getTypeId();
 
-        if (!empty($types[$typeId]['model'])) {
-            $typeModelName = $types[$typeId]['model'];
+        if (!empty($types[$typeId][\'model\'])) {
+            $typeModelName = $types[$typeId][\'model\'];
         } else {
             $typeModelName = self::DEFAULT_TYPE_MODEL;
             $typeId = self::DEFAULT_TYPE;
@@ -96,8 +96,8 @@ class Mage_Catalog_Model_Product_Type
 
         $types = self::getTypes();
 
-        if (!empty($types[$productType]['price_model'])) {
-            $priceModelName = $types[$productType]['price_model'];
+        if (!empty($types[$productType][\'price_model\'])) {
+            $priceModelName = $types[$productType][\'price_model\'];
         } else {
             $priceModelName = self::DEFAULT_PRICE_MODEL;
         }
@@ -110,7 +110,7 @@ class Mage_Catalog_Model_Product_Type
     {
         $options = array();
         foreach(self::getTypes() as $typeId=>$type) {
-            $options[$typeId] = Mage::helper('catalog')->__($type['label']);
+            $options[$typeId] = Mage::helper(\'catalog\')->__($type[\'label\']);
         }
 
         return $options;
@@ -119,18 +119,18 @@ class Mage_Catalog_Model_Product_Type
     static public function getAllOption()
     {
         $options = self::getOptionArray();
-        array_unshift($options, array('value'=>'', 'label'=>''));
+        array_unshift($options, array(\'value\'=>\'\', \'label\'=>\'\'));
         return $options;
     }
 
     static public function getAllOptions()
     {
         $res = array();
-        $res[] = array('value'=>'', 'label'=>'');
+        $res[] = array(\'value\'=>\'\', \'label\'=>\'\');
         foreach (self::getOptionArray() as $index => $value) {
             $res[] = array(
-               'value' => $index,
-               'label' => $value
+               \'value\' => $index,
+               \'label\' => $value
             );
         }
         return $res;
@@ -141,8 +141,8 @@ class Mage_Catalog_Model_Product_Type
         $res = array();
         foreach (self::getOptionArray() as $index => $value) {
             $res[] = array(
-               'value' => $index,
-               'label' => $value
+               \'value\' => $index,
+               \'label\' => $value
             );
         }
         return $res;
@@ -157,14 +157,14 @@ class Mage_Catalog_Model_Product_Type
     static public function getTypes()
     {
         if (is_null(self::$_types)) {
-            $productTypes = Mage::getConfig()->getNode('global/catalog/product/type')->asArray();
+            $productTypes = Mage::getConfig()->getNode(\'global/catalog/product/type\')->asArray();
             foreach ($productTypes as $productKey => $productConfig) {
-                $moduleName = 'catalog';
-                if (isset($productConfig['@']['module'])) {
-                    $moduleName = $productConfig['@']['module'];
+                $moduleName = \'catalog\';
+                if (isset($productConfig[\'@\'][\'module\'])) {
+                    $moduleName = $productConfig[\'@\'][\'module\'];
                 }
-                $translatedLabel = Mage::helper($moduleName)->__($productConfig['label']);
-                $productTypes[$productKey]['label'] = $translatedLabel;
+                $translatedLabel = Mage::helper($moduleName)->__($productConfig[\'label\']);
+                $productTypes[$productKey][\'label\'] = $translatedLabel;
             }
             self::$_types = $productTypes;
         }
@@ -183,7 +183,7 @@ class Mage_Catalog_Model_Product_Type
             self::$_compositeTypes = array();
             $types = self::getTypes();
             foreach ($types as $typeId=>$typeInfo) {
-                if (array_key_exists('composite', $typeInfo) && $typeInfo['composite']) {
+                if (array_key_exists(\'composite\', $typeInfo) && $typeInfo[\'composite\']) {
                     self::$_compositeTypes[] = $typeId;
                 }
             }
@@ -205,8 +205,8 @@ class Mage_Catalog_Model_Product_Type
 
             $types = self::getTypes();
             foreach ($types as $typeId => $typeInfo) {
-                $priority = isset($typeInfo['index_priority']) ? abs(intval($typeInfo['index_priority'])) : 0;
-                if (!empty($typeInfo['composite'])) {
+                $priority = isset($typeInfo[\'index_priority\']) ? abs(intval($typeInfo[\'index_priority\'])) : 0;
+                if (!empty($typeInfo[\'composite\'])) {
                     $b[$typeId] = $priority;
                 } else {
                     $a[$typeId] = $priority;
@@ -225,9 +225,8 @@ class Mage_Catalog_Model_Product_Type
         }
         return self::$_typesPriority;
     }
-}
+}';
 
-EOD;
 echo '<pre>';
 echo $str;
 echo '</pre>';
