@@ -142,7 +142,7 @@
       <h5>Questions</h5>
       <ul>
         <li>Starting with the index.php, including Mage.php, follow through the steps Magento takes to set up the run time environment.</li>
-        <li>How and when is the include path set up and the auto loader registered?</li>
+        <li><a href="/answers/2q2.html" class="file">How and when is the include path set up and the auto loader registered?</a></li>
         <li>How and when does Magento load the base configuration, the module configuration, and the database configuration?</li>
         <li>How and when are the two main types of setup script executed?</li>
         <li>When does Magento decide which store view to use, and when is the current locale set?</li>
