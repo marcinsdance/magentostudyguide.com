@@ -1,0 +1,61 @@
+In <strong>Mage_Core_Model_Resource_Setup</strong> we find these two functions:<br/>
+<ul>
+  <li>applyAllUpdates</li>
+  <li>applyAllDataUpdates</li>
+</ul>
+<p>&nbsp;</p>
+<h3>applyAllUpdates</h3>
+applyAllUpdates calls <strong>applyUpdates</strong> which depending on 'version_compare' check calls _rollback<strong>ResourceDb</strong>, _upgrade<strong>ResourceDb</strong> or _install<strong>ResourceDb</strong>.<br/>
+This method is responsible for running the install scripts.<br/><br/>
+
+<h3>applyAllDataUpdates</h3>
+applyAllDataUpdates calls <strong>applyDataUpdates</strong> which depending on 'version_compare' check calls _upgrade<strong>Data</strong> or _install<strong>Data</strong><br/>
+This method is responsible for running the install scripts.<br/>
+<br/>
+<p>&nbsp;</p>
+
+In <strong>Mage_Core_Model_App</strong> these two methods are being called:<br />
+<ul>
+  <li>Mage_Core_Model_Resource_Setup::applyAllUpdates() is called in run() method</li>
+  <li>Mage_Core_Model_Resource_Setup::applyAllDataUpdates() is called in _initModules() method from within method run(),</li>
+</ul>
+
+Because _initModules() is called from within run() before Mage_Core_Model_Resource_Setup::applyAllDataUpdates so <strong>install scripts run before update scripts</strong>.
+<p>&nbsp;</p>
+<h3>Here's where it happens: Mage_Core_Model_App-&gt;run()</h3>
+<pre>
+/**
+* Run application. Run process responsible for request processing and sending response.
+* List of supported parameters:
+*  scope_code - code of default scope (website/store_group/store code)
+*  scope_type - type of default scope (website/group/store)
+*  options    - configuration options
+*
+* @param  array $params application run parameters
+* @return Mage_Core_Model_App
+*/
+public function run($params)
+{
+  $options = isset($params['options']) ? $params['options'] : array();
+  $this->baseInit($options);
+  Mage::register('application_params', $params);
+
+  if ($this->_cache->processRequest()) {
+    $this->getResponse()->sendResponse();
+  } else {
+    $this->_initModules();
+    $this->loadAreaPart(Mage_Core_Model_App_Area::AREA_GLOBAL, Mage_Core_Model_App_Area::PART_EVENTS);
+
+    if ($this->_config->isLocalConfigLoaded()) {
+      $scopeCode = isset($params['scope_code']) ? $params['scope_code'] : '';
+      $scopeType = isset($params['scope_type']) ? $params['scope_type'] : 'store';
+      $this->_initCurrentStore($scopeCode, $scopeType);
+      $this->_initRequest();
+      Mage_Core_Model_Resource_Setup::applyAllDataUpdates();
+    }
+
+    $this->getFrontController()->dispatch();
+  }
+  return $this;
+}
+</pre>
