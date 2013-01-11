@@ -1,0 +1,31 @@
+<p>Magento loads the base configuration, the module configuration and the database configuration in Mage_Core_Model_Config->init()</p>
+The order of loading is:
+<ol>
+  <li>Base configuration</li>
+  <li>Module configuration</li>
+  <li>Database configuration</li>
+</ol>
+<p>&nbsp;</p>
+<pre>
+/**
+* Initialization of core configuration
+*
+* @return Mage_Core_Model_Config
+*/
+public function init($options=array())
+{
+  $this->setCacheChecksum(null);
+  $this->_cacheLoadedSections = array();
+  $this->setOptions($options);
+  $this->loadBase();
+
+  $cacheLoad = $this->loadModulesCache();
+  if ($cacheLoad) {
+    return $this;
+  }
+  $this->loadModules();
+  $this->loadDb();
+  $this->saveCache();
+  return $this;
+}
+</pre>
