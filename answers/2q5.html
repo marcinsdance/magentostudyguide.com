@@ -1,0 +1,179 @@
+Both store and locale are set in the Mage_Core_Model_App->run() function.<br/>
+Locale are set first since in baseInit() method (which sets locale) is called before _initCurrentStore().<br/>
+
+<h2>Locale:</h2>
+<ul>
+  <li>index.php Mage::run()</li>
+  <li>/app/Mage.php calls Mage_Core_Model_App->run()</li>
+  <li>Mage_Core_Model_App->run() calls Mage_Core_Model_App->baseInit()</li>
+  <li>Mage_Core_Model_App->baseInit() calls _initEnvironment()</li>
+</ul>
+
+baseInit calls _initEnvironment() method which sets the locale on Mage_Core_Model_Locale.<br/><br/>
+
+<pre>
+  /**
+   * Initialize PHP environment
+   *
+   * @return Mage_Core_Model_App
+   */
+  protected function _initEnvironment()
+  {
+      $this->setErrorHandler(self::DEFAULT_ERROR_HANDLER);
+      date_default_timezone_set(Mage_Core_Model_Locale::DEFAULT_TIMEZONE);
+      return $this;
+  }
+</pre>
+
+<h2>Store initialization:</h2>
+The method which is responsible for initializing the correct store is _initCurrentStore().<br/>
+This method is declared in Mage_Core_Model_App. The _initCurrentStore() is being called by method run which is declared in the same class (Mage_Core_Model_App).<br/>
+Method Mage_Core_Model_App->run() is called within /app/Mage.php which is called at the end of the main entry file: index.php.<br/>
+So the "road" to the _initCurrentStore() method is:<br/>
+<ul>
+  <li>index.php Mage::run()</li>
+  <li>/app/Mage.php calls Mage_Core_Model_App->run()</li>
+  <li>Mage_Core_Model_App->run() calls Mage_Core_Model_App->_initCurrentStore()</li>
+</ul>
+
+
+<h3>Mage_Core_Model_App->run()</h3>
+<pre>
+  /**
+   * Run application. Run process responsible for request processing and sending response.
+   * List of supported parameters:
+   *  scope_code - code of default scope (website/store_group/store code)
+   *  scope_type - type of default scope (website/group/store)
+   *  options    - configuration options
+   *
+   * @param  array $params application run parameters
+   * @return Mage_Core_Model_App
+   */
+  public function run($params)
+  {
+      $options = isset($params['options']) ? $params['options'] : array();
+      $this->baseInit($options);
+      Mage::register('application_params', $params);
+
+      if ($this->_cache->processRequest()) {
+          $this->getResponse()->sendResponse();
+      } else {
+          $this->_initModules();
+          $this->loadAreaPart(Mage_Core_Model_App_Area::AREA_GLOBAL, Mage_Core_Model_App_Area::PART_EVENTS);
+
+          if ($this->_config->isLocalConfigLoaded()) {
+              $scopeCode = isset($params['scope_code']) ? $params['scope_code'] : '';
+              $scopeType = isset($params['scope_type']) ? $params['scope_type'] : 'store';
+              $this->_initCurrentStore($scopeCode, $scopeType);
+              $this->_initRequest();
+              Mage_Core_Model_Resource_Setup::applyAllDataUpdates();
+          }
+
+          $this->getFrontController()->dispatch();
+      }
+      return $this;
+  }
+</pre>
+
+<h3>Mage_Core_Model_App->_initCurrentStore()</h3>
+<pre>
+  /**
+   * Initialize currently ran store
+   *
+   * @param string $scopeCode code of default scope (website/store_group/store code)
+   * @param string $scopeType type of default scope (website/group/store)
+   * @return unknown_type
+   */
+  protected function _initCurrentStore($scopeCode, $scopeType)
+  {
+      Varien_Profiler::start('mage::app::init::stores');
+      $this->_initStores();
+      Varien_Profiler::stop('mage::app::init::stores');
+
+      if (empty($scopeCode) && !is_null($this->_website)) {
+          $scopeCode = $this->_website->getCode();
+          $scopeType = 'website';
+      }
+      switch ($scopeType) {
+          case 'store':
+              $this->_currentStore = $scopeCode;
+              break;
+          case 'group':
+              $this->_currentStore = $this->_getStoreByGroup($scopeCode);
+              break;
+          case 'website':
+              $this->_currentStore = $this->_getStoreByWebsite($scopeCode);
+              break;
+          default:
+              $this->throwStoreException();
+      }
+
+      if (!empty($this->_currentStore)) {
+          $this->_checkCookieStore($scopeType);
+          $this->_checkGetStore($scopeType);
+      }
+      $this->_useSessionInUrl = $this->getStore()->getConfig(
+          Mage_Core_Model_Session_Abstract::XML_PATH_USE_FRONTEND_SID);
+      return $this;
+  }
+
+</pre>
+
+<h3>Mage->run()</h3>
+<pre>
+  /**
+   * Front end main entry point
+   *
+   * @param string $code
+   * @param string $type
+   * @param string|array $options
+   */
+  public static function run($code = '', $type = 'store', $options = array())
+  {
+      try {
+          Varien_Profiler::start('mage');
+          self::setRoot();
+          if (isset($options['edition'])) {
+              self::$_currentEdition = $options['edition'];
+          }
+          self::$_app    = new Mage_Core_Model_App();
+          if (isset($options['request'])) {
+              self::$_app->setRequest($options['request']);
+          }
+          if (isset($options['response'])) {
+              self::$_app->setResponse($options['response']);
+          }
+          self::$_events = new Varien_Event_Collection();
+          self::_setIsInstalled($options);
+          self::_setConfigModel($options);
+          self::$_app->run(array(
+              'scope_code' => $code,
+              'scope_type' => $type,
+              'options'    => $options,
+          ));
+          Varien_Profiler::stop('mage');
+      } catch (Mage_Core_Model_Session_Exception $e) {
+          header('Location: ' . self::getBaseUrl());
+          die();
+      } catch (Mage_Core_Model_Store_Exception $e) {
+          require_once(self::getBaseDir() . DS . 'errors' . DS . '404.php');
+          die();
+      } catch (Exception $e) {
+          if (self::isInstalled() || self::$_isDownloader) {
+              self::printException($e);
+              exit();
+          }
+          try {
+              self::dispatchEvent('mage_run_exception', array('exception' => $e));
+              if (!headers_sent()) {
+                  header('Location:' . self::getUrl('install'));
+              } else {
+                  self::printException($e);
+              }
+          } catch (Exception $ne) {
+              self::printException($ne, $e->getMessage());
+          }
+      }
+  }
+
+</pre>

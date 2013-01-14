@@ -1,0 +1,75 @@
+The request and response objects are initialized early in the bootstrap, in the Mage_Core_Model_App->run() method.<br/><br/>
+<ul>
+  <li>index.php calls Mage::run()</li>
+  <li>Mage::run() (/app/Mage.php) calls Mage_Core_Model_App->run()</li>
+  <li>Mage_Core_Model_App->run() initializes the request and response objects.</li>
+</ul>
+
+<pre>
+    /**
+   * Front end main entry point
+   *
+   * @param string $code
+   * @param string $type
+   * @param string|array $options
+   */
+  public static function run($code = '', $type = 'store', $options = array())
+  {
+      try {
+          Varien_Profiler::start('mage');
+          self::setRoot();
+          if (isset($options['edition'])) {
+              self::$_currentEdition = $options['edition'];
+          }
+          self::$_app    = new Mage_Core_Model_App();
+          if (isset($options['request'])) {
+</pre>
+<strong>
+<pre>
+              self::$_app->setRequest($options['request']);
+</pre>
+</strong>
+<pre>
+          }
+          if (isset($options['response'])) {
+</pre>
+<strong>
+<pre>
+              self::$_app->setResponse($options['response']);
+</pre>
+</strong>
+<pre>
+          }
+          self::$_events = new Varien_Event_Collection();
+          self::_setIsInstalled($options);
+          self::_setConfigModel($options);
+          self::$_app->run(array(
+              'scope_code' => $code,
+              'scope_type' => $type,
+              'options'    => $options,
+          ));
+          Varien_Profiler::stop('mage');
+      } catch (Mage_Core_Model_Session_Exception $e) {
+          header('Location: ' . self::getBaseUrl());
+          die();
+      } catch (Mage_Core_Model_Store_Exception $e) {
+          require_once(self::getBaseDir() . DS . 'errors' . DS . '404.php');
+          die();
+      } catch (Exception $e) {
+          if (self::isInstalled() || self::$_isDownloader) {
+              self::printException($e);
+              exit();
+          }
+          try {
+              self::dispatchEvent('mage_run_exception', array('exception' => $e));
+              if (!headers_sent()) {
+                  header('Location:' . self::getUrl('install'));
+              } else {
+                  self::printException($e);
+              }
+          } catch (Exception $ne) {
+              self::printException($ne, $e->getMessage());
+          }
+      }
+  }
+</pre>
