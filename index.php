@@ -728,7 +728,7 @@
         <li><a href="/answers/7q4.html" class="file">How do the different product types handle price calculation</a></li>
         <li>Which indexing processes does the product type influence</li>
         <li><a href="/answers/7q6.html" class="file">Which product types implement a parent-child relationship between product entities</a></li>
-        <li>Which database tables are shared between product types, and which ones are specific to one product type</li>
+        <li><a href="/answers/7q7.html" class="file">Which database tables are shared between product types, and which ones are specific to one product type</a></li>
       </ul>
       <h5>Reference files</h5>
       <ul>
