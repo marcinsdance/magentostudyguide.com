@@ -118,9 +118,9 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Which method is used for translating strings, and on which types of objects is it generally available?</li>
+        <li><a href="/answers/1q14.html" class="file">Which method is used for translating strings, and on which types of objects is it generally available?</a></li>
         <li>In what way does the developer mode influence how Magento handles translations?</li>
-        <li>How many options exist to add a custom translation for any given string?</li>
+        <li><a href="/answers/1q15.html" class="file">How many options exist to add a custom translation for any given string?</a></li>
         <li>What is the priority of translation options?</li>
         <li>How are translation conflicts (when two modules translate the same string) processed by Magento?</li>
       </ul>
@@ -158,7 +158,7 @@
     </li>
     <li><h4>Front Controller</h4>
       <ul>
-        <li>19. Describe the role of the Front Controller</li>
+        <li><a href="/answers/19.html" class="file">19. Describe the role of the Front Controller</a></li>
         <li>20. Identify uses for events fired in the Front Controller</li>
       </ul>
       <h5>Questions</h5>
@@ -198,7 +198,7 @@
       <h5>Questions</h5>
       <ul>
         <li>Starting with the front controller delegating the process of mapping a request to a controller action, study the steps that occur until a controller action is dispatched.</li>
-        <li>Which routers exist in a native Magento implementation?</li>
+        <li><a href="/answers/2q16.html" class="file">Which routers exist in a native Magento implementation?</a></li>
         <li>How does the standard router map a request to a controller class?</li>
         <li>How does the standard router build the filesystem path to a file that might contain a matching action controller?</li>
         <li>How does Magento process requests that cannot be mapped?</li>
@@ -746,7 +746,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>Under what circumstances are product prices read from the index tables?</li>
+        <li><a href="/answers/7q8.html" class="file">Under what circumstances are product prices read from the index tables?</a></li>
         <li>From which modules do classes participate in price calculation?</li>
         <li>Which ways exist to specify custom prices during runtime?</li>
         <li>How do custom product options influence price calculation?</li>

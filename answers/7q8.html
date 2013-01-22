@@ -1,0 +1,21 @@
+by <a href="http://stackoverflow.com/users/1267056/mpaepper" target="_blank">mpaepper</a>
+<h3><a href="http://stackoverflow.com/questions/14443991/under-what-circumstances-are-product-prices-read-from-the-index-tables-in-magent" target="_blank">http://stackoverflow.com/questions/14443991/under-what-circumstances-are-product-prices-read-from-the-index-tables-in-magent</a></h3>
+<pre>
+The product price is only read from the index tables when you are using product collections, i.e. when you are handling several products at a time. When you get a single product, for example on the product view page, the price is generated on the fly.
+
+And now the explanation with some code references:
+
+When you consider the Mage_Catalog_Model_Product, you will see that the method getFinalPrice() calls $this->getPriceModel()->getFinalPrice($qty, $this); In turn, the default price model (Mage_Catalog_Model_Product_Type_Price) calculates the price in the method getFinalPrice() and also fires the event catalog_product_get_final_price which is used by some module (I think it was the catalog or the cart price rules) to adjust the price. This method is a calculation "on-the-fly" so without indexes.
+
+In the collection (Mage_Catalog_Model_Resource_Product_Collection) the price indexer is used to reduce the complicated procedure of calcaluting the price for each product. It defines a map to assign the fields to the appropriate indexed fields:
+
+protected $_map = array('fields' => array(
+'price'         => 'price_index.price',
+'final_price'   => 'price_index.final_price',
+'min_price'     => 'price_index.min_price',
+'max_price'     => 'price_index.max_price',
+'tier_price'    => 'price_index.tier_price',
+'special_price' => 'price_index.special_price',
+));
+The indexer which does the work is the class Mage_Catalog_Model_Product_Indexer_Price.
+</pre>

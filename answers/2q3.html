@@ -1,8 +1,8 @@
 <p>Magento loads the base configuration, the module configuration and the database configuration in Mage_Core_Model_Config->init()</p>
 The order of loading is:
 <ol>
-  <li>Base configuration</li>
-  <li>Module configuration</li>
+  <li>Base configuration (all *.xml files from /app/etc/ directory)</li>
+  <li>Module configuration (active modules merged with local.xml file at the end to prevent directives overwriting)</li>
   <li>Database configuration</li>
 </ol>
 <p>&nbsp;</p>

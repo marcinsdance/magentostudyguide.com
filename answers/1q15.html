@@ -1,0 +1,17 @@
+by <a href="http://ka.lpe.sh/about-me/" target="_blank">Kalpesh Mehta</a>
+<h3><a href="http://ka.lpe.sh/2013/01/04/magento-certification-interview-preparation/" target="_blank">http://ka.lpe.sh/2013/01/04/magento-certification-interview-preparation/</a></h3>
+There are three options in Magento to add a custom translation to a text string: module translation, theme translation and inline translation.
+<ol>
+  <li>Module translation:<br/>
+    Module translations are stored in app/locale/languagecode_COUNTRYCODE/ folder in form of csv files, named as Namespace_Modulename.csv All string in extensions that are inside __() method can be translated this way
+  </li>
+  <li>Theme translation:<br/>
+  Strings can be translated inside your theme, for that you just need to set locale via Magento admin area, then create translate.csv in app/design/frontend/&lt;package&gt;/&lt;theme&lt;/locale/ languagecode_COUNTRYCODE and put your translated strings inside this CSV<br/>
+      "My Cart","My Basket"<br/>
+      "My Account","Account"
+  </li>
+  <li>Inline translation:<br/>
+    To enable inline translation you need to log into Admin panel and go to System -> Configuration -> Developer.<br/>
+    You need to select Store view from scope select and enable inline translation for this desired store view there.
+  </li>
+</ol>
