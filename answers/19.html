@@ -1,3 +1,54 @@
+The roles of the Front controller are:<br/>
+<ul>
+  <li>Gather the list of all configured routers</li>
+  <li>Execute all rewrites collected in database</li>
+  <li>Execute rewrites defined in configuration file</li>
+  <li>Match the correct router</li>
+  <li>Send the response</li>
+</ul>
+
+<p>&nbsp;</p>
+<pre>
+public function dispatch()
+{
+    $request = $this->getRequest();
+
+    // If pre-configured, check equality of base URL and requested URL
+    $this->_checkBaseUrl($request);
+
+    $request->setPathInfo()->setDispatched(false);
+    if (!$request->isStraight()) {
+        Varien_Profiler::start('mage::dispatch::db_url_rewrite');
+        Mage::getModel('core/url_rewrite')->rewrite();
+        Varien_Profiler::stop('mage::dispatch::db_url_rewrite');
+    }
+    Varien_Profiler::start('mage::dispatch::config_url_rewrite');
+    $this->rewrite();
+    Varien_Profiler::stop('mage::dispatch::config_url_rewrite');
+    Varien_Profiler::start('mage::dispatch::routers_match');
+    $i = 0;
+    while (!$request->isDispatched() && $i++<100) {
+        foreach ($this->_routers as $router) {
+            if ($router->match($this->getRequest())) {
+                break;
+            }
+        }
+    }
+    Varien_Profiler::stop('mage::dispatch::routers_match');
+    if ($i>100) {
+        Mage::throwException('Front controller reached 100 router match iterations');
+    }
+    // This event gives possibility to launch something before sending output (allow cookie setting)
+    Mage::dispatchEvent('controller_front_send_response_before', array('front'=>$this));
+    Varien_Profiler::start('mage::app::dispatch::send_response');
+    $this->getResponse()->sendResponse();
+    Varien_Profiler::stop('mage::app::dispatch::send_response');
+    Mage::dispatchEvent('controller_front_send_response_after', array('front'=>$this));
+    return $this;
+}
+</pre>
+
+<p>&nbsp;</p>
 by <a href="http://ka.lpe.sh/about-me/" target="_blank">Kalpesh Mehta</a>
 <h3><a href="http://ka.lpe.sh/2013/01/04/magento-certification-interview-preparation/" target="_blank">http://ka.lpe.sh/2013/01/04/magento-certification-interview-preparation/</a></h3>
 Magento uses the Front Controller pattern for the following purposes:
