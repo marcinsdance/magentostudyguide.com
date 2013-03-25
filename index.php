@@ -742,7 +742,7 @@
     <li><h4>Price Generation</h4>
       <ul>
         <li>80. Identify basic concepts of price generation in Magento</li>
-        <li>81. Modify and adjust price generation for products (for example, during integration of third-party software)</li>
+        <li>81. <a href="/answers/81.html" class="file">Modify and adjust price generation for products (for example, during integration of third-party software)</a></li>
       </ul>
       <h5>Questions</h5>
       <ul>
