@@ -1,5 +1,55 @@
-<p>We find both methods in Mage_Sales_Model_Order_Payment:</p>
+<p>We find both methods in Mage_Sales_Model_Order_Payment and in Mage_Sales_Model_Order_Invoice.</p>
+<p>The methods in <strong>Mage_Sales_Model_Order_Invoice</strong> can help us answering this question:</p>
+<p>&nbsp;</p>
+<pre>
+/**
+ * Capture invoice
+ *
+ * @return Mage_Sales_Model_Order_Invoice
+ */
+public function capture()
+{
+    $this->getOrder()->getPayment()->capture($this);
+    if ($this->getIsPaid()) {
+        $this->pay();
+    }
+    return $this;
+}
 
+/**
+ * Pay invoice
+ *
+ * @return Mage_Sales_Model_Order_Invoice
+ */
+public function pay()
+{
+    if ($this->_wasPayCalled) {
+        return $this;
+    }
+    $this->_wasPayCalled = true;
+
+    $invoiceState = self::STATE_PAID;
+    if ($this->getOrder()->getPayment()->hasForcedState()) {
+        $invoiceState = $this->getOrder()->getPayment()->getForcedState();
+    }
+
+    $this->setState($invoiceState);
+
+    $this->getOrder()->getPayment()->pay($this);
+    $this->getOrder()->setTotalPaid(
+        $this->getOrder()->getTotalPaid()+$this->getGrandTotal()
+    );
+    $this->getOrder()->setBaseTotalPaid(
+        $this->getOrder()->getBaseTotalPaid()+$this->getBaseGrandTotal()
+    );
+    Mage::dispatchEvent('sales_order_invoice_pay', array($this->_eventObject=>$this));
+    return $this;
+}
+
+</pre>
+<p>&nbsp;</p>
+In Mage_Sales_Model_Order_Payment we can see different definitions of these methods, however these will be less helpful:
+<p>&nbsp;</p>
 <pre>
 /**
  * Register payment fact: update self totals from the invoice
