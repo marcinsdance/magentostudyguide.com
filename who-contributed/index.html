@@ -45,10 +45,20 @@
           '<div class="item belvg"><a href="http://store.belvg.com/" target="_blank"><img src="/img/belvg-logo.png" align="center" /></div>' +
           '<div class="item vinaikopp"><a href="https://twitter.com/VinaiKopp" target="_blank"><img src="/img/vinaikopp.png" align="center" /></div>' +
           '<div class="item inchoo"><a href="http://inchoo.net/" target="_blank"><img src="/img/inchoo_logo_monitor.png" align="center" /></div>' +
+          '<div class="item kalpesh"><a href="http://lpe.sh/" target="_blank"><img src="/img/kalpesh.png" align="center" /></div>' +
                 '');
           $('#container').prepend( $newItems).isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' });
         };
       setTimeout(showcontributors, 100)
+
+      var audio = $(".audio")[0];
+      $(".applause")
+        .mouseenter(function() {
+          audio.play();
+        })
+        .mouseleave( function() {
+          audio.pause();
+        });
     });
   </script>
     <footer>
@@ -56,5 +66,9 @@
     </footer>
   </section> <!-- #content -->
   <img src="/img/applause.gif" class="applause" />
+  <audio controls preload="auto" class="audio">
+    <source src="audio/applause.mp3" controls></source>
+    Your browser isn't invited for super fun audio time.
+  </audio>
 </body>
 </html>

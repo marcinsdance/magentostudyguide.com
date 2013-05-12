@@ -113,5 +113,7 @@ a img { border: none; }
 .belvg { width: 194px; height: 82px; }
 .vinaikopp { width: 300px; height: 67px; }
 .inchoo { width: 250px; height: 45px; }
+.kalpesh { width: 200px; height: 60px; }
 
 .applause { position: fixed; bottom: 0; right: 0; }
+audio { display: none; }
