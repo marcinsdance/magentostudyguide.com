@@ -112,7 +112,7 @@
     </li>
     <li><h4>Internationalization</h4>
       <ul>
-        <li>14. Describe how to plan for internationalization of a Magento site</li>
+        <li>14. <a href="/answers/14.html" class="file">Describe how to plan for internationalization of a Magento site</a></li>
         <li>15. Describe the use of Magento translate classes and translate files</li>
         <li>16. Describe the advantages and disadvantages of using subdomains and subdirectories in internationalization</li>
       </ul>
