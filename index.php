@@ -323,7 +323,7 @@
       <h5>Questions</h5>
       <ul>
         <li>(Ad.1) What are blocks used for in Magento?</li>
-        <li>(Ad.1) <a href="/answers/3q10.html" class="file">What is the parent block for all Magento blocks?</a></li>
+        <li>(Ad.1) <a href="/answers/3q10-revision-01.html" class="file">What is the parent block for all Magento blocks?</a></li>
         <li>(Ad.1) <a href="/answers/3q11.html" class="file">Which class does each block that uses a template extend?</a></li>
         <li>(Ad.1) In which way does a template block store information about its template file? Does it store an absolute or a relative path to the template?</li>
         <li>(Ad.1) What is the role of the Mage_Core_Block_Abstract class?</li>
