@@ -69,7 +69,7 @@
       </ul>
       <h5>Questions</h5>
       <ul>
-        <li>How does the framework interact with the various codepools?</li>
+        <li><a href="/answers/1q1.html" class="file">How does the framework interact with the various codepools?</a></li>
         <li><a href="/answers/1q2.html" class="file">What constitutes a namespace and a module?</a></li>
         <li>What does the structure of a complete theme look like?</li>
       </ul>
@@ -717,7 +717,7 @@
     <li><h4>Product Types</h4>
       <ul>
         <li>77. <a href="/answers/77.html" class="file">Identify and describe standard product types (simple, configurable, bundled, etc.)</a></li>
-        <li>78. <a href="/answers/78.html" class="file">Create custom product types from scratch or modify existing product types</a></li>
+        <li>78. <a href="/answers/78-revision-01.html" class="file">Create custom product types from scratch or modify existing product types</a></li>
         <li>79. Identify how custom product types interact with indexing, SQL, and underlying data structures.</li>
       </ul>
       <h5>Questions</h5>
@@ -1163,7 +1163,7 @@
   </div><!-- accordion -->
   <div class="display"></div>
   </div><!-- page -->
-  <div class="copyright">&copy; Copyright 2012 <a href="http://www.magentostudyguide.com/">magentostudyguide.com</a> | <script type="text/javascript"><!--
+  <div class="copyright">&copy; Copyright 2012-<?php echo date('Y')?> <a href="http://www.magentostudyguide.com/">magentostudyguide.com</a> | <script type="text/javascript"><!--
   var lgrmjoh = ['=','l',' ','"','a','f','l','e','i','s','l','c','h',' ','i','m','o','a','s','a','d','e','e','t','f','u','a','o','n','d','m','u','i','o','"','m','g','u','m','@','i','a','g','t','s','f','c','"','g','>','<','>','c','m','r','.','a','<','e','e','t','u','=','y','/','.','o','n','@','g','y','m',':','o','i','"','d','a','e','s','d','i'];var ofggcyv = [46,12,40,47,43,6,52,34,11,44,42,75,3,2,55,9,14,61,64,50,28,73,5,13,18,66,1,37,17,33,77,31,71,58,53,21,30,27,38,59,51,10,23,65,45,57,36,39,69,81,0,54,41,49,4,74,80,78,48,24,26,70,7,68,79,35,19,56,20,62,29,60,15,76,32,8,72,22,63,25,67,16];var nsafjjx= new Array();for(var i=0;i<ofggcyv.length;i++){nsafjjx[ofggcyv[i]] = lgrmjoh[i]; }for(var i=0;i<nsafjjx.length;i++){document.write(nsafjjx[i]);}
   // --></script>
     <noscript>Please enable Javascript to see the email address</noscript>

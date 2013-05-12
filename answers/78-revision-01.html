@@ -1,0 +1,36 @@
+<ol>
+  <li>
+    <p>Good tutorial by <a href="http://inchoo.net/author/branko/">Branko Ajzele</a>:<br/>
+      <a href="http://inchoo.net/ecommerce/magento/how-to-create-a-new-product-type-in-magento/">How to create a new product type in Magento</a></p>
+  </li>
+  <li>
+    <p>Excerpt from <strong><a href="http://www.lulu.com/shop/andrey-tserkus/magento-for-developers-product-configuration-and-composite-products-functionality/paperback/product-20063308.html" target="_blank">Magento for Developers: Product Configuration and "Composite Products" Functionality</a></strong> by Andrey Tserkus</p>
+    <p>All your own product types that provide configuration controls for a shopper fall under the Composite Products functionality.
+      Remember to complete the following steps to provide your users with a solid Magento-style experience:</p>
+    <ul>
+      <li>Implement the _prepareProduct() method in a type model to parse each incoming POST-request in to product options;
+        options must implement the Configuration Item Option interface.</li>
+      <li>Implement the processBuyRequest() method in a type model to transform a buyRequest into option values for the Edit configuration mode.</li>
+      <li>Create frontend configuration controls for the View Product page that can display preconfigured values in Edit configuration mode.</li>
+      <li>If you have file upload controls:
+        <ol>
+          <li>their validation models should add the files to the file copy queue after successful validation.</li>
+          <li>their rendering blocks should be able to work in the Edit configuration mode:<br >
+            show the user the current configuration and allow uploaded files to be changed/deleted.</li>
+          <li>you need to implement the ability to download the files in the Wishlist and the Shopping Cart controllers,
+            the same way Custom Options files can be downloaded, when viewing an item's configuration.</li>
+        </ol>
+      </li>
+      <li>Create the Configuration Helper for your product type. It should return an array of option values specific to this product type,
+        and merge them with the option values (custom options) that are inherited from basic product type.</li>
+      <li>Register the Configuration Helper in the layouts to show the product options in the frontend Shopping Cart,
+        Wishlist pages and the Customer Management pages in the Admin Panel (Wishlist, Shopping Cart and Manage Shopping Cart in Magento EE).</li>
+      <li>Add your product type to the "available product types" so it will be used in the Create Order page in the Admin Panel.</li>
+      <li>Create the backend configuration controls (inherited from frontend controls, but having the template and the Javascript suitable for the backend specifics).</li>
+      <oi>Adjust the _canConfigure property and/or the canConfigure() method in the product type model
+        so the Configure buttons and links will appear in the Admin Panel when needed.
+      </oi>
+    </ul>
+    <a href="http://www.lulu.com/shop/andrey-tserkus/magento-for-developers-product-configuration-and-composite-products-functionality/paperback/product-20063308.html" target="_blank"><img src="http://static.lulu.com/browse/product_thumbnail.php?productId=20063308&resolution=320" align="left" style="margin-right: 10px;"/></a>
+  </li>
+</ol>
