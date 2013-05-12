@@ -330,7 +330,7 @@
         <li>(Ad.2) Can any block in Magento use a template file?</li>
         <li>(Ad.2) How does the $this variable work inside the template file?</li>
         <li>(Ad.2) Is it possible to render a template without a block in Magento?</li>
-        <li>(Ad.2) Is it possible to have a block without a template in Magento?</li>
+        <li>(Ad.2) <a href="/answers/3q17.html" class="file">Is it possible to have a block without a template in Magento?</a></li>
         <li>(Ad.3) Which class is responsible for creating an instance of the block?</li>
         <li>(Ad.3) Which class is responsible for figuring out which blocks should be created for certain pages?</li>
         <li>(Ad.3) How is the tree of blocks typically rendered?</li>
@@ -339,7 +339,7 @@
         <li>(Ad.3) <a href="/answers/3q23.html" class="file">How are a  block's children rendered? Once you added a child to the block, can you expect it will be rendered automatically?</a></li>
         <li>(Ad.3) What is a difference in rendering process for different types of blocks?</li>
         <li>(Ad.4) How can block output be caught using an observer?</li>
-        <li>(Ad.4) What events do Mage_Core_Block_Abstract and Mage_Core_Block_Template fire?</li>
+        <li>(Ad.4) <a href="/answers/3q26.html" class="file">What events do Mage_Core_Block_Abstract and Mage_Core_Block_Template fire?</a></li>
         <li>(Ad.5) What is the purpose of each of the following block types:
           <ul>
             <li>Mage_Core_Block_Template</li>
