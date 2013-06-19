@@ -73,6 +73,7 @@ div.accordion h4 {
 }
 .wrapper {
   width: 100%;
+  min-width: 500px;
   height: 100px;
   position: absolute;
   z-index: 1;
