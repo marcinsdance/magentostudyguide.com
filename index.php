@@ -71,7 +71,7 @@
       <ul>
         <li><a href="/answers/1q1.html" class="file">How does the framework interact with the various codepools?</a></li>
         <li><a href="/answers/1q2.html" class="file">What constitutes a namespace and a module?</a></li>
-        <li>What does the structure of a complete theme look like?</li>
+        <li><a href="/answers/1q3.html" class="file">What does the structure of a complete theme look like?</a></li>
       </ul>
       <h5>Reference files</h5>
       <ul>
