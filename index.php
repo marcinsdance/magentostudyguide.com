@@ -679,7 +679,7 @@
       <h5>Questions</h5>
       <ul>
         <li><a href="/answers/6q37.html" class="file">For what purpose is the _isAllowed() method used and which class types implement it</a></li>
-        <li>What is the XML syntax for adding new menu element</li>
+        <li><a href="/answers/6q38.html" class="file">What is the XML syntax for adding new menu element</a></li>
         <li>What is adminhtml.xml used for? Which class parses it, and which class applies it</li>
         <li>Where is the code located that processes the ACL XML and where is the code that applies it</li>
         <li>What is the relationship between Magento and Zend_Acl</li>
