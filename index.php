@@ -463,7 +463,7 @@
     </li>
     <li><h4>Install/upgrade scripts</h4>
       <ul>
-        <li>56. Describe the Install/Upgrade Workflow</li>
+        <li>56. <a href="/answers/56.html" class="file">Describe the Install/Upgrade Workflow</a></li>
         <li>57. Write install and upgrade scripts using set-up resources</li>
         <li>58. Identify how to use the DDL class in setup scripts</li>
       </ul>
