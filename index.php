@@ -175,7 +175,7 @@
     <li><h4>URL rewrites</h4>
       <ul>
         <li>21. Describe URL structure/processing in Magento</li>
-        <li>22. Describe the URL rewrite process</li>
+        <li>22. <a href="/answers/22.html" class="file">Describe the URL rewrite process</a></li>
       </ul>
       <h5>Questions</h5>
       <ul>
