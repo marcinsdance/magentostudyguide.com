@@ -42,7 +42,9 @@
   This project is build on top of <a href="http://www.phptherightway.com">www.phptherightway.com</a>.
 </footer>
 </div>
-<div class="formwrapper"></div><!-- formwrapper -->
+<a href="https://github.com/marcinsdance/magentostudyguide.com" target="_blank" class="forkme"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+<div class="formwrapper"></div>
+<!-- formwrapper -->
 <div class="theform">
   <div class="closeform">x</div>
   <h3></h3>
