@@ -1,6 +1,28 @@
-$(".accordion").accordion({ "header": "h3", "heightStyle": "fill" });
+$(".accordion").accordion({ "header": "h3",autoHeight: false });
 $(document).ready( function() {
-    $(".display").load( 'welcome.html' );
+  // load answer is hash found in url
+  var hash = window.location.hash.substring(1);
+  console.log(hash);
+  if ( hash !== '' ) {
+    $("a.file").each( function() {
+      var thishtml = $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,"");
+      if ( hash === thishtml ) {
+        var link = $(this).attr('href');
+        $("div#content").load( link, function() {
+          $("div#content").scrollTop('0');
+        });
+      }
+    });
+  };
+
+  // dirty hack to change hrefs - sorry it would take so much time to change them by hand...
+  $(".site-navigation ul ul a").each( function() {
+    var takeTheUrl = $(this).attr('href');
+    $(this).attr('data-url', takeTheUrl);
+    $(this).attr('href', '#' + $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,""));
+  });
+
+  $(".display").load( 'welcome.html' );
     $("li ul li").not(" li ul li ul li ").hover(
         function() { $(this).prepend('<div class="sendform">contribute</div>'); },
         function() { $(".sendform").remove(); }
@@ -15,13 +37,12 @@ $(document).ready( function() {
 });
 $(".submit").click( function(e) {
   e.preventDefault();
-  console.log('test');
   $.post("form.php", $("form.form").serialize(),function(data) {
     $(".description h3").text(data);
-    $(".description h3").show("slow");
-    $(".formwrapper").hide();
-    $(".theform").hide();
   });
+  $(".description h3").show("slow");
+  $(".formwrapper").hide();
+  $(".theform").hide();
 });
 $("ul li a").click( function() {
     var taketext = $(this).text();
@@ -42,10 +63,12 @@ $("a.file")
     .not("#file482,#file541,#file542,#file551,#file552,#file56,#file761,#file762,#file77,#file721")
     .click( function(e) {
     e.preventDefault();
-    var link = $(this).attr('href');
-    $("div.display").load( link, function() {
-        $("div.display").scrollTop('0');
+    var link = $(this).attr('data-url');
+    var title = $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,"");
+    $("div#content").load( link, function() {
+        $("div#content").scrollTop('0');
     });
+    window.location.replace(window.location.protocol + "#" + title);
 });
 $("a#file18").click( function(e) {
     e.preventDefault();
@@ -255,4 +278,24 @@ $(".closeform").click( function() {
 });
 $(".formwrapper").click( function() {
   $(".theform, .formwrapper").hide();
+});
+$("h5").next().toggle();
+$("h5").click( function() { $(this).next().toggle() })
+
+// switch certification links
+$(".switch.one, .switch.two, .switch.three").click( function() {
+  var showThis = $(this).attr('data-show');
+  $(".switch").hide();
+  $("." + showThis).show();
+});
+$(".switch span").click( function() {
+  $(".switch.one, .switch.two, .switch.three").show();
+});
+$(".switch.three").click( function() {
+  $(".accordion").hide();
+  $(".frontend").show();
+});
+$(".switch.one, .switch.two").click( function() {
+  $(".frontend").hide();
+  $(".accordion").show();
 });
