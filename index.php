@@ -38,9 +38,7 @@
   <?php include 'includes/socials.html'; ?>
   <div id="content"><?php include 'includes/welcome.html'; ?></div>
 
-<footer class="site-footer" id="site-footer">
-  This project is build on top of <a href="http://www.phptherightway.com">www.phptherightway.com</a>.
-</footer>
+<footer class="site-footer" id="site-footer">Copyright &copy; 2012 - <?php echo date('Y'); ?> <a href="http://magestudyguide.com">magestudyguide.com</a></footer>
 </div>
 <a href="https://github.com/marcinsdance/magentostudyguide.com" target="_blank" class="forkme"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 <div class="formwrapper"></div>
