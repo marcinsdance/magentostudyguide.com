@@ -3361,3 +3361,6 @@ select {
 hgroup {
   z-index: 1;
 }
+h5 + ul {
+  display: none;
+}

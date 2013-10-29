@@ -1,9 +1,12 @@
-$(".accordion").accordion({ "header": "h3",autoHeight: false });
+$(".accordion,.accordion2").accordion({ "header": "h3",autoHeight: false });
 $(document).ready( function() {
   // load answer is hash found in url
   var hash = window.location.hash.substring(1);
-  console.log(hash);
   if ( hash !== '' ) {
+    if ( hash === 'front-end-developer-certification' ) {
+      $(".accordion").hide();
+      $(".frontend").show();
+    }
     $("a.file").each( function() {
       var thishtml = $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,"");
       if ( hash === thishtml ) {
@@ -16,7 +19,7 @@ $(document).ready( function() {
   };
 
   // dirty hack to change hrefs - sorry it would take so much time to change them by hand...
-  $(".site-navigation ul ul a").each( function() {
+  $(".site-navigation ul ul a").not(".external").each( function() {
     var takeTheUrl = $(this).attr('href');
     $(this).attr('data-url', takeTheUrl);
     $(this).attr('href', '#' + $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,""));
@@ -34,7 +37,9 @@ $(document).ready( function() {
     $(".formwrapper").show();
     $(".theform").show();
   });
-});
+
+}); // end document ready
+
 $(".submit").click( function(e) {
   e.preventDefault();
   $.post("form.php", $("form.form").serialize(),function(data) {
@@ -279,8 +284,11 @@ $(".closeform").click( function() {
 $(".formwrapper").click( function() {
   $(".theform, .formwrapper").hide();
 });
-$("h5").next().toggle();
-$("h5").click( function() { $(this).next().toggle() })
+
+// show questions and reference files on click
+$("h5").click( function() {
+  $(this).next().toggle();
+});
 
 // switch certification links
 $(".switch.one, .switch.two, .switch.three").click( function() {
@@ -291,9 +299,18 @@ $(".switch.one, .switch.two, .switch.three").click( function() {
 $(".switch span").click( function() {
   $(".switch.one, .switch.two, .switch.three").show();
 });
+$(".switch.one").click( function() {
+  $(".accordion").hide();
+  $(".frontend").show();
+  window.location.replace(window.location.protocol + "#magento-developer-certification");
+});
+$(".switch.two").click( function() {
+  window.location.replace(window.location.protocol + "#magento-developer-plus-certification");
+});
 $(".switch.three").click( function() {
   $(".accordion").hide();
   $(".frontend").show();
+  window.location.replace(window.location.protocol + "#front-end-developer-certification");
 });
 $(".switch.one, .switch.two").click( function() {
   $(".frontend").hide();
