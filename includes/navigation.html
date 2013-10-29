@@ -1118,40 +1118,435 @@
     <h3>1- Use the Magento Design Fallback System - 7% of the exam.</h3>
     <ul class="one">
       <li>
+        <h5>Description</h5>
         <ul>
-          <li><a href="/includes/answers/1.html" class="file">1.1 Create custom themes</a></li>
-          <li><a href="/includes/answers/1.html" class="file">1.2 Configure the design fallback using the options found in the Admin panel under System > Configuration > Design<br/>
+          <li>
+            <p>This section tests how well you can utilize the Magento fallback system to implement different use cases,
+          such as single- and multi-store Magento instance theming, temporary design changes, etc.</p>
+            <p>This topic comprises approximately 7% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>1.1 Create custom themes</li>
+          <li>1.2 Configure the design fallback using the options found in the Admin panel under System > Configuration > Design<br/>
         1.2.1 Design Package<br/>
         1.2.2 Default Theme<br/>
         1.2.3 Type-specific Themes<br/>
         1.2.4 Design exceptions
           </li>
-          <li><a href="/includes/answers/1.html" class="file">1.3 Apply a temporary theme configuration to a store view using the options found in the Admin panel under System > Design</a></li>
-          <li><a href="/includes/answers/1.html" class="file">1.4 Understand the differences and similarities between System > Configuration > Design and System > Design to configure the design fallback</a></li>
+          <li>1.3 Apply a temporary theme configuration to a store view using the options found in the Admin panel under System > Design</li>
+          <li>1.4 Understand the differences and similarities between System > Configuration > Design and System > Design to configure the design fallback</li>
         </ul>
         <h5>Questions</h5>
         <ul>
-          <li><a href="/includes/answers/1.html" class="file">How can I display templates from all available fallback steps within one page?</a></li>
-          <li><a href="/includes/answers/1.html" class="file">When implementing a custom theme based on the default/blank theme, how can I minimize work during upgrades of Magento and the blank theme?</a></li>
-          <li><a href="/includes/answers/1.html" class="file">How many fallback steps are maximally available?</a></li>
-          <li><a href="/includes/answers/1.html" class="file">How does choosing a theme on a category, product, or CMS page influence the fallback configuration?</a></li>
+          <li>How can I display templates from all available fallback steps within one page?</li>
+          <li>When implementing a custom theme based on the default/blank theme, how can I minimize work during upgrades of Magento and the blank theme?</li>
+          <li>How many fallback steps are maximally available?</li>
+          <li>How does choosing a theme on a category, product, or CMS page influence the fallback configuration?</li>
         </ul>
         <h5>References</h5>
         <ul>
-          <li><a href="/includes/answers/1.html" class="file">The Magento Admin interface
+          <li>The Magento Admin interface
             <ul>
               <li>System > Design</li>
               <li>System > Configuration > Design</li>
               <li>Catalog > Manage Products > [choose product] > Design tab</li>
               <li>Catalog > Manage Categories > [choose category] > Custom Design tab</li>
               <li>CMS > Pages > [choose page] > Design tab</li>
-            </ul></a></li>
-          <li><a href="/includes/answers/1.html" class="file">The Magento Designers Guide:
+            </ul></li>
+          <li>The Magento Designers Guide:
             <ul>
               <li><a href="http://www.magentocommerce.com/design_guide" class="external" target="_blank">http://www.magentocommerce.com/design_guide</a></li>
               <li><a href="http://www.magentocommerce.com/knowledge-base/entry/magentos-theme-hierarchy" class="external" target="_blank">http://www.magentocommerce.com/knowledge-base/entry/magentos-theme-hierarchy</a></li>
-            </ul></a>
+            </ul>
           </li>
         </ul>
+      </li>
+    </ul>
+    <h3>2- Use Layout XML to Customize a Theme - 19% of the exam.</h3>
+    <ul class="one">
+      <li>
+        <h5>Description</h5>
+        <ul>
+          <li>
+            <p>Layout XML is a central part of Magento theming. This objective tests your knowledge of Layout XML syntax and how to apply it to solve specific problems.
+            Even though they are few in number, layout XML tags offer an amazing amount of flexibility and functionality.
+              Layout XML often provides the biggest learning opportunity for more graphics-oriented frontend developers.</p>
+            <p>This topic comprises approximately 19% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>2.1 Demonstrate knowledge of all layout XML directives (layout handles, block, reference, action, remove, update and label) and their arguments</li>
+          <li>2.2 Define an output block</li>
+          <li>2.3 Use a local.xml file</li>
+          <li>2.4 Understand layout merging</li>
+          <li>2.5 Understand processing order of layout handles and other directives</li>
+          <li>2.6 Set values on block instances using layout XML</li>
+          <li>2.7 Move a child block from one parent to another using layout XML</li>
+          <li>2.8 Specify the root template for all pages or for specific pages</li>
+        </ul>
+        <h5>Questions</h5>
+        <ul>
+          <li>What is the difference between the <i>name</i> and <i>as</i> attributes for blocks?</li>
+          <li>What is the processing order of layout XML instructions?</li>
+          <li>How can I include a custom CSS file on a product details page for a specific product?</li>
+          <li>How can I include a custom CSS file on a product details page for a specific product type (e.g. grouped, downloadable, configurable, etc.)?</li>
+          <li>How can I include a custom CSS file on a CMS page?</li>
+          <li>How can I include a custom CSS file on all Magento pages?</li>
+          <li>How can you avoid copying core layout XML files into a custom theme by using the local.xml layout file?</li>
+        </ul>
+        <h5>References</h5>
+        <ul>
+          <li>The Magento Designers Guide:<br/><a href="http://www.magentocommerce.com/design_guide" class="external" target="_blank">http://www.magentocommerce.com/design_guide</a></li>
+          <li><a href="http://www.magentocommerce.com/design_guide/articles/intro-to-layouts" class="external" target="_blank">http://www.magentocommerce.com/design_guide/articles/intro-to-layouts</a></li>
+          <li><a href="/magento/app/design/frontend/base/layout/page.xml" class="file">app/design/frontend/base/layout/page.xml</a></li>
+          <li><a href="/magento/app/design/frontend/base/layout/catalog.xml" class="file">app/design/frontend/base/layout/catalog.xml</a></li>
+          <li>The Magento Admin interface
+            <ul>
+              <li>Catalog > Manage Products > [choose product] > Design tab</li>
+              <li>Similar options for categories and CMS pages</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3>3- Create and Customize Template Files - 16% of the exam</h3>
+    <ul class="one">
+      <li>
+        <h5>Description</h5>
+        <ul>
+          <li>
+            <p>Template files re responsible for the visual representation of page content. In order to work with Magento templates efficiently,
+              you should not only understand how they relate to layout XML and the fallback, but also know how to use basic PHP.
+              A frontend developer must also be familiar with Magento's own set of conventions to be used in templates.</p>
+            <p>This tomic comprises approximately 16% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>3.1 Assign a customized template file using layout XML</li>
+          <li>3.2 Override a native template file with a customized template file, using the design fallback</li>
+          <li>3.3 Describe conventions used in template files:
+            <ul>
+              <li>3.3.1 Variable naming (_prefix for variables declared in a template)</li>
+              <li>3.3.2 PHP loop and block constructs (for example: <i>if (...) : endif;</i>)</li>
+              <li>3.3.3 Opening and closing PHP tags (<i>&lt;&#63;php</i> vs <i>&lt;&#63;</i>, <i>&lt;&#37;</i> and others)</li>
+            </ul>
+          </li>
+        </ul>
+        <h5>Questions</h5>
+        <ul>
+          <li>What are the conventions for variable naming?</li>
+          <li>What does <i>$this</i> refer to in template files?</li>
+          <li>How can I include another template inside the current one?</li>
+        </ul>
+        <h5>References</h5>
+        <ul>
+          <li>The Magento Designers Guide:<br/><a href="http://www.magentocommerce.com/design_guide" class="external" target="_blank">http://www.magentocommerce.com/design_guide</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>4- Effectively Use the Magento Block-Template Design System - 11% of the exam</h3>
+    <ul class="one">
+      <li>
+        <h5>Description</h5>
+        <ul>
+          <li>
+            <p>To fully utilize Magento's design system, it is necessary to grasp three major concepts - layout XML, templates, and blocks - and to understand how they relate to each other.
+              The page content hierarchy is represented in all three of them. The parent-child associations always need to be considered. Blocks provide the functionality and content displayed by templates.
+              This section asks you to demonstrate your knowledge of Magento blocks and how to use them to customize a Magento theme.</p>
+            <p>This tomic comprises approximately 11% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>4.1 Declare a custom template using a core/template block via layout XML with a custom template, and output it as a child of a structural block or of a template block</li>
+          <li>4.2 Understand the differences between structural and content blocks</li>
+          <li>4.3 Assign a default root template on all pages</li>
+          <li>4.4 Assign a default root template on a specific page</li>
+          <li>4.5 Demonstrate the use of core/text_list blocks</li>
+        </ul>
+        <h5>Questions</h5>
+        <ul>
+          <li>What is the difference between a template and a block?</li>
+          <li>How can I see which block methods are available in a template?</li>
+          <li>How can I assign a child block to another block?</li>
+          <li>How do I display a child block?</li>
+          <li>How can I access data from a parent block?</li>
+          <li>How can I set data on a block via layout XML, and how do I display that data in a template?</li>
+        </ul>
+        <h5>Rerefences</h5>
+        <ul>
+          <li>The Magento Designers Guide:<br/><a href="http://www.magentocommerce.com/design_guide" class="external" target="_blank">http://www.magentocommerce.com/design_guide</a></li>
+          <li><a href="http://www.sitepoint.com/an-introduction-to-magento-themes/" class="external" target="_blank">http://www.sitepoint.com/an-introduction-to-magento-themes/</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>5- Identify Where to Locate Files and Create New Files in the Theming-related Directory Structure - 7% of the exam</h3>
+    <ul class="one">
+      <li>
+        <h5>Description</h5>
+        <ul>
+          <li>
+            <p>Expecially for developers new to Magento, the deep folder hierarchies and hundreds of files in the directory structure may be confusing.
+              This section of the exam asks you to demonstrate your understanding of the underlying logic of the structure and your ability to navigate efficiently through the directories.</p>
+            <p>This topic comprises approximately 7% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>5.1 Describe the contents of the app/design/ and skin/ directory branches and why they are separated</li>
+          <li>5.2 Describe the general directory hierarchy format under app/design/ and skin/[area]/[package]/[theme]/[filetype]/[module-or-namespace]/</li>
+        </ul>
+        <h5>Questions to ask yourself while studying:</h5>
+        <ul>
+          <li>What is the purpose of packages?</li>
+          <li>What is the purpose of the theme fallback?</li>
+          <li>What is the purpose of separating the skin and the design files?</li>
+        </ul>
+        <h5>References</h5>
+        <ul>
+          <li>The Magento Designers Guide:<br/><a href="http://www.magentocommerce.com/design_guide" class="external" target="_blank">http://www.magentocommerce.com/design_guide</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>6- Customize and Create JavaScript Within the Magento Framework - 8% of the exam.</h3>
+    <ul class="one">
+      <li>
+        <h5>Description</h5>
+        <ul>
+          <li>
+            <p>Many of Magento's functionalities work with JavaScript. This starts with form validation and ends with more complex pages like the one-page checkout.
+              Prototype provides a framework to cleanly extend and modify core functionality without having to modify core files or revert to theme fallback overrides.
+              To demonstrate mastery of this topic, you also need to understand how to include custom JavaScript files using layout XML.</p>
+            <p>This topic comprises approximately 8% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>6.1 Include custom JavaScript on all pages</li>
+          <li>6.2 Include custom JavaScript on specific pages</li>
+          <li>6.3 Demonstrate understanding of using prototype.js</li>
+          <li>6.4 Override core JavaScript classes (without overriding core JavaScript files)</li>
+          <li>6.5 Configure JavaScript merging in the Admin panel</li>
+        </ul>
+        <h5>Questions</h5>
+        <ul>
+          <li>How can I extend an existing JavaScript class instance with new or customized functionality?</li>
+          <li>How many upgrade-safe ways can I find to execute custom JavaScript functions when a one-page checkout step is submitted?</li>
+          <li>How can I add custom JavaScript form validation using the framework provided by Magento?</li>
+          <li>How can I change the label text of the configurable product dropdowns in an upgrade-safe way?</li>
+          <li>How do I use the JavaScript translation facility for custom text?</li>
+        </ul>
+        <h5>References</h5>
+        <ul>
+          <li><a href="http://prototypejs.org/" class="external" target="_blank">http://prototypejs.org/</a></li>
+          <li><a href="/magento/js/prototype/validation.js" class="file">js/prototype/validation.js</a></li>
+          <li><a href="/magento/js/varien/product.js" class="file">js/varien/product.js</a></li>
+          <li><a href="/magento/skin/frontend/base/default/js/opcheckout.js" class="file">skin/frontend/base/default/js/opcheckout.js</a></li>
+          <li><a href="/magento/skin/frontend/base/default/js/bundle.js" class="file">skin/frontend/base/default/js/bundle.js</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>7- Use CSS Effectively to Customize Magento Look and Feel - 9% of the exam</h3>
+    <ul class="one">
+      <li>
+        <h5>Description</h5>
+        <ul>
+          <li>
+            <p>CSS is arguably the most important tool in the frontend developers' toolbox. Of course, Magento, being a web application, is no exception.
+            This section tests your knowledge of how to apply custom CSS within Magento (of course with the help of Layout XML).</p>
+            <p>This topic comprises approximately 9% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+          </li>
+        </ul>
+        <ul>
+          <li>7.1 CSS2</li>
+          <li>7.1 CSS Merging</li>
+          <li>7.1 CSS Compression</li>
+          <li>7.1 Other CSS skills</li>
+        </ul>
+        <h5>Questions</h5>
+        <ul>
+          <li>Which types of selectors and rules of priority are available in CSS2?</li>
+          <li>Which CSS related methods of Page Speed Optimization do you know?</li>
+        </ul>
+        <h5>References</h5>
+        <ul>
+          <li><a href="http://www.w3schools.com/css/default.asp" class="external" target="_blank">http://www.w3schools.com/css/default.asp</a></li>
+          <li><a href="http://www.seomoz.org/blog/15-tips-to-speed-up-your-website" class="external" target="_blank">http://www.seomoz.org/blog/15-tips-to-speed-up-your-website</a></li>
+        </ul>
+      </li>
+    </ul>
+  <h3>8- Customize the Look and Feel of Specific Magento Pages - 12% of the exam</h3>
+  <ul class="one">
+    <li>
+      <h5>Description</h5>
+      <ul>
+        <li>
+          <p>Besides the generic content framework that Magento's design provides, each content page has individual hooks, wrappers, and elements that are unique to that specific page.
+            A good frontend developer needs to be familiar with all of them in order to work efficiently and using best practices.</p>
+          <p>This topic comprises approximately 12% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+        </li>
+      </ul>
+      <ul>
+        <li>8.1 Generic Page Elements
+          <ul>
+            <li>Top Links</li>
+            <li>Page Header and Footer</li>
+            <li>Quick Search</li>
+            <li>Store View (Language) and Store Switcher</li>
+            <li>Mini Cart</li>
+            <li>Breadcrumbs</li>
+            <li>Sidebar menu</li>
+          </ul>
+        </li>
+        <li>8.2 Product Detail Pages (including Simple, Configurable, Bundle, Grouped, Virtual, Downloadable, Gift Card products)
+          <ul>
+            <li>Configure design changes (page layout)</li>
+            <li>Use custom layout updates (XML)</li>
+            <li>Use container blocks provided by native Magento to display additional information on category pages</li>
+          </ul>
+        </li>
+        <li>8.3 Category Pages
+          <ul>
+            <li>Configure design changes (page layout)</li>
+            <li>Use custom layout updates (XML)</li>
+            <li>Configure the layered navigation</li>
+            <li>Configure design changes (page layout)</li>
+            <li>Configure design inheritance</li>
+            <li>Configure a CMS block as a category landing page</li>
+          </ul>
+        </li>
+        <li>8.4 CMS Pages
+          <ul>
+            <li>Configure design changes (page layout)</li>
+            <li>Use custom layout updates</li>
+            <li>Use static variables</li>
+            <li>Understand the use of CMS template directives (var, store, block, ...)</li>
+          </ul>
+        </li>
+        <li>8.5 Widgets
+          <ul>
+            <li>Insert widgets</li>
+            <li>Understand the differences among widget types</li>
+            <li>Configure a widget instance</li>
+          </ul>
+        </li>
+        <li>8.6 CMS Blocks
+          <ul>
+            <li>Create and insert CMS blocks</li>
+            <li>Understand the use of CMS template directives (var, store, block, ...)</li>
+          </ul>
+        </li>
+        <li>8.7 Customer Account Pages
+          <ul>
+            <li>Remove an item from the customer account navigation using layout XML</li>
+            <li>Add a custom page to the customer account navigation using layout XML</li>
+          </ul>
+        </li>
+        <li>8.8 One-page Checkout
+          <ul>
+            <li>Use container blocks provided in the native Magento checkout to display additional information</li>
+          </ul>
+        </li>
+        <li>8.9 Multi-address Checkout
+          <ul>
+            <li>Use container blocks provided in the native Magento checkout to display additional information</li>
+          </ul>
+        </li>
+        <li>8.10 Understand Customization of Transactional Email Templates
+          <ul>
+            <li>Create and assign custom transactional email templates</li>
+            <li>Use of template variables available in each email {store, var, ...) and how to access properties of variable objects (for example <i>var order.getCustomer.getName</i>)</li>
+            <li>Link to custom images from transactional email templates</li>
+            <li>Create links to store pages in transactional email templates</li>
+          </ul>
+        </li>
+      </ul>
+      <h5>Questions</h5>
+      <ul>
+        <li>Which structural blocks are available as part of the content on all pages?</li>
+        <li>To which menus can I add custom entries using layout XML in an upgrade-safe way?</li>
+        <li>How can I create links to store pages in transactional email templates?</li>
+        <li>How can I include a custom template in transactional email templates?</li>
+        <li>How can I access properties of the template variables (for example the order in the new order email, or the customer in the registration confirmation email)?</li>
+      </ul>
+      <h5>References</h5>
+      <ul>
+        <li>The Magento Designers Guide:<br/><a href="http://www.magentocommerce.com/design_guide" class="external" target="_blank">http://www.magentocommerce.com/design_guide</a></li>
+      </ul>
+    </li>
+  </ul>
+  <h3>9- Correctly Use the Admin Configuration Scopes (Default/Website/Store View Fallback) - 6% of the exam</h3>
+  <ul class="one">
+    <li>
+      <h5>Description</h5>
+      <ul>
+        <li>
+          <p>Even though it's a simple concept, admin configuration scopes is an exxential idea to understand.
+            This section of the exam asks you to demonstrate the ability to apply your knowledge of the configuration scopes to everyday tasks.</p>
+          <p>This topic comprises approximately 6% of the exam.</p>
+        </li>
+      </ul>
+      <h5>Questions</h5>
+      <ul>
+        <li>Why are some options not configurable on a store view level?</li>
+        <li>How can I use the available configuration scopes to the greatest effect?</li>
+      </ul>
+      <h5>References</h5>
+      <ul>
+        <li>The Magento admin interface
+          <ul>
+            <li>All settings under System > Configuration</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <h3>10- Implement Internationalization of Frontend Pages (CE + EE) - 4% of the exam.</h3>
+  <ul class="one">
+    <li>
+      <h5>Description</h5>
+      <ul>
+        <li>
+          <p>Almost every project requires some degree of internationalization. The localization tools also can be used as a tool to customize content.</p>
+          <p>This topic comprises approximately 4% of the exam. Questions are drawn randomly from the following topics and objectives:</p>
+        </li>
+      </ul>
+      <ul>
+        <li>10.1 Create and change translations
+          <ul>
+            <li>10.1.1 Understand the prioritization of translation methods
+              <ul>
+                <li>Theme locale translate csv</li>
+                <li>The database table core_translate</li>
+              </ul>
+            </li>
+            <li>10.1.2 Understand the pros and cons of applying translations via the translate.csv file versus the core_translate table</li>
+            <li>10.1.3 Understand how to apply a module scope to a translation</li>
+            <li>10.1.4 Understand the inline translation feature</li>
+          </ul>
+        </li>
+        <li>10.2 Configure time zones nd locale settings using the Admin panel</li>
+        <li>10.3 Configure currencies</li>
+      </ul>
+      <h5>Questions</h5>
+      <ul>
+        <li>Which methods are available for translation?</li>
+        <li>How can I customize translations in an upgrade-safe manner?</li>
+        <li>How can I add translations for custom strings in templates?</li>
+        <li>How can I use the translation feature to customize existing text?</li>
+        <li>How can translations be moved from one host to another (for example, from a development host to the live server)?</li>
+        <li>How can I translate transactional emails?</li>
+        <li>How can I specify localized variables in transactional emails?</li>
+      </ul>
+      <h5>References</h5>
+      <ul>
+        <li>app/locale/*</li>
+        <li>app/design/frontend/*/*/locale/translate.csv</li>
+        <li>The Magento Admin interface
+          <ul>
+            <li>System > Configuration > Developer > Inline Translation</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
   </div>
 </div>
