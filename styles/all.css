@@ -3069,6 +3069,10 @@ select {
   overflow: auto;
   width: 400px;
 }
+.site-navigation h3,
+.site-navigation h5 {
+  cursor: pointer;
+}
 .build-date {
   margin-bottom: 20px !important;
   color: #AAA;
@@ -3136,6 +3140,8 @@ select {
   padding-top: 40px !important;
   font-size: 13px;
   text-align: center;
+  position: fixed;
+  bottom: 0;
 }
 .site-footer img {
   margin-left: 2px;
@@ -3175,6 +3181,7 @@ select {
   .site-navigation ul {
     border: 1px solid #999;
     border-bottom: none;
+    cursor: pointer;
   }
   .site-navigation li {
     margin-top: 0px !important;
@@ -3185,6 +3192,7 @@ select {
     padding-right: 0px !important;
     padding-bottom: 0px !important;
     padding-left: 0px !important;
+    cursor: pointer;
   }
   .site-navigation a {
     background: #CCC;
