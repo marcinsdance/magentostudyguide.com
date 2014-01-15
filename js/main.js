@@ -11,8 +11,9 @@ $(document).ready( function() {
       var thishtml = $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,"");
       if ( hash === thishtml ) {
         var link = $(this).attr('href');
+        var subject = $(this).html();
         $("div#content").load( link, function() {
-          $("div#content").scrollTop('0');
+          $("div#content").scrollTop('0').prepend('<h1>' + subject + '</h1>');
         });
       }
     });
@@ -70,8 +71,9 @@ $("a.file")
     e.preventDefault();
     var link = $(this).attr('data-url');
     var title = $(this).html().toLowerCase().replace(/ /g,"-").replace(/[()]/g,"");
+    var subject = $(this).html();
     $("div#content").load( link, function() {
-        $("div#content").scrollTop('0');
+        $("div#content").scrollTop('0').prepend('<h1>' + subject + '</h1>');
     });
     window.location.replace(window.location.protocol + "#" + title);
 });
