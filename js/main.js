@@ -44,7 +44,7 @@ $(document).ready( function() {
 $(".submit").click( function(e) {
   e.preventDefault();
   $.post("form.php", $("form.form").serialize(),function(data) {
-    $(".description h3").text(data);
+    $("#content").append('<h3>' + data + '</h3>');
   });
   $(".description h3").show("slow");
   $(".formwrapper").hide();
