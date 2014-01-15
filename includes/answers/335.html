@@ -1,0 +1,6 @@
+Source: <a href="http://blog.magestore.com/2012/02/10/magento-certificate-block-structure/" target="_blank">http://blog.magestore.com/2012/02/10/magento-certificate-block-structure/</a><br/>
+A block will be shown by a template file. When a block returns to HTML code by calling toHtml() function,
+it will get a template file and then flush variables to this file.
+One block can flush its variables many template files. Similarly, it’s possible for a template to show lots of block types.
+A template is maybe unnecessary for one block but one template compulsorily requires a block attached to it in Magento.
+In a template file, we are able to use $this pointer to call functions as well as take the values of the block attached to this template.
