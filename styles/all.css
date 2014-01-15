@@ -3137,7 +3137,8 @@ select {
 }
 .site-footer {
   clear: both;
-  padding-top: 40px !important;
+  padding: 10px 10px 0 0;
+  background: white;
   font-size: 13px;
   text-align: center;
   position: fixed;
