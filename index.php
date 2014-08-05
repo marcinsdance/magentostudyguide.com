@@ -61,7 +61,7 @@
   </form>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script src="/js/setup.js"></script>
 <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
 <script src="js/main.js"></script>
