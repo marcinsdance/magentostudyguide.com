@@ -13,7 +13,7 @@ $message = <<<EOT
 EOT;
 $message = htmlspecialchars($message);
 $subject = "Suggestion from the website";
-$address = "info@magentostudyguide.com";
+$address = "changed-email@magentostudyguide.com";
 if(!mail($address, $subject, $message)) {
   echo "<script>alert('There was an error submitting the form, please send us the information to: info@magestudyguide.com')</script>";
 } else {
