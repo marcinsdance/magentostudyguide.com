@@ -48,4 +48,4 @@ by <a href="http://blog.belvg.com/author/sergey-guk" target="_blank">Sergei Guk<
   </div>
 </div>
 <!-- [Format Time: 0.0085 seconds] -->
-<p>This code snippet illustrates the order Magento is using to include paths &#8211; firstly it includes Local code pool, than community and after that &#8211; core, which allow developers to override classes without changing core files.</p>
+<p>This code snippet illustrates the order Magento is using to include paths.  First it adds the Local code pool to the include path, then Community, then Core, then it adds the lib/ directory.  This allow developers to override classes without changing core files - Magento will search for a class first in local, then community, then core, then lastly it will search in the lib/ directory.</p>
